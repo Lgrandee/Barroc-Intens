@@ -219,7 +219,7 @@
     </div>
 
     {{-- Additional dashboard sections from HTML files - Only show if defined by child views --}}
-    
+
     {{-- Product/Inventory List Section (for Purchasing) --}}
     @hasSection('product_list')
     <div class="bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">

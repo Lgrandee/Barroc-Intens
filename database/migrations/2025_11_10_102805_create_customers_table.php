@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('city');
             $table->string('zipcode');
             $table->enum('bkr_status', ['approved', 'denied', 'pending', 'unknown'])->default('unknown');
+            $table->string('notes')->nullable();
             $table->timestamps();
         });
     }
