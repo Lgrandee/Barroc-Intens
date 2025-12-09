@@ -97,11 +97,11 @@
                 </div>
                 </div>
                 <div class="flex gap-2">
-                <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" class="flex-1 text-center border border-gray-300 rounded-md py-2 text-sm text-gray-600 hover:border-blue-500 hover:text-blue-600">
-                    👁️ Edit dat mf
+                <a href="{{ route('customers.show', ['customer' => $customer->id]) }}" class="flex-1 text-center border border-gray-300 rounded-md py-2 text-sm text-gray-600 hover:border-blue-500 hover:text-blue-600">
+                    👁️ Details bekijken
                 </a>
-                <a href="#" class="flex-1 text-center border border-gray-300 rounded-md py-2 text-sm text-gray-600 hover:border-blue-500 hover:text-blue-600">
-                    📝 offertes bekijken
+                <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" class="flex-1 text-center border border-gray-300 rounded-md py-2 text-sm text-gray-600 hover:border-blue-500 hover:text-blue-600">
+                    ✏️ Bewerken
                 </a>
                 <a href="mailto:{{ $customer->email }}" class="flex-1 text-center border border-gray-300 rounded-md py-2 text-sm text-gray-600 hover:border-blue-500 hover:text-blue-600">
                     ✉️ Contact
