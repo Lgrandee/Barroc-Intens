@@ -44,12 +44,19 @@ class CustomerController extends Controller
         return view('sales.editCustomer', ['customer' => $customer]);
     }
 
+    public function show(Customer $customer)
+    {
+        return view('sales.showCustomer', ['customer' => $customer]);
+    }
+
     public function edit(Customer $customer, Request $request)
     {
         $customer->name_company = $request->name_company;
         $customer->contact_person = $request->contact_person;
         $customer->email = $request->email;
         $customer->phone_number = $request->phone_number;
+        $customer->bkr_number = $request->bkr_number;
+        $customer->notes = $request->notes;
         $customer->save();
 
         return redirect()->route('customers.index');

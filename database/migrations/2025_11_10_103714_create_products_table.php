@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('product_name');
             $table->integer('stock');
             $table->decimal('price', 10, 2);
+            $table->enum('type', ['beans', 'parts', 'machines'])->default('beans');
             $table->timestamps();
         });
     }

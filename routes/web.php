@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FactuurController;
 use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\OfferteController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserManagementController;
@@ -34,6 +35,7 @@ Route::middleware(['auth', 'departmentRole:Sales'])->group(function () {
     Route::put('/customers/{customer}', [CustomerController::class, 'edit'])->name('customers.update');
     Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
 });
+
 
 Route::view('purchasing', 'purchasing.dashboard')->middleware(['auth', 'departmentRole:Purchasing'])->name('purchasing.dashboard');
 Route::view('finance', 'finance.dashboard')->middleware(['auth', 'departmentRole:Finance'])->name('finance.dashboard');
@@ -101,6 +103,17 @@ Route::middleware(['auth', 'departmentRole:Management'])->group(function () {
     Route::put('/management/users/{id}', [UserManagementController::class, 'update'])->name('management.users.update');
     Route::delete('/management/users/{id}', [UserManagementController::class, 'destroy'])->name('management.users.destroy');
 });
+
+//Purchasing Department
+Route::get('/product-stock', [ProductController::class, 'showStock'])->middleware('auth')->name('product.stock');
+Route::get('/products/create', [ProductController::class, 'create'])->middleware('auth')->name('products.create');
+Route::post('/products', [ProductController::class, 'store'])->middleware('auth')->name('products.store');
+// Product ordering (bestellen)
+Route::get('/products/order', [ProductController::class, 'orderForm'])->middleware('auth')->name('products.order');
+Route::post('/products/order', [ProductController::class, 'order'])->middleware('auth')->name('products.order.store');
+// Backlog / bestellingen overzicht
+Route::get('/orders/logistics', [ProductController::class, 'orderLogistics'])->middleware('auth')->name('orders.logistics');
+
 
 // Geen afdeling
 Route::view('none', 'none')->middleware('auth')->name('none');

@@ -16,10 +16,24 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $names = [
+            'Kenji SX Premium',
+            'Kenji MK-II',
+            'Kenji-X1000',
+            'KKKenji Deluxe',
+            'Xtreme Kenji Pro',
+        ];
+        $types = [
+            'beans',
+            'parts',
+            'machines',
+        ];
+
         return [
-            'product_name' => $this->faker->word(),
+            'product_name' => $this->faker->randomElement($names),
             'stock' => $this->faker->numberBetween(1, 100),
             'price' => $this->faker->randomFloat(2, 10, 1000),
+            'type' => $this->faker->randomElement($types),
         ];
     }
 }

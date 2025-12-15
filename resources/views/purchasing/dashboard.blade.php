@@ -6,9 +6,9 @@
 	<h1 class="text-xl font-semibold mb-1">Goedemorgen, Jan 👋</h1>
 	<p class="text-sm text-white/90 mb-4">Je hebt 6 producten met lage voorraad en 3 openstaande bestellingen</p>
 	<div class="flex flex-wrap gap-3">
-		<button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">+ Nieuwe Bestelling</button>
-		<button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">+ Product Toevoegen</button>
-		<button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">📦 Voorraad Tellen</button>
+		<a href="{{route('products.order')}}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">+ Nieuwe Bestelling</a>
+		<a href="{{route('product.stock')}}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded"> Voorraad bekijken</a>
+        <a href="{{route('orders.logistics')}}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded"> Bestellingen backlog</a>
 	</div>
 @endsection
 
