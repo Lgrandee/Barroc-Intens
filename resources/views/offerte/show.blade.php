@@ -95,23 +95,7 @@
             </div>
           </div>
 
-          <!-- Marge controle -->
-          <div class="flex items-start gap-3 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-            <div class="text-yellow-600 text-xl">!</div>
-            <div class="flex-1">
-              <div class="font-medium text-yellow-900">Marge controle</div>
-              <div class="text-sm text-yellow-700">Marge is lager dan gebruikelijk (18%). Manager goedkeuring nodig</div>
-            </div>
-          </div>
-
-          <!-- BKR check -->
-          <div class="flex items-start gap-3 p-3 bg-gray-50 border border-gray-200 rounded-md">
-            <div class="text-gray-600 text-xl">?</div>
-            <div class="flex-1">
-              <div class="font-medium text-gray-900">BKR check</div>
-              <div class="text-sm text-gray-600">BKR check is nog niet uitgevoerd voor deze klant</div>
-            </div>
-          </div>
+          <livewire:offerte-bkr-check :offerte="$offerte" />
         </div>
       </div>
 
@@ -191,10 +175,37 @@
         <a href="{{ route('offertes.index') }}" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium">
           ← Terug naar overzicht
         </a>
-        <button class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-medium">
-          📤 Verstuur naar klant
-        </button>
+          <form method="POST" action="{{ route('offertes.send', $offerte->id) }}">
+            @csrf
+            <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-medium">
+              📤 Verstuur naar klant
+            </button>
+          </form>
       </div>
     </div>
   </main>
+  <script>
+    function markBkrApproved() {
+      const card = document.getElementById('bkr-card');
+      const icon = document.getElementById('bkr-icon');
+      const text = document.getElementById('bkr-text');
+      const button = document.getElementById('bkr-button');
+
+      // Update styles to indicate success
+      card.classList.remove('bg-gray-50', 'border-gray-200');
+      card.classList.add('bg-green-50', 'border-green-200');
+      icon.classList.remove('text-gray-600');
+      icon.classList.add('text-green-600');
+      icon.textContent = '✓';
+      text.classList.remove('text-gray-600');
+      text.classList.add('text-green-700');
+      text.textContent = 'BKR check gemarkeerd als goedgekeurd';
+
+      // Disable button after marking
+      button.disabled = true;
+      button.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+      button.classList.add('bg-green-600', 'cursor-default');
+      button.textContent = 'Goedgekeurd';
+    }
+  </script>
 </x-layouts.app>

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('name_company_id')->constrained('customers')->onDelete('cascade');
             $table->foreignId('product_id')->nullable()->constrained('products')->onDelete('set null');
+            $table->foreignId('offerte_id')->nullable()->constrained('offertes')->onDelete('set null');
             $table->date('start_date');
             $table->date('end_date');
             $table->enum('status', ['active', 'inactive', 'pending']);

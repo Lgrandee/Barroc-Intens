@@ -12,6 +12,7 @@ class Contract extends Model
     protected $fillable = [
         'name_company_id',
         'product_id',
+        'offerte_id',
         'start_date',
         'end_date',
         'status',
@@ -25,6 +26,11 @@ class Contract extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function offerte()
+    {
+        return $this->belongsTo(Offerte::class);
     }
 
     public function products()

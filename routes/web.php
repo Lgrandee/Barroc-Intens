@@ -76,6 +76,7 @@ Route::middleware(['auth', 'departmentRole:Sales'])->group(function () {
     Route::get('/offertes/{id}/pdf', [OfferteController::class, 'downloadPdf'])->name('offertes.pdf');
 });
 
+
 // Factuur routes - alleen voor Finance en Management
 Route::middleware(['auth', 'departmentRole:Finance'])->group(function () {
     Route::get('/facturen', [FactuurController::class, 'index'])->name('facturen.index');
@@ -109,6 +110,14 @@ Route::view('none', 'none')->middleware('auth')->name('none');
 Route::view('dashboard', 'admin.dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+Route::view('admin/dashboard', 'admin.dashboard')
+    ->middleware(['auth', 'verified'])
+    ->name('admin.dashboard');
+
+Route::view('admin/sales', 'sales.dashboard')
+    ->middleware(['auth', 'verified'])
+    ->name('admin.sales.dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
