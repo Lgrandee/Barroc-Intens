@@ -1,3 +1,4 @@
+<x-layouts.app>
 <!doctype html>
 <html lang="nl">
 <head>
@@ -21,7 +22,7 @@
       <div class="grid grid-cols-5 font-semibold text-sm bg-gray-50 text-gray-600 p-4 border-b border-gray-200">
         <div>Productnaam</div>
         <div>Voorraad</div>
-        <div>Prijs</div>
+        <div>Prijs (per stuk)</div>
         <div>Type</div>
         <div>Acties</div>
       </div>
@@ -85,3 +86,4 @@
   </main>
 </body>
 </html>
+</x-layouts.app>

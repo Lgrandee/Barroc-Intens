@@ -24,7 +24,7 @@
       <div class="grid grid-cols-5 font-semibold text-sm bg-gray-50 text-gray-600 p-4 border-b border-gray-200">
         <div class="text-black">Productnaam</div>
         <div class="text-black">Voorraad</div>
-        <div class="text-black">Prijs</div>
+        <div class="text-black">Prijs (per stuk)</div>
         <div class="text-black">Type</div>
         <div class=" text-black">Aantal</div>
       </div>
