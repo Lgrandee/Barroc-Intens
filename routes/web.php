@@ -105,14 +105,16 @@ Route::middleware(['auth', 'departmentRole:Management'])->group(function () {
 });
 
 //Purchasing Department
-Route::get('/product-stock', [ProductController::class, 'showStock'])->middleware('auth')->name('product.stock');
-Route::get('/products/create', [ProductController::class, 'create'])->middleware('auth')->name('products.create');
-Route::post('/products', [ProductController::class, 'store'])->middleware('auth')->name('products.store');
-// Product ordering (bestellen)
-Route::get('/products/order', [ProductController::class, 'orderForm'])->middleware('auth')->name('products.order');
-Route::post('/products/order', [ProductController::class, 'order'])->middleware('auth')->name('products.order.store');
-// Backlog / bestellingen overzicht
-Route::get('/orders/logistics', [ProductController::class, 'orderLogistics'])->middleware('auth')->name('orders.logistics');
+Route::middleware(['auth', 'departmentRole:Purchasing'])->group(function () {
+    Route::get('/product-stock', [ProductController::class, 'showStock'])->name('product.stock');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+    // Product ordering (bestellen)
+    Route::get('/products/order', [ProductController::class, 'orderForm'])->name('products.order');
+    Route::post('/products/order', [ProductController::class, 'order'])->name('products.order.store');
+    // Backlog / bestellingen overzicht
+    Route::get('/orders/logistics', [ProductController::class, 'orderLogistics'])->name('orders.logistics');
+});
 
 
 // Geen afdeling
