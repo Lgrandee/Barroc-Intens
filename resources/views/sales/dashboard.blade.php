@@ -6,9 +6,9 @@
 	<h1 class="text-xl font-semibold mb-1">Goedemorgen, Lisa 👋</h1>
 	<p class="text-sm text-white/90 mb-4">Je hebt 3 openstaande taken en 2 nieuwe leads voor vandaag</p>
 	<div class="flex flex-wrap gap-3">
-		<button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">+ Nieuwe Offerte</button>
-		<button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">+ Contact Toevoegen</button>
-		<button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">📅 Planning</button>
+		<a href="{{ route('offertes.create') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">+ Nieuwe Offerte</a>
+		<a href="{{ route('customers.create') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">+ Contact Toevoegen</a>
+		<a href="{{ route('offertes.index') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Alle Offertes</a>
 	</div>
 @endsection
 
@@ -18,7 +18,7 @@
 			<h3 class="text-sm text-gray-500">Totaal Offertes</h3>
 			<div class="w-8 h-8 flex items-center justify-center bg-blue-100 text-blue-700 rounded">📝</div>
 		</div>
-		<p class="text-2xl font-semibold mt-3">€86.450</p>
+		<p class="text-2xl font-semibold mt-3">{{ $totalOffertes }}</p>
 		<div class="flex items-center gap-2 text-sm text-green-600 mt-2">↑ 12% <span class="text-gray-400">vs vorige maand</span></div>
 	</div>
 
@@ -27,7 +27,7 @@
 			<h3 class="text-sm text-gray-500">Conversie Ratio</h3>
 			<div class="w-8 h-8 flex items-center justify-center bg-blue-100 text-blue-700 rounded">📈</div>
 		</div>
-		<p class="text-2xl font-semibold mt-3">68%</p>
+		<p class="text-2xl font-semibold mt-3">{{ $conversionRatio }}%</p>
 		<div class="flex items-center gap-2 text-sm text-green-600 mt-2">↑ 4% <span class="text-gray-400">vs vorige maand</span></div>
 	</div>
 
@@ -36,7 +36,7 @@
 			<h3 class="text-sm text-gray-500">Nieuwe Leads</h3>
 			<div class="w-8 h-8 flex items-center justify-center bg-blue-100 text-blue-700 rounded">👥</div>
 		</div>
-		<p class="text-2xl font-semibold mt-3">24</p>
+		<p class="text-2xl font-semibold mt-3">{{ $newLeads }}</p>
 		<div class="flex items-center gap-2 text-sm text-red-600 mt-2">↓ 2% <span class="text-gray-400">vs vorige maand</span></div>
 	</div>
 
@@ -68,36 +68,23 @@
 <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
 	<div class="flex items-center justify-between p-4 border-b border-gray-100">
 		<h2 class="text-lg font-medium">Recente Deals</h2>
-		<button class="text-sm text-gray-600">Alle Deals</button>
+		<a href="{{ route('offertes.index') }}" class="text-sm text-gray-600">Alle Deals</a>
 	</div>
 	<div class="divide-y divide-gray-100">
+		@forelse($recentDeals as $deal)
 		<div class="flex items-center p-4">
 			<div class="flex-1">
-				<h4 class="font-medium">Zonnepanelen Project Almere</h4>
-				<p class="text-sm text-gray-500">Familie van der Berg - Fase: Offerte verstuurd</p>
+				<h4 class="font-medium">Offerte #{{ $deal->id }}</h4>
+				<p class="text-sm text-gray-500">{{ $deal->customer->name_company ?? 'Onbekend' }} - Status: {{ $deal->status }}</p>
 			</div>
 			<div class="text-right">
-				<div class="font-medium">€24.500</div>
+				<div class="font-medium">{{ $deal->valid_until }}</div>
 			</div>
 		</div>
-		<div class="flex items-center p-4">
-			<div class="flex-1">
-				<h4 class="font-medium">Warmtepomp Installatie</h4>
-				<p class="text-sm text-gray-500">Bakkerij Jansen - Fase: Onderhandeling</p>
-			</div>
-			<div class="text-right">
-				<div class="font-medium">€18.900</div>
-			</div>
-		</div>
-		<div class="flex items-center p-4">
-			<div class="flex-1">
-				<h4 class="font-medium">Hybride Systeem Utrecht</h4>
-				<p class="text-sm text-gray-500">Gemeente Utrecht - Fase: Contract getekend</p>
-			</div>
-			<div class="text-right">
-				<div class="font-medium">€42.000</div>
-			</div>
-		</div>
+		@empty
+		<div class="p-4 text-gray-500 text-center">Geen recente deals.</div>
+		@endforelse
+	</div>
 	</div>
 </div>
 @endsection
