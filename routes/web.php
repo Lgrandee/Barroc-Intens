@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FactuurController;
 use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\OfferteController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserManagementController;
@@ -29,6 +30,7 @@ Route::view('sales', 'sales.dashboard')->middleware('auth')->name('sales.dashboa
 Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
 Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
 Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customers.show');
 Route::get('/customers/{customer}/edit', [CustomerController::class, 'goToEdit'])->name('customers.edit');
 Route::put('/customers/{customer}', [CustomerController::class, 'edit'])->name('customers.update');
 Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
@@ -77,7 +79,6 @@ Route::put('/facturen/{id}', [FactuurController::class, 'update'])->middleware('
 Route::get('/facturen/{id}/send', [FactuurController::class, 'send'])->middleware('auth')->name('facturen.send');
 Route::post('/facturen/{id}/send', [FactuurController::class, 'sendEmail'])->middleware('auth')->name('facturen.sendEmail');
 Route::get('/facturen/{id}/pdf', [FactuurController::class, 'downloadPdf'])->middleware('auth')->name('facturen.pdf');
-
 // Management - Rollen beheer
 Route::get('/management/roles', [RoleController::class, 'index'])->middleware('auth')->name('management.roles.index');
 
@@ -88,6 +89,17 @@ Route::post('/management/users', [UserManagementController::class, 'store'])->mi
 Route::get('/management/users/{id}/edit', [UserManagementController::class, 'edit'])->middleware('auth')->name('management.users.edit');
 Route::put('/management/users/{id}', [UserManagementController::class, 'update'])->middleware('auth')->name('management.users.update');
 Route::delete('/management/users/{id}', [UserManagementController::class, 'destroy'])->middleware('auth')->name('management.users.destroy');
+
+//Purchasing Department
+Route::get('/product-stock', [ProductController::class, 'showStock'])->middleware('auth')->name('product.stock');
+Route::get('/products/create', [ProductController::class, 'create'])->middleware('auth')->name('products.create');
+Route::post('/products', [ProductController::class, 'store'])->middleware('auth')->name('products.store');
+// Product ordering (bestellen)
+Route::get('/products/order', [ProductController::class, 'orderForm'])->middleware('auth')->name('products.order');
+Route::post('/products/order', [ProductController::class, 'order'])->middleware('auth')->name('products.order.store');
+// Backlog / bestellingen overzicht
+Route::get('/orders/logistics', [ProductController::class, 'orderLogistics'])->middleware('auth')->name('orders.logistics');
+
 
 // Geen afdeling
 Route::view('none', 'none')->middleware('auth')->name('none');
