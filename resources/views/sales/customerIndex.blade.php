@@ -19,7 +19,7 @@
   <nav class="bg-white border-y border-gray-200">
     <ul class="p-4">
       <li>
-        <a href="index.html" class="text-blue-600 hover:underline">← Terug naar Index</a>
+        <a href="#" class="text-blue-600 hover:underline">← Terug naar Index</a>
       </li>
     </ul>
   </nav>
@@ -51,9 +51,9 @@
         💰 Omzet
       </button>
 
-      <button class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700 flex items-center gap-2">
+      <a href="{{ route('customers.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700 flex items-center gap-2">
         ＋ Nieuwe Klant
-      </button>
+      </a>
     </div>
 
     <!-- Customers Grid -->

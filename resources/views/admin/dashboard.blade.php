@@ -6,10 +6,8 @@
   <h1 class="text-xl font-semibold mb-1">Welkom, {{ auth()->user()->name ?? '' }}</h1>
 	<p class="text-sm text-white/90 mb-4">Je hebt 5 openstaande facturen en 3 herinneringen voor deze week</p>
 	<div class="flex flex-wrap gap-3">
-		<button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">Gebruikers Beheren</button>
-		<button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">Rollen Overzicht</button>
-		<button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">Planner Page</button>
-    <button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">Vooraad beheer</button>
+		<a href="{{route('management.users.index')}}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">Gebruikers Beheren</a>
+        <a href="{{route('customers.index')}}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">klanten Beheren</a>
 	</div>
 @endsection
 
