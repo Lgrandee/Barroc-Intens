@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Contract;
 
 class Offerte extends Model
 {
@@ -15,6 +16,11 @@ class Offerte extends Model
         'name_company_id',
         'product_id',
         'status',
+        'valid_until',
+        'delivery_time_weeks',
+        'payment_terms_days',
+        'custom_terms',
+        'sent_at',
     ];
 
     public function customer()
@@ -35,5 +41,10 @@ class Offerte extends Model
     public function factuur()
     {
         return $this->hasOne(Factuur::class);
+    }
+
+    public function contract()
+    {
+        return $this->hasOne(Contract::class);
     }
 }

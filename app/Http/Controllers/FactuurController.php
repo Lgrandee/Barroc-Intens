@@ -38,7 +38,8 @@ class FactuurController extends Controller
         $validated = $request->validate([
             'name_company_id' => ['required', 'exists:customers,id'],
             'invoice_date' => ['required', 'date'],
-            'payment_terms_days' => ['required', 'integer', 'min:0'],
+            // Optional: used only to calculate due_date, not stored directly
+            'payment_terms_days' => ['nullable', 'integer', 'min:0'],
             'reference' => ['nullable', 'string', 'max:100'],
             'payment_method' => ['required', 'in:bank_transfer,ideal,creditcard,cash'],
             'description' => ['nullable', 'string', 'max:1000'],
@@ -50,8 +51,9 @@ class FactuurController extends Controller
             'status' => ['required', 'in:concept,verzonden'],
         ]);
 
-        // Calculate due date based on payment terms
-        $dueDate = \Carbon\Carbon::parse($validated['invoice_date'])->addDays($validated['payment_terms_days']);
+        // Calculate due date based on payment terms (defaults to 30 days if not provided)
+        $paymentTermsDays = (int) ($validated['payment_terms_days'] ?? 30);
+        $dueDate = \Carbon\Carbon::parse($validated['invoice_date'])->addDays($paymentTermsDays);
 
         // Check if invoice is overdue on creation (shouldn't be, but safety check)
         $status = $validated['status'];

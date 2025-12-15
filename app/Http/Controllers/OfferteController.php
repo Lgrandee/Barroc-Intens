@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Offerte;
+use App\Models\Contract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -116,6 +117,29 @@ class OfferteController extends Controller
         return view('offerte.edit', compact('offerte'));
     }
 
+    public function sendToCustomer($id)
+    {
+        $user = Auth::user();
+        if (!$user || !in_array($user->department ?? '', ['Sales', 'Management'])) {
+            abort(403, 'Toegang geweigerd. Alleen Sales en Management hebben toegang tot offertes.');
+        }
+
+        $offerte = Offerte::with('customer')->findOrFail($id);
+        $offerte->sent_at = now();
+
+        // If still in draft, move to pending to reflect it was sent
+        if ($offerte->status === 'draft') {
+            $offerte->status = 'pending';
+        }
+
+        $offerte->save();
+
+        $customerLabel = $offerte->customer->name_company ?? $offerte->customer->email ?? 'onbekende klant';
+
+        return redirect()->route('offertes.index')
+            ->with('success', 'Offerte gemarkeerd als verstuurd naar ' . $customerLabel);
+    }
+
     public function update(Request $request, $id)
     {
         $user = Auth::user();
@@ -160,34 +184,65 @@ class OfferteController extends Controller
         return redirect()->route('offertes.show', $offerte->id)->with('success', 'Offerte bijgewerkt.');
     }
 
+
     /**
      * Create a factuur automatically from an accepted offerte
      */
     private function createFactuurFromOfferte(Offerte $offerte)
     {
+        if ($offerte->status !== 'accepted') {
+            return; // Safety: only create contract/factuur when accepted
+        }
+
+        $offerte->loadMissing(['products', 'contract']);
+
         // Check if factuur already exists for this offerte
-        if ($offerte->factuur()->exists()) {
-            return;
+        if (!$offerte->factuur()->exists()) {
+            // Create factuur with same data as offerte
+            $factuur = \App\Models\Factuur::create([
+                'name_company_id' => $offerte->name_company_id,
+                'offerte_id' => $offerte->id,
+                'invoice_date' => now(),
+                'due_date' => now()->addDays(30), // Default 30 dagen betalingstermijn
+                'reference' => 'OFF-' . date('Y', strtotime($offerte->created_at)) . '-' . str_pad($offerte->id, 3, '0', STR_PAD_LEFT),
+                'payment_method' => 'bank_transfer',
+                'description' => 'Factuur voor geaccepteerde offerte',
+                'status' => 'concept',
+            ]);
+
+            // Copy products from offerte to factuur
+            $syncData = [];
+            foreach ($offerte->products as $product) {
+                $qty = $product->pivot->quantity ?? 1;
+                $syncData[$product->id] = ['quantity' => $qty];
+            }
+            $factuur->products()->sync($syncData);
         }
 
-        // Create factuur with same data as offerte
-        $factuur = \App\Models\Factuur::create([
-            'name_company_id' => $offerte->name_company_id,
-            'offerte_id' => $offerte->id,
-            'invoice_date' => now(),
-            'due_date' => now()->addDays(30), // Default 30 dagen betalingstermijn
-            'reference' => 'OFF-' . date('Y', strtotime($offerte->created_at)) . '-' . str_pad($offerte->id, 3, '0', STR_PAD_LEFT),
-            'payment_method' => 'bank_transfer',
-            'description' => 'Factuur voor geaccepteerde offerte',
-            'status' => 'concept',
-        ]);
+        // Create contract alongside the factuur (once)
+        $primaryProduct = $offerte->products->first();
+        $contractExists = Contract::where('name_company_id', $offerte->name_company_id)
+            ->whereDate('start_date', now()->toDateString())
+            ->where('product_id', $primaryProduct?->id)
+            ->exists();
 
-        // Copy products from offerte to factuur
-        $syncData = [];
-        foreach ($offerte->products as $product) {
-            $qty = $product->pivot->quantity ?? 1;
-            $syncData[$product->id] = ['quantity' => $qty];
+        if (!$offerte->contract) {
+            $contract = Contract::create([
+                'name_company_id' => $offerte->name_company_id,
+                'product_id' => $primaryProduct?->id,
+                'offerte_id' => $offerte->id,
+                'start_date' => now()->toDateString(),
+                'end_date' => now()->addYear()->toDateString(),
+                'status' => 'active',
+            ]);
+
+            // Attach same products with quantities to the contract
+            $contractSync = [];
+            foreach ($offerte->products as $product) {
+                $qty = $product->pivot->quantity ?? 1;
+                $contractSync[$product->id] = ['quantity' => $qty];
+            }
+            $contract->products()->sync($contractSync);
         }
-        $factuur->products()->sync($syncData);
     }
 }

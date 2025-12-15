@@ -65,6 +65,7 @@ Route::post('/offertes', [OfferteController::class, 'store'])->middleware('auth'
 Route::get('/offertes/{id}', [OfferteController::class, 'show'])->middleware('auth')->name('offertes.show');
 Route::get('/offertes/{id}/edit', [OfferteController::class, 'edit'])->middleware('auth')->name('offertes.edit');
 Route::put('/offertes/{id}', [OfferteController::class, 'update'])->middleware('auth')->name('offertes.update');
+Route::post('/offertes/{id}/send-to-customer', [OfferteController::class, 'sendToCustomer'])->middleware('auth')->name('offertes.send');
 Route::get('/offertes/{id}/pdf', [OfferteController::class, 'downloadPdf'])->middleware('auth')->name('offertes.pdf');
 
 // Factuur routes - alleen voor Finance en Management
