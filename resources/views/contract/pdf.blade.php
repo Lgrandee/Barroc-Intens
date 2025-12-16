@@ -5,18 +5,18 @@
     <title>Contract PDF</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'DejaVu Sans', Arial, sans-serif; 
-            font-size: 12px; 
-            line-height: 1.7; 
+        body {
+            font-family: 'DejaVu Sans', Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.7;
             color: #1f2937;
             background: #fff;
             padding: 40px;
         }
-        
+
         /* Page break */
         .page-break { page-break-after: always; }
-        
+
         /* === COVER PAGE === */
         .cover-page {
             height: 100vh;
@@ -56,7 +56,7 @@
             font-weight: bold;
             color: #000;
         }
-        
+
         /* === HEADER === */
         .pdf-header {
             display: flex;
@@ -72,27 +72,27 @@
             text-align: right;
             font-size: 11px;
         }
-        .pdf-header-company-name { 
-            font-size: 13px; 
+        .pdf-header-company-name {
+            font-size: 13px;
             font-weight: bold;
             color: #000;
         }
-        .pdf-header-company-contact { 
-            font-size: 11px; 
+        .pdf-header-company-contact {
+            font-size: 11px;
             margin-top: 4px;
             color: #666;
         }
-        
+
         /* === TYPOGRAPHY === */
-        h1 { 
-            font-size: 28px; 
-            margin: 25px 0 15px 0; 
-            color: #000; 
+        h1 {
+            font-size: 28px;
+            margin: 25px 0 15px 0;
+            color: #000;
             font-weight: bold;
             letter-spacing: -0.3px;
         }
-        h2 { 
-            font-size: 14px; 
+        h2 {
+            font-size: 14px;
             margin: 25px 0 12px 0;
             padding: 10px 0 8px 0;
             border-bottom: 3px solid #fbbf24;
@@ -101,9 +101,9 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         p { margin-bottom: 10px; }
-        
+
         /* === SECTIONS === */
         .info-section {
             background: #f9fafb;
@@ -122,29 +122,29 @@
             display: flex;
             flex-direction: column;
         }
-        .info-label { 
-            font-weight: bold; 
+        .info-label {
+            font-weight: bold;
             color: #000;
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.3px;
             margin-bottom: 4px;
         }
-        .info-value { 
+        .info-value {
             font-size: 12px;
             color: #374151;
         }
-        
+
         /* === TABLES === */
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            margin: 20px 0; 
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
             font-size: 11px;
         }
-        th { 
-            background: #000; 
-            color: #fff; 
+        th {
+            background: #000;
+            color: #fff;
             font-weight: bold;
             padding: 12px;
             text-align: left;
@@ -153,36 +153,36 @@
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
-        td { 
-            padding: 10px 12px; 
+        td {
+            padding: 10px 12px;
             border-bottom: 1px solid #e5e7eb;
         }
         tr:nth-child(even) { background: #f9fafb; }
-        
+
         /* === LISTS === */
-        ul { 
-            margin: 12px 0 12px 24px; 
+        ul {
+            margin: 12px 0 12px 24px;
             padding: 0;
         }
-        li { 
+        li {
             margin-bottom: 6px;
             color: #374151;
         }
-        
+
         /* === BOXES === */
-        .terms-box { 
-            background: #fef3c7; 
-            padding: 15px; 
+        .terms-box {
+            background: #fef3c7;
+            padding: 15px;
             margin: 15px 0;
             border-left: 5px solid #fbbf24;
             border-radius: 2px;
             font-size: 11px;
         }
-        .terms-box p { 
+        .terms-box p {
             margin-bottom: 8px;
             color: #78350f;
         }
-        .terms-box strong { 
+        .terms-box strong {
             color: #000;
             font-weight: bold;
         }
@@ -193,11 +193,11 @@
             color: #78350f;
             margin-bottom: 5px;
         }
-        
+
         /* === FOOTER === */
-        .footer { 
-            margin-top: 40px; 
-            padding-top: 20px; 
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
             border-top: 1px solid #e5e7eb;
             font-size: 10px;
             text-align: center;
@@ -213,7 +213,7 @@
         </div>
         <div class="cover-title">SERVICE CONTRACT</div>
         <div class="cover-subtitle">{{ date('Y', strtotime($contract->start_date)) }} – {{ date('Y', strtotime($contract->end_date)) }}</div>
-        
+
         <div class="cover-info">
             <div class="cover-info-item">
                 <span class="cover-info-label">Customer:</span> {{ $contract->customer->name_company ?? 'Unknown' }}
