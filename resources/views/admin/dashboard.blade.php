@@ -1,10 +1,10 @@
-@php($title = 'Finance Dashboard')
+@php($title = 'Admin Dashboard')
 @extends('layouts.layout_dashboard')
 
 @section('welcome_classes', 'bg-gradient-to-br from-blue-700 to-blue-500')
 @section('welcome')
   <h1 class="text-xl font-semibold mb-1">Welkom, {{ auth()->user()->name ?? '' }}</h1>
-	<p class="text-sm text-white/90 mb-4">Je hebt 5 openstaande facturen en 3 herinneringen voor deze week</p>
+	<p class="text-sm text-white/90 mb-4">Je hebt {{ $openInvoicesCount }} openstaande facturen en {{ $reminders->count() }} herinneringen voor deze week</p>
 	<div class="flex flex-wrap gap-3">
 		<a href="{{ route('management.users.index') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Gebruikers Beheren</a>
 		<a href="{{ route('management.roles.index') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Rollen Overzicht</a>
@@ -20,7 +20,7 @@
 			<h3 class="text-sm text-gray-500">Omzet Deze Maand</h3>
 			<div class="w-8 h-8 flex items-center justify-center bg-yellow-100 text-yellow-700 rounded">💰</div>
 		</div>
-		<p class="text-2xl font-semibold mt-3">€184.320</p>
+		<p class="text-2xl font-semibold mt-3">€{{ number_format($monthlyRevenue, 0, ',', '.') }}</p>
 	</div>
 
 	<div class="flex-1 min-w-0 bg-white border border-gray-200 rounded-lg p-4">
@@ -37,7 +37,6 @@
 			<div class="w-8 h-8 flex items-center justify-center bg-yellow-100 text-yellow-700 rounded">⏱️</div>
 		</div>
 		<p class="text-2xl font-semibold mt-3">{{ $openTicketsCount }}</p>
-		<div class="flex items-center gap-2 text-sm text-red-600 mt-2">↑ 2 dagen <span class="text-gray-400">vs vorige maand</span></div>
 	</div>
 
 	<div class="flex-1 min-w-0 bg-white border border-gray-200 rounded-lg p-4">
@@ -46,7 +45,6 @@
 			<div class="w-8 h-8 flex items-center justify-center bg-red-100 text-red-700 rounded">⚠️</div>
 		</div>
 		<p class="text-2xl font-semibold mt-3">{{ $lateInvoicesCount }}</p>
-		<div class="flex items-center gap-2 text-sm text-red-600 mt-2">↑ 1.2% <span class="text-gray-400">vs vorige maand</span></div>
 	</div>
 @endsection
 
@@ -100,27 +98,18 @@
 		<button class="text-sm text-gray-600">Instellingen</button>
 	</div>
 	<div class="p-3 space-y-2">
+		@forelse($reminders as $reminder)
 		<div class="flex items-start gap-3 p-3 border border-gray-200 rounded-lg">
 			<div class="w-8 h-8 bg-yellow-100 rounded flex items-center justify-center text-yellow-700">💰</div>
 			<div class="flex-1">
-				<p class="text-sm font-medium">Herinnering versturen naar Familie van der Berg</p>
-				<p class="text-xs text-gray-500">Vervaldatum: Morgen</p>
+				<p class="text-sm font-medium">Herinnering versturen naar {{ $reminder->customer->name_company ?? 'Onbekend' }}</p>
+				<p class="text-xs text-gray-500">Vervaldatum: {{ \Carbon\Carbon::parse($reminder->due_date)->diffForHumans() }}</p>
 			</div>
 		</div>
-		<div class="flex items-start gap-3 p-3 border border-gray-200 rounded-lg">
-			<div class="w-8 h-8 bg-yellow-100 rounded flex items-center justify-center text-yellow-700">📞</div>
-			<div class="flex-1">
-				<p class="text-sm font-medium">Telefonisch contact opnemen met Gemeente Utrecht</p>
-				<p class="text-xs text-gray-500">Vervaldatum: Deze week</p>
-			</div>
-		</div>
-		<div class="flex items-start gap-3 p-3 border border-gray-200 rounded-lg">
-			<div class="w-8 h-8 bg-yellow-100 rounded flex items-center justify-center text-yellow-700">📊</div>
-			<div class="flex-1">
-				<p class="text-sm font-medium">Maandrapport voorbereiden</p>
-				<p class="text-xs text-gray-500">Vervaldatum: Einde van de week</p>
-			</div>
-		</div>
+		@empty
+		<div class="p-4 text-gray-500 text-center">Geen betalingsherinneringen.</div>
+		@endforelse
 	</div>
 </div>
 @endsection
+
