@@ -9,6 +9,13 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\DashboardController;
+use App\Livewire\Dashboards\AdminDashboard;
+use App\Livewire\Dashboards\SalesDashboard;
+use App\Livewire\Dashboards\FinanceDashboard;
+use App\Livewire\Dashboards\PurchasingDashboard;
+use App\Livewire\Dashboards\TechnicianDashboard;
+use App\Livewire\Dashboards\PlannerDashboard;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
@@ -17,17 +24,17 @@ Route::get('/', function () {
     return redirect()->route('login');
 })->name('home');
 
-// Afdelingsroutes (beschermd met auth en departmentRole)
-Route::view('sales', 'sales.dashboard')->middleware(['auth', 'departmentRole:Sales'])->name('sales');
-Route::view('purchasing', 'purchasing.dashboard')->middleware(['auth', 'departmentRole:Purchasing'])->name('purchasing');
-Route::view('finance', 'finance.dashboard')->middleware(['auth', 'departmentRole:Finance'])->name('finance');
-Route::view('technician', 'technician.dashboard')->middleware(['auth', 'departmentRole:Technician'])->name('technician');
-Route::view('planner', 'planner.dashboard')->middleware(['auth', 'departmentRole:Planner'])->name('planner');
-Route::view('admin', 'admin.dashboard')->middleware(['auth', 'departmentRole:Management'])->name('management');
+// Afdelingsroutes (beschermd met auth en departmentRole) - Using Livewire components for real-time updates
+Route::get('sales', SalesDashboard::class)->middleware(['auth', 'departmentRole:Sales'])->name('sales');
+Route::get('purchasing', PurchasingDashboard::class)->middleware(['auth', 'departmentRole:Purchasing'])->name('purchasing');
+Route::get('finance', FinanceDashboard::class)->middleware(['auth', 'departmentRole:Finance'])->name('finance');
+Route::get('technician', TechnicianDashboard::class)->middleware(['auth', 'departmentRole:Technician'])->name('technician');
+Route::get('planner', PlannerDashboard::class)->middleware(['auth', 'departmentRole:Planner'])->name('planner');
+Route::get('admin', AdminDashboard::class)->middleware(['auth', 'departmentRole:Management'])->name('management');
 
 // Sales Department
 Route::middleware(['auth', 'departmentRole:Sales'])->group(function () {
-    Route::view('sales', 'sales.dashboard')->name('sales.dashboard');
+    Route::get('sales', SalesDashboard::class)->name('sales.dashboard');
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
     Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
@@ -37,10 +44,11 @@ Route::middleware(['auth', 'departmentRole:Sales'])->group(function () {
 });
 
 
-Route::view('purchasing', 'purchasing.dashboard')->middleware(['auth', 'departmentRole:Purchasing'])->name('purchasing.dashboard');
-Route::view('finance', 'finance.dashboard')->middleware(['auth', 'departmentRole:Finance'])->name('finance.dashboard');
-Route::view('technician', 'technician.dashboard')->middleware(['auth', 'departmentRole:Technician'])->name('technician.dashboard');
-Route::view('planner', 'planner.dashboard')->middleware(['auth', 'departmentRole:Planner'])->name('planner.dashboard');
+
+Route::get('purchasing', PurchasingDashboard::class)->middleware(['auth', 'departmentRole:Purchasing'])->name('purchasing.dashboard');
+Route::get('finance', FinanceDashboard::class)->middleware(['auth', 'departmentRole:Finance'])->name('finance.dashboard');
+Route::get('technician', TechnicianDashboard::class)->middleware(['auth', 'departmentRole:Technician'])->name('technician.dashboard');
+Route::get('planner', PlannerDashboard::class)->middleware(['auth', 'departmentRole:Planner'])->name('planner.dashboard');
 
 // Technician - Onderhoud routes
 Route::middleware(['auth', 'departmentRole:Technician'])->group(function () {
@@ -122,15 +130,15 @@ Route::view('none', 'none')->middleware('auth')->name('none');
 
 
 
-Route::view('dashboard', 'admin.dashboard')
+Route::get('dashboard', AdminDashboard::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::view('admin/dashboard', 'admin.dashboard')
+Route::get('admin/dashboard', AdminDashboard::class)
     ->middleware(['auth', 'verified'])
     ->name('admin.dashboard');
 
-Route::view('admin/sales', 'sales.dashboard')
+Route::get('admin/sales', SalesDashboard::class)
     ->middleware(['auth', 'verified'])
     ->name('admin.sales.dashboard');
 

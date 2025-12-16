@@ -12,7 +12,7 @@ class FactuurTable extends Component
 
     public $search = '';
     public $status = 'all';
-    public $period = 'this_month';
+    public $period = 'all';
 
     public function updatingSearch()
     {

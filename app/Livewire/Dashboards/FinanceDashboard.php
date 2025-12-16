@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Livewire\Dashboards;
+
+use Livewire\Component;
+use App\Models\Factuur;
+
+class FinanceDashboard extends Component
+{
+    /**
+     * PERFORMANCE OPTIMIZATION:
+     * wire:poll.2s refreshes every 2 seconds (currently set for testing).
+     * For production with many concurrent users, consider:
+     * - Increase to 5s or 10s: wire:poll.5s or wire:poll.10s
+     * - Use wire:poll.keep-alive to only poll when tab is visible
+     * - Use Laravel Echo + Pusher for event-driven real-time updates instead of polling
+     */
+    
+    public function render()
+    {
+        // Monthly revenue from paid invoices
+        $monthlyRevenue = Factuur::where('status', 'betaald')
+            ->whereMonth('paid_at', now()->month)
+            ->whereYear('paid_at', now()->year)
+            ->with('products')
+            ->get()
+            ->sum('total_amount');
+
+        // Outstanding invoice amount
+        $outstandingAmount = Factuur::whereNotIn('status', ['betaald', 'paid'])
+            ->with('products')
+            ->get()
+            ->sum('total_amount');
+
+        // Overdue percentage
+        $totalInvoices = Factuur::count();
+        $overdueCount = Factuur::where('due_date', '<', now())
+            ->whereNotIn('status', ['betaald', 'paid'])
+            ->count();
+        $overduePercentage = $totalInvoices > 0 ? round(($overdueCount / $totalInvoices) * 100, 1) : 0;
+
+        // Recent invoices
+        $recentInvoices = Factuur::with('customer')->latest()->take(5)->get();
+
+        // Payment reminders
+        $reminders = Factuur::with('customer')
+            ->where('due_date', '<=', now()->addDays(7))
+            ->whereNotIn('status', ['betaald', 'paid'])
+            ->orderBy('due_date')
+            ->take(5)
+            ->get();
+
+        return view('livewire.dashboards.finance-dashboard', compact(
+            'monthlyRevenue',
+            'outstandingAmount',
+            'overduePercentage',
+            'recentInvoices',
+            'reminders'
+        ));
+    }
+}
