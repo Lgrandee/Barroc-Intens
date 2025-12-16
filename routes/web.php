@@ -83,6 +83,7 @@ Route::middleware(['auth', 'departmentRole:Sales'])->group(function () {
     Route::get('/offertes/{id}', [OfferteController::class, 'show'])->name('offertes.show');
     Route::get('/offertes/{id}/edit', [OfferteController::class, 'edit'])->name('offertes.edit');
     Route::put('/offertes/{id}', [OfferteController::class, 'update'])->name('offertes.update');
+    Route::post('/offertes/{id}/send', [OfferteController::class, 'sendToCustomer'])->name('offertes.send');
     Route::get('/offertes/{id}/pdf', [OfferteController::class, 'downloadPdf'])->name('offertes.pdf');
 });
 
@@ -102,7 +103,7 @@ Route::middleware(['auth', 'departmentRole:Finance'])->group(function () {
 // Management - Rollen beheer
 Route::middleware(['auth', 'departmentRole:Management'])->group(function () {
     Route::get('/management/roles', [RoleController::class, 'index'])->name('management.roles.index');
-    
+
     // Management - Gebruikersbeheer
     Route::get('/management/users', [UserManagementController::class, 'index'])->name('management.users.index');
     Route::get('/management/users/create', [UserManagementController::class, 'create'])->name('management.users.create');
