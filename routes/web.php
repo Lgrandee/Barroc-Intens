@@ -41,6 +41,7 @@ Route::middleware(['auth', 'departmentRole:Sales'])->group(function () {
     Route::get('/customers/{customer}/edit', [CustomerController::class, 'goToEdit'])->name('customers.edit');
     Route::put('/customers/{customer}', [CustomerController::class, 'edit'])->name('customers.update');
     Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+    Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customers.show');
 });
 
 
