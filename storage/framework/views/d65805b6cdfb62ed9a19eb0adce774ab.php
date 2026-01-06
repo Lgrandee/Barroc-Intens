@@ -1,4 +1,13 @@
-<x-layouts.app title="Productvoorraad">
+<?php if (isset($component)) { $__componentOriginal5863877a5171c196453bfa0bd807e410 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal5863877a5171c196453bfa0bd807e410 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.layouts.app','data' => ['title' => 'Productvoorraad']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('layouts.app'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['title' => 'Productvoorraad']); ?>
     <div class="max-w-6xl mx-auto p-6 bg-gray-100 min-h-screen">
         <div class="flex items-center justify-between mb-6">
             <div>
@@ -6,7 +15,7 @@
                 <p class="text-gray-500 text-sm">Overzicht van alle producten en voorraadniveaus</p>
             </div>
             <div>
-                <a href="{{ route('products.order') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition shadow-sm">
+                <a href="<?php echo e(route('products.order')); ?>" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition shadow-sm">
                     + Nieuwe Bestelling
                 </a>
             </div>
@@ -18,30 +27,30 @@
                 <div>Voorraad</div>
                 <div>Prijs (per stuk)</div>
                 <div>Type</div>
-                @if(optional(auth()->user())->department === 'Management')
+                <?php if(optional(auth()->user())->department === 'Management'): ?>
                 <div>Acties</div>
-                @else
+                <?php else: ?>
                 <div></div>
-                @endif
+                <?php endif; ?>
             </div>
 
             <div class="divide-y divide-gray-100">
-                @foreach ($products as $product)
+                <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="grid grid-cols-5 p-4 items-center text-sm hover:bg-gray-50 transition">
-                    <div class="font-medium text-gray-900">{{ $product->product_name }}</div>
+                    <div class="font-medium text-gray-900"><?php echo e($product->product_name); ?></div>
                     <div>
-                         @if($product->stock < 5)
-                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">{{ $product->stock }} (Kritiek)</span>
-                        @elseif($product->stock < 15)
-                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">{{ $product->stock }} (Laag)</span>
-                        @else
-                            <span class="text-gray-700">{{ $product->stock }}</span>
-                        @endif
+                         <?php if($product->stock < 5): ?>
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800"><?php echo e($product->stock); ?> (Kritiek)</span>
+                        <?php elseif($product->stock < 15): ?>
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800"><?php echo e($product->stock); ?> (Laag)</span>
+                        <?php else: ?>
+                            <span class="text-gray-700"><?php echo e($product->stock); ?></span>
+                        <?php endif; ?>
                     </div>
-                    <div class="text-gray-600">€ {{ number_format($product->price, 2, ',', '.') }}</div>
-                    <div class="capitalize text-gray-600">{{ $product->type }}</div>
+                    <div class="text-gray-600">€ <?php echo e(number_format($product->price, 2, ',', '.')); ?></div>
+                    <div class="capitalize text-gray-600"><?php echo e($product->type); ?></div>
 
-                    @if(optional(auth()->user())->department === 'Management')
+                    <?php if(optional(auth()->user())->department === 'Management'): ?>
                     <div class="flex gap-2">
                         <a href="#" class="p-1 text-gray-400 hover:text-blue-600 transition" title="Bewerken">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -54,21 +63,21 @@
                             </svg>
                         </a>
                     </div>
-                    @else
+                    <?php else: ?>
                     <div></div>
-                    @endif
+                    <?php endif; ?>
                 </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
-            @if ($products->isEmpty())
+            <?php if($products->isEmpty()): ?>
             <div class="p-8 text-center text-gray-500">
                 <p>Geen producten gevonden.</p>
             </div>
-            @endif
+            <?php endif; ?>
         </div>
 
-        @if(optional(auth()->user())->department === 'Management')
+        <?php if(optional(auth()->user())->department === 'Management'): ?>
         <div class="bg-white p-6 rounded-lg shadow-sm mt-6 border border-gray-200">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-2">
@@ -83,11 +92,21 @@
                         </span>
                     </div>
                 </div>
-                <a href="{{ route('products.create') }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
+                <a href="<?php echo e(route('products.create')); ?>" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                     Product Toevoegen
                 </a>
             </div>
         </div>
-        @endif
+        <?php endif; ?>
     </div>
-</x-layouts.app>
+ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal5863877a5171c196453bfa0bd807e410)): ?>
+<?php $attributes = $__attributesOriginal5863877a5171c196453bfa0bd807e410; ?>
+<?php unset($__attributesOriginal5863877a5171c196453bfa0bd807e410); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal5863877a5171c196453bfa0bd807e410)): ?>
+<?php $component = $__componentOriginal5863877a5171c196453bfa0bd807e410; ?>
+<?php unset($__componentOriginal5863877a5171c196453bfa0bd807e410); ?>
+<?php endif; ?>
+<?php /**PATH C:\Users\PowerHouse V2\Herd\Barocc-intens\resources\views/purchasing/productStock.blade.php ENDPATH**/ ?>

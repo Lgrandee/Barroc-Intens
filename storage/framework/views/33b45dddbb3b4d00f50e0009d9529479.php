@@ -2,6 +2,13 @@
 <html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>" class="dark">
     <head>
         <?php echo $__env->make('partials.head', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+        <style>
+            /* Highlight voor actieve menu items */
+            [data-flux-navlist-item][aria-current="page"],
+            .dark [data-flux-navlist-item][aria-current="page"] {
+                @apply bg-gray-400 dark:bg-zinc-600 font-semibold;
+            }
+        </style>
     </head>
     <body class="min-h-screen bg-[#FAF9F6] dark:bg-zinc-800">
         <?php if (isset($component)) { $__componentOriginal17e56bc23bb0192e474b351c4358d446 = $component; } ?>
@@ -1055,5 +1062,4 @@
 <?php echo app('flux')->scripts(); ?>
 
     </body>
-</html>
-<?php /**PATH C:\Users\PowerHouse V2\Herd\Barocc-intens\resources\views/components/layouts/app/sidebar.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\Users\PowerHouse V2\Herd\Barocc-intens\resources\views/components/layouts/app/sidebar.blade.php ENDPATH**/ ?>
