@@ -1,17 +1,16 @@
-
 <div wire:poll.2s>
 <?php ($title = 'Admin Dashboard'); ?>
 
-<main class="p-6 bg-[#FAF9F6]">
+<div class="p-6 bg-[#FAF9F6]">
     <div class="bg-gradient-to-br from-blue-700 to-blue-500 text-white rounded-xl p-6 mb-6 shadow-lg">
         <h1 class="text-xl font-semibold mb-1">Welkom, <?php echo e(auth()->user()->name ?? ''); ?></h1>
         <p class="text-sm text-white/90 mb-4">Je hebt <?php echo e($openInvoicesCount); ?> openstaande facturen en <?php echo e($reminders->count()); ?> herinneringen voor deze week</p>
         <div class="flex flex-wrap gap-3">
             <a href="<?php echo e(route('management.users.index')); ?>" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Gebruikers Beheren</a>
             <a href="<?php echo e(route('management.roles.index')); ?>" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Rollen Overzicht</a>
-            <a href="<?php echo e(route('planner.dashboard')); ?>" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Planner Page</a>
-            <a href="<?php echo e(route('product.stock')); ?>" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Vooraad beheer</a>
-            <a href="<?php echo e(route('customers.index')); ?>" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">klanten Beheren</a>
+            <a href="<?php echo e(route('planner.dashboard')); ?>" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Planner Dashboard</a>
+            <a href="<?php echo e(route('product.stock')); ?>" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Voorraadbeheer</a>
+            <a href="<?php echo e(route('customers.index')); ?>" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">Klanten Beheren</a>
         </div>
     </div>
 
@@ -26,7 +25,7 @@
 
         <div class="flex-1 min-w-0 bg-white border border-gray-200 rounded-lg p-4">
             <div class="flex justify-between items-start">
-                <h3 class="text-sm text-gray-500">Actieve Colegas</h3>
+                <h3 class="text-sm text-gray-500">Actieve Collega's</h3>
                 <div class="w-8 h-8 flex items-center justify-center bg-yellow-100 text-yellow-700 rounded">📝</div>
             </div>
             <p class="text-2xl font-semibold mt-3"><?php echo e($activeUsers); ?></p>
@@ -42,7 +41,7 @@
 
         <div class="flex-1 min-w-0 bg-white border border-gray-200 rounded-lg p-4">
             <div class="flex justify-between items-start">
-                <h3 class="text-sm text-gray-500">Facturen Te Laat</h3>
+                <h3 class="text-sm text-gray-500">Achterstallige Facturen</h3>
                 <div class="w-8 h-8 flex items-center justify-center bg-red-100 text-red-700 rounded">⚠️</div>
             </div>
             <p class="text-2xl font-semibold mt-3"><?php echo e($lateInvoicesCount); ?></p>
@@ -113,6 +112,6 @@
             </div>
         </div>
     </div>
-</main>
+</div>
 </div>
 <?php /**PATH C:\Users\PowerHouse V2\Herd\Barocc-intens\resources\views/livewire/dashboards/admin-dashboard.blade.php ENDPATH**/ ?>

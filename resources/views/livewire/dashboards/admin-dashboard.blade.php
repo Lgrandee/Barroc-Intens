@@ -1,24 +1,16 @@
-{{--
-    PERFORMANCE OPTIMIZATION:
-    wire:poll.2s refreshes every 2 seconds (currently set for testing).
-    For production with many concurrent users, consider:
-    - Increase interval: wire:poll.5s or wire:poll.10s
-    - Use wire:poll.keep-alive to only poll when browser tab is visible
-    - Use Laravel Echo + Pusher for event-driven real-time updates (recommended for production)
---}}
 <div wire:poll.2s>
 @php($title = 'Admin Dashboard')
 
-<main class="p-6 bg-[#FAF9F6]">
+<div class="p-6 bg-[#FAF9F6]">
     <div class="bg-gradient-to-br from-blue-700 to-blue-500 text-white rounded-xl p-6 mb-6 shadow-lg">
         <h1 class="text-xl font-semibold mb-1">Welkom, {{ auth()->user()->name ?? '' }}</h1>
         <p class="text-sm text-white/90 mb-4">Je hebt {{ $openInvoicesCount }} openstaande facturen en {{ $reminders->count() }} herinneringen voor deze week</p>
         <div class="flex flex-wrap gap-3">
             <a href="{{ route('management.users.index') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Gebruikers Beheren</a>
             <a href="{{ route('management.roles.index') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Rollen Overzicht</a>
-            <a href="{{ route('planner.dashboard') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Planner Page</a>
-            <a href="{{ route('product.stock') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Vooraad beheer</a>
-            <a href="{{ route('customers.index') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">klanten Beheren</a>
+            <a href="{{ route('planner.dashboard') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Planner Dashboard</a>
+            <a href="{{ route('product.stock') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Voorraadbeheer</a>
+            <a href="{{ route('customers.index') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">Klanten Beheren</a>
         </div>
     </div>
 
@@ -33,7 +25,7 @@
 
         <div class="flex-1 min-w-0 bg-white border border-gray-200 rounded-lg p-4">
             <div class="flex justify-between items-start">
-                <h3 class="text-sm text-gray-500">Actieve Colegas</h3>
+                <h3 class="text-sm text-gray-500">Actieve Collega's</h3>
                 <div class="w-8 h-8 flex items-center justify-center bg-yellow-100 text-yellow-700 rounded">📝</div>
             </div>
             <p class="text-2xl font-semibold mt-3">{{ $activeUsers }}</p>
@@ -49,7 +41,7 @@
 
         <div class="flex-1 min-w-0 bg-white border border-gray-200 rounded-lg p-4">
             <div class="flex justify-between items-start">
-                <h3 class="text-sm text-gray-500">Facturen Te Laat</h3>
+                <h3 class="text-sm text-gray-500">Achterstallige Facturen</h3>
                 <div class="w-8 h-8 flex items-center justify-center bg-red-100 text-red-700 rounded">⚠️</div>
             </div>
             <p class="text-2xl font-semibold mt-3">{{ $lateInvoicesCount }}</p>
@@ -120,5 +112,5 @@
             </div>
         </div>
     </div>
-</main>
+</div>
 </div>
