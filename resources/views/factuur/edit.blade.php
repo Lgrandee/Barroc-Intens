@@ -6,12 +6,25 @@
     <title>Factuur bewerken</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    <style>
+        /* Light-only page background override */
+        html:not(.dark) body { background-color: #f3f4f6 !important; }
+    </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 dark:bg-zinc-900">
     <div class="min-h-screen">
         <!-- Header -->
-        <div class="bg-white border-b border-gray-200 px-6 py-4">
-            <h1 class="text-2xl font-semibold text-gray-900">Factuur bewerken</h1>
+        <div class="bg-white dark:bg-zinc-800 border-b border-gray-200 dark:border-zinc-700 px-6 py-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-semibold text-black dark:text-white">Factuur bewerken</h1>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">Wijzig de factuurgegevens</p>
+                </div>
+                <a href="{{ route('facturen.index') }}" class="inline-flex items-center gap-2 rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-yellow-300 transition-colors">
+                    <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4A1 1 0 0110.707 6.293L8.414 8.586H16a1 1 0 110 2H8.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"/></svg>
+                    Terug naar overzicht
+                </a>
+            </div>
         </div>
 
         <div class="max-w-7xl mx-auto px-6 py-8">
@@ -29,16 +42,16 @@
                     <!-- Left Column - Main Form -->
                     <div class="lg:col-span-2 space-y-6">
                         <!-- Bewerk factuur section -->
-                        <div class="bg-white rounded-lg shadow p-6">
+                        <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-xl p-6 border border-gray-200 dark:border-zinc-700">
                             <div class="flex items-center justify-between mb-4">
-                                <h2 class="text-lg font-semibold text-gray-900">Bewerk factuur</h2>
+                                <h2 class="text-lg font-semibold text-black dark:text-white">Bewerk factuur</h2>
                                 <div class="flex gap-2">
                                     <button type="button" onclick="window.location.href='{{ route('facturen.index') }}'"
-                                        class="px-4 py-2 text-sm border border-gray-300 rounded text-gray-700 hover:bg-gray-50">
+                                        class="px-4 py-2 text-sm border border-gray-300 dark:border-zinc-600 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-700">
                                         Annuleren
                                     </button>
                                     <button type="submit"
-                                        class="px-4 py-2 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700">
+                                        class="px-4 py-2 text-sm bg-yellow-400 text-black rounded hover:bg-yellow-300 font-semibold shadow">
                                         Opslaan wijzigingen
                                     </button>
                                 </div>
@@ -46,22 +59,22 @@
 
                             <div class="space-y-4">
                                 <!-- Factuur Info -->
-                                <div class="bg-gray-50 border border-gray-200 rounded p-4">
+                                <div class="bg-gray-50 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-600 rounded p-4">
                                     <div class="grid grid-cols-4 gap-4 text-sm">
                                         <div>
-                                            <div class="text-xs text-gray-500">Klant</div>
-                                            <span class="text-gray-900 font-medium">{{ $factuur->customer->name_company ?? 'Onbekend' }}</span>
+                                            <div class="text-xs text-gray-500 dark:text-gray-400">Klant</div>
+                                            <span class="text-black dark:text-white font-medium">{{ $factuur->customer->name_company ?? 'Onbekend' }}</span>
                                         </div>
                                         <div>
-                                            <div class="text-xs text-gray-500">Factuurnr</div>
-                                            <span class="text-gray-900 font-medium">{{ $factuur->factuurnr }}</span>
+                                            <div class="text-xs text-gray-500 dark:text-gray-400">Factuurnr</div>
+                                            <span class="text-black dark:text-white font-medium">{{ $factuur->factuurnr }}</span>
                                         </div>
                                         <div>
-                                            <div class="text-xs text-gray-500">Factuurdatum</div>
-                                            <span class="text-gray-600">{{ \Carbon\Carbon::parse($factuur->invoice_date)->format('d-m-Y') }}</span>
+                                            <div class="text-xs text-gray-500 dark:text-gray-400">Factuurdatum</div>
+                                            <span class="text-gray-600 dark:text-gray-300">{{ \Carbon\Carbon::parse($factuur->invoice_date)->format('d-m-Y') }}</span>
                                         </div>
                                         <div>
-                                            <div class="text-xs text-gray-500">Status</div>
+                                            <div class="text-xs text-gray-500 dark:text-gray-400">Status</div>
                                             @switch($factuur->status)
                                                 @case('betaald')
                                                     <span class="text-green-700 font-medium">✅ Betaald</span>
@@ -96,15 +109,15 @@
                                     </div>
                                 </div>                                <!-- Customer Search (read-only display) -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Klant</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Klant</label>
                                     <input type="text" value="{{ $factuur->customer->name_company ?? '' }}" disabled
-                                        class="w-full px-3 py-2 border border-gray-300 rounded bg-gray-50 text-gray-700">
+                                        class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded bg-gray-50 dark:bg-zinc-700 text-gray-700 dark:text-gray-300">
                                     <input type="hidden" name="name_company_id" value="{{ $factuur->name_company_id }}">
                                 </div>
 
                                 <!-- Regels Header -->
                                 <div class="pt-4">
-                                    <div class="grid grid-cols-12 gap-2 text-xs font-medium text-gray-500 uppercase mb-2">
+                                    <div class="grid grid-cols-12 gap-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase mb-2">
                                         <div class="col-span-5">Omschrijving</div>
                                         <div class="col-span-2">Aantal</div>
                                         <div class="col-span-2">Prijs</div>
@@ -122,23 +135,23 @@
                                 ])
 
                                 <!-- Add Rule Button -->
-                                <button type="button" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">
+                                <button type="button" class="text-sm text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-medium">
                                     + Regel toevoegen
                                 </button>
 
                                 <!-- Description -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Omschrijving (zichtbaar op factuur)</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Omschrijving (zichtbaar op factuur)</label>
                                     <textarea name="description" rows="2"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 focus:border-transparent">{{ $factuur->description ?? '' }}</textarea>
+                                        class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded bg-white dark:bg-zinc-700 text-black dark:text-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent">{{ $factuur->description ?? '' }}</textarea>
                                 </div>
 
                                 <!-- Internal Notes -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Interne notities (niet zichtbaar voor klant)</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Interne notities (niet zichtbaar voor klant)</label>
                                     <textarea name="notes" rows="2"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-yellow-50">{{ $factuur->notes ?? '' }}</textarea>
-                                    <p class="text-xs text-gray-500 mt-1">💡 Deze notities zijn alleen voor intern gebruik</p>
+                                        class="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-600 rounded bg-yellow-50 dark:bg-yellow-900/20 text-black dark:text-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent">{{ $factuur->notes ?? '' }}</textarea>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">💡 Deze notities zijn alleen voor intern gebruik</p>
                                 </div>
                             </div>
                         </div>
@@ -147,43 +160,43 @@
                     <!-- Right Column - Summary & History -->
                     <div class="lg:col-span-1 space-y-6">
                         <!-- Total Summary -->
-                        <div class="bg-white rounded-lg shadow p-6">
-                            <h2 class="text-lg font-semibold text-gray-900 mb-4">Totaal</h2>
+                        <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-xl p-6 border border-gray-200 dark:border-zinc-700">
+                            <h2 class="text-lg font-semibold text-black dark:text-white mb-4">Totaal</h2>
 
                             <div class="space-y-3">
                                 <div class="flex justify-between text-sm">
-                                    <span class="text-gray-600">Subtotaal</span>
-                                    <span class="font-medium" id="subtotal">€{{ number_format($factuur->products->sum(function($p) { return $p->price * $p->pivot->quantity; }), 2, ',', '.') }}</span>
+                                    <span class="text-gray-600 dark:text-gray-300">Subtotaal</span>
+                                    <span class="font-medium text-black dark:text-white" id="subtotal">€{{ number_format($factuur->products->sum(function($p) { return $p->price * $p->pivot->quantity; }), 2, ',', '.') }}</span>
                                 </div>
 
                                 <div class="flex justify-between text-sm">
-                                    <span class="text-gray-600">BTW (21%)</span>
-                                    <span class="font-medium" id="btw">€{{ number_format($factuur->products->sum(function($p) { return $p->price * $p->pivot->quantity; }) * 0.21, 2, ',', '.') }}</span>
+                                    <span class="text-gray-600 dark:text-gray-300">BTW (21%)</span>
+                                    <span class="font-medium text-black dark:text-white" id="btw">€{{ number_format($factuur->products->sum(function($p) { return $p->price * $p->pivot->quantity; }) * 0.21, 2, ',', '.') }}</span>
                                 </div>
 
-                                <div class="border-t pt-3 flex justify-between">
-                                    <span class="font-semibold text-gray-900">Totaal</span>
-                                    <span class="font-semibold text-gray-900 text-lg" id="total">€{{ number_format($factuur->total_amount * 1.21, 2, ',', '.') }}</span>
+                                <div class="border-t border-gray-200 dark:border-zinc-600 pt-3 flex justify-between">
+                                    <span class="font-semibold text-black dark:text-white">Totaal</span>
+                                    <span class="font-semibold text-black dark:text-white text-lg" id="total">€{{ number_format($factuur->total_amount * 1.21, 2, ',', '.') }}</span>
                                 </div>
                             </div>
 
-                            <a href="{{ route('facturen.send', $factuur->id) }}" class="block text-center text-indigo-600 hover:text-indigo-700 mt-6 text-sm font-medium">
+                            <a href="{{ route('facturen.send', $factuur->id) }}" class="block text-center bg-yellow-400 hover:bg-yellow-300 text-black font-semibold py-2 px-4 rounded shadow mt-6 text-sm transition-colors">
                                 Verstuur factuur →
                             </a>
                         </div>
 
                         <!-- Change History -->
-                        <div class="bg-white rounded-lg shadow p-6">
-                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Wijzigingsgeschiedenis</h3>
+                        <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-xl p-6 border border-gray-200 dark:border-zinc-700">
+                            <h3 class="text-lg font-semibold text-black dark:text-white mb-4">Wijzigingsgeschiedenis</h3>
 
                             <div class="space-y-3 text-sm">
                                 <div>
-                                    <div class="text-gray-600">{{ \Carbon\Carbon::parse($factuur->updated_at)->format('d M Y') }}</div>
-                                    <div class="text-gray-900">— Aangepast door {{ Auth::user()->name ?? 'Gebruiker' }}</div>
+                                    <div class="text-gray-600 dark:text-gray-300">{{ \Carbon\Carbon::parse($factuur->updated_at)->format('d M Y') }}</div>
+                                    <div class="text-black dark:text-white">— Aangepast door {{ Auth::user()->name ?? 'Gebruiker' }}</div>
                                 </div>
                                 <div>
-                                    <div class="text-gray-600">{{ \Carbon\Carbon::parse($factuur->created_at)->format('d M Y') }}</div>
-                                    <div class="text-gray-900">— Concept aangemaakt</div>
+                                    <div class="text-gray-600 dark:text-gray-300">{{ \Carbon\Carbon::parse($factuur->created_at)->format('d M Y') }}</div>
+                                    <div class="text-black dark:text-white">— Concept aangemaakt</div>
                                 </div>
                             </div>
                         </div>

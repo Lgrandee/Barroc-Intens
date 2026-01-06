@@ -37,8 +37,8 @@
           <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
           <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start</th>
           <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End</th>
-          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acties</th>
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
@@ -74,8 +74,17 @@
                 {{ $statusLabels[$contract->status] ?? ucfirst($contract->status) }}
               </span>
             </td>
-            <td class="px-4 py-4 text-right">
-              <a href="{{ route('contracts.show', $contract->id) }}" class="text-indigo-600 hover:text-indigo-900 text-sm font-medium">View</a>
+            <td class="px-4 py-4 text-left">
+              <div class="flex items-center gap-4 text-xl">
+                <!-- Bekijken -->
+                <a href="{{ route('contracts.show', $contract->id) }}" title="Bekijken" class="hover:opacity-80">👁️</a>
+                <!-- Bewerken (nog niet beschikbaar) -->
+                <span title="Bewerken (niet beschikbaar)" class="opacity-40 cursor-not-allowed">✏️</span>
+                <!-- Verwijderen (nog niet beschikbaar) -->
+                <span title="Verwijderen (niet beschikbaar)" class="opacity-40 cursor-not-allowed">🗑️</span>
+                <!-- Download PDF -->
+                <a href="{{ route('contracts.pdf', $contract->id) }}" title="Download PDF" class="hover:opacity-80">⬇️</a>
+              </div>
             </td>
           </tr>
         @empty

@@ -2,6 +2,13 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
     <head>
         @include('partials.head')
+        <style>
+            /* Highlight voor actieve menu items */
+            [data-flux-navlist-item][aria-current="page"],
+            .dark [data-flux-navlist-item][aria-current="page"] {
+                @apply bg-gray-400 dark:bg-zinc-600 font-semibold;
+            }
+        </style>
     </head>
     <body class="min-h-screen bg-[#FAF9F6] dark:bg-zinc-800">
         <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">

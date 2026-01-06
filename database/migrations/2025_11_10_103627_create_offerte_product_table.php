@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('offerte_id')->constrained('offertes')->onDelete('cascade');
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+            $table->integer('quantity')->default(1);
             $table->enum('status', ['ordered', 'delivered'])->default('ordered');
             $table->timestamps();
         });

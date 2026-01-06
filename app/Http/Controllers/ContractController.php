@@ -41,7 +41,10 @@ class ContractController extends Controller
         // Sorteer op startdatum
         $contracts = $query->orderBy('start_date', 'desc')->paginate(10);
 
-        return view('contract.index', compact('contracts'));
+        // Total active contracts (for quick stats)
+        $totalActive = Contract::where('status', 'active')->count();
+
+        return view('contract.index', compact('contracts', 'totalActive'));
     }
 
     public function show($id)
