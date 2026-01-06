@@ -3,10 +3,190 @@
     <head>
         <?php echo $__env->make('partials.head', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
         <style>
-            /* Highlight voor actieve menu items */
+            /* Sleek Sidebar Navigation Styles - Override Flux UI */
+            
+            /* Target all possible nav item selectors */
+            [data-flux-navlist-item],
+            [data-flux-navlist] a,
+            [data-flux-navlist] button,
+            .flux-navlist-item,
+            nav a[href],
+            [data-flux-sidebar] a[href] {
+                position: relative !important;
+                border-radius: 0.5rem !important;
+                transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                margin: 2px 0 !important;
+            }
+            
+            /* Hover effect - subtle lift and glow */
+            [data-flux-navlist-item]:hover,
+            [data-flux-navlist] a:hover,
+            [data-flux-sidebar] a[href]:hover {
+                background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(245, 158, 11, 0.08) 100%) !important;
+                transform: translateX(4px) !important;
+                box-shadow: 0 2px 8px rgba(251, 191, 36, 0.2) !important;
+            }
+            
+            /* Active/clicked state - prominent pressed effect */
+            [data-flux-navlist-item]:active,
+            [data-flux-navlist] a:active,
+            [data-flux-sidebar] a[href]:active {
+                transform: translateX(2px) scale(0.95) !important;
+                background: linear-gradient(135deg, rgba(251, 191, 36, 0.35) 0%, rgba(245, 158, 11, 0.25) 100%) !important;
+                box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+                transition: all 0.05s ease !important;
+            }
+            
+            /* Current page - very strong highlight */
             [data-flux-navlist-item][aria-current="page"],
-            .dark [data-flux-navlist-item][aria-current="page"] {
-                @apply bg-gray-400 dark:bg-zinc-600 font-semibold;
+            [data-flux-navlist] a[aria-current="page"],
+            [data-flux-sidebar] a[aria-current="page"],
+            [data-flux-navlist-item][data-current="true"],
+            [data-flux-navlist] a[data-current="true"],
+            a.is-active,
+            a.active {
+                background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%) !important;
+                color: #1f2937 !important;
+                font-weight: 700 !important;
+                box-shadow: 0 4px 16px rgba(251, 191, 36, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+                transform: translateX(0) !important;
+                border-left: 4px solid #B45309 !important;
+            }
+            
+            [data-flux-navlist-item][aria-current="page"]:hover,
+            [data-flux-navlist] a[aria-current="page"]:hover,
+            [data-flux-sidebar] a[aria-current="page"]:hover {
+                transform: translateX(0) !important;
+                box-shadow: 0 6px 20px rgba(251, 191, 36, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+                background: linear-gradient(135deg, #FCD34D 0%, #FBBF24 100%) !important;
+            }
+            
+            [data-flux-navlist-item][aria-current="page"]:active,
+            [data-flux-navlist] a[aria-current="page"]:active {
+                transform: scale(0.98) !important;
+                box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4), inset 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+            }
+            
+            /* Icon styling for current page */
+            [data-flux-navlist-item][aria-current="page"] svg,
+            [data-flux-navlist] a[aria-current="page"] svg,
+            [data-flux-sidebar] a[aria-current="page"] svg {
+                color: #1f2937 !important;
+            }
+            
+            /* Group headings styling */
+            [data-flux-navlist-group] > button,
+            [data-flux-navlist-group] > [data-flux-heading],
+            [data-flux-navlist] [data-flux-heading] {
+                font-size: 0.7rem !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.05em !important;
+                opacity: 0.7 !important;
+                font-weight: 600 !important;
+            }
+            
+            /* Subtle left border indicator for items */
+            [data-flux-navlist-item]::before,
+            [data-flux-navlist] a::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 3px;
+                height: 0;
+                background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%);
+                border-radius: 0 2px 2px 0;
+                transition: height 0.2s ease;
+            }
+            
+            [data-flux-navlist-item]:hover::before,
+            [data-flux-navlist] a:hover::before {
+                height: 60%;
+            }
+            
+            [data-flux-navlist-item][aria-current="page"]::before,
+            [data-flux-navlist] a[aria-current="page"]::before {
+                height: 80%;
+                width: 4px;
+            }
+            
+            /* Smooth icon transitions */
+            [data-flux-navlist-item] svg,
+            [data-flux-navlist] a svg,
+            [data-flux-sidebar] a svg {
+                transition: transform 0.2s ease, color 0.2s ease !important;
+            }
+            
+            [data-flux-navlist-item]:hover svg,
+            [data-flux-navlist] a:hover svg,
+            [data-flux-sidebar] a:hover svg {
+                transform: scale(1.1) !important;
+                color: #FBBF24 !important;
+            }
+            
+            /* Focus states for accessibility */
+            [data-flux-navlist-item]:focus-visible,
+            [data-flux-navlist] a:focus-visible {
+                outline: 2px solid #FBBF24 !important;
+                outline-offset: 2px !important;
+            }
+            
+            /* Sleek Custom Scrollbar */
+            ::-webkit-scrollbar {
+                width: 6px;
+                height: 6px;
+            }
+            
+            ::-webkit-scrollbar-track {
+                background: transparent;
+                border-radius: 3px;
+            }
+            
+            ::-webkit-scrollbar-thumb {
+                background: linear-gradient(180deg, #D4D4D8 0%, #A1A1AA 100%);
+                border-radius: 3px;
+                transition: background 0.2s ease;
+            }
+            
+            ::-webkit-scrollbar-thumb:hover {
+                background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%);
+            }
+            
+            .dark ::-webkit-scrollbar-thumb {
+                background: linear-gradient(180deg, #52525B 0%, #3F3F46 100%);
+            }
+            
+            .dark ::-webkit-scrollbar-thumb:hover {
+                background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%);
+            }
+            
+            /* Firefox scrollbar */
+            * {
+                scrollbar-width: thin;
+                scrollbar-color: #A1A1AA transparent;
+            }
+            
+            .dark * {
+                scrollbar-color: #52525B transparent;
+            }
+            
+            /* Sidebar specific scrollbar */
+            [data-flux-sidebar] {
+                scrollbar-width: thin;
+            }
+            
+            [data-flux-sidebar]::-webkit-scrollbar {
+                width: 4px;
+            }
+            
+            [data-flux-sidebar]::-webkit-scrollbar-thumb {
+                background: rgba(161, 161, 170, 0.5);
+                border-radius: 2px;
+            }
+            
+            [data-flux-sidebar]::-webkit-scrollbar-thumb:hover {
+                background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%);
             }
         </style>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
