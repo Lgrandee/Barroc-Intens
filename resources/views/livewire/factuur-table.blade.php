@@ -11,10 +11,10 @@
       </select>
 
       <select wire:model.live="period" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <option value="all">Alle periodes</option>
         <option value="this_month">Deze maand</option>
         <option value="last_30_days">Laatste 30 dagen</option>
         <option value="last_90_days">Laatste 90 dagen</option>
-        <option value="all">Alle periodes</option>
       </select>
 
       <input

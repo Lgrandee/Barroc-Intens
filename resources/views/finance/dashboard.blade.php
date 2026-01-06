@@ -1,10 +1,9 @@
-@php($title = 'Finance Dashboard')
 @extends('layouts.layout_dashboard')
 
 @section('welcome_classes', 'bg-gradient-to-br from-yellow-500 to-orange-600')
 @section('welcome')
      <h1 class="text-xl font-semibold mb-1">Welcome, {{ auth()->user()->name ?? '' }}</h1>
-	<p class="text-sm text-white/90 mb-4">You have 5 outstanding invoices and 3 reminders for this week</p>
+	<p class="text-sm text-white/90 mb-4">You have {{ $recentInvoices->where('status', '!=', 'betaald')->count() }} outstanding invoices and {{ $reminders->count() }} reminders for this week</p>
 	<div class="flex flex-wrap gap-3">
 		<button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">New Invoice</button>
 		<button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">Invoice Overview</button>
@@ -17,16 +16,14 @@
 		<div class="flex justify-between items-start">
 			<h3 class="text-sm text-gray-500">Revenue This Month</h3>
 		</div>
-		<p class="text-2xl font-semibold mt-3">€184.320</p>
-		<div class="flex items-center gap-2 text-sm text-green-600 mt-2">↑ 8% <span class="text-gray-400">vs last month</span></div>
+		<p class="text-2xl font-semibold mt-3">€{{ number_format($monthlyRevenue, 0, ',', '.') }}</p>
 	</div>
 
 	<div class="flex-1 min-w-0 bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
 		<div class="flex justify-between items-start">
 			<h3 class="text-sm text-gray-500">Outstanding Invoices</h3>
 		</div>
-		<p class="text-2xl font-semibold mt-3">€42.850</p>
-		<div class="flex items-center gap-2 text-sm text-red-600 mt-2">↓ 12% <span class="text-gray-400">vs last month</span></div>
+		<p class="text-2xl font-semibold mt-3">€{{ number_format($outstandingAmount, 0, ',', '.') }}</p>
 	</div>
 
 
@@ -34,8 +31,7 @@
 		<div class="flex justify-between items-start">
 			<h3 class="text-sm text-gray-500">Overdue Invoices</h3>
 		</div>
-		<p class="text-2xl font-semibold mt-3">8.4%</p>
-		<div class="flex items-center gap-2 text-sm text-red-600 mt-2">↑ 1.2% <span class="text-gray-400">vs last month</span></div>
+		<p class="text-2xl font-semibold mt-3">{{ $overduePercentage }}%</p>
 	</div>
 @endsection
 
@@ -56,7 +52,6 @@
 	</div>
 </div>
 @endsection
-
 @section('modules')
 <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
 	<div class="flex items-center justify-between p-4 border-b border-gray-100">
@@ -64,58 +59,40 @@
 		<button class="text-sm text-gray-600">View All</button>
 	</div>
 	<div class="divide-y divide-gray-100">
+		@forelse($recentInvoices as $invoice)
 		<div class="flex items-center p-4">
 			<div class="flex-1 mr-4">
-				<h4 class="font-medium">Invoice #2024-1187</h4>
-				<p class="text-sm text-gray-500">van der Berg Family - Due date: Nov 22, 2024</p>
+				<h4 class="font-medium">Invoice #{{ $invoice->id }}</h4>
+				<p class="text-sm text-gray-500">{{ $invoice->customer->name_company ?? 'Unknown' }} - Due date: {{ \Carbon\Carbon::parse($invoice->due_date)->format('M d, Y') }}</p>
 			</div>
 			<div class="text-right">
-				<div class="font-medium">€12.450</div>
-				<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-yellow-50 text-yellow-800">Processing</span>
+				<div class="font-medium">€{{ number_format($invoice->total_amount, 0, ',', '.') }}</div>
+				@if(in_array($invoice->status, ['betaald', 'paid']))
+					<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-50 text-green-700">{{ ucfirst($invoice->status) }}</span>
+				@elseif($invoice->status === 'verlopen')
+					<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-red-50 text-red-700">{{ ucfirst($invoice->status) }}</span>
+				@else
+					<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-yellow-50 text-yellow-800">{{ ucfirst($invoice->status) }}</span>
+				@endif
 			</div>
 		</div>
-		<div class="flex items-center p-4">
-			<div class="flex-1 mr-4">
-				<h4 class="font-medium">Invoice #2024-1186</h4>
-				<p class="text-sm text-gray-500">Jansen Bakery - Due date: Nov 18, 2024</p>
-			</div>
-			<div class="text-right">
-				<div class="font-medium">€8.950</div>
-				<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-50 text-green-700">Paid</span>
-			</div>
-		</div>
-		<div class="flex items-center p-4">
-			<div class="flex-1 mr-4">
-				<h4 class="font-medium">Invoice #2024-1185</h4>
-				<p class="text-sm text-gray-500">Utrecht Municipality - Due date: Nov 10, 2024</p>
-			</div>
-			<div class="text-right">
-				<div class="font-medium">€42.000</div>
-				<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-red-50 text-red-700">Overdue</span>
-			</div>
-		</div>
+		@empty
+		<div class="p-4 text-gray-500 text-center">No recent invoices.</div>
+		@endforelse
 	</div>
 </div>
+@endsection
+@section('reminders_section')
+@forelse($reminders as $reminder)
+<div class="flex items-start gap-3 p-4 border border-gray-200 rounded-lg shadow-sm mb-3">
+	<div class="flex-1">
+		<p class="text-sm font-medium mb-1">Send reminder to {{ $reminder->customer->name_company ?? 'Unknown' }}</p>
+		<p class="text-xs text-gray-500">Due date: {{ \Carbon\Carbon::parse($reminder->due_date)->diffForHumans() }}</p>
+	</div>
+</div>
+@empty
+<div class="p-4 text-gray-500 text-center">No payment reminders.</div>
+@endforelse
 @endsection
 
-@section('reminders_section')
-<div class="flex items-start gap-3 p-4 border border-gray-200 rounded-lg shadow-sm mb-3">
-	<div class="flex-1">
-		<p class="text-sm font-medium mb-1">Send reminder to van der Berg Family</p>
-		<p class="text-xs text-gray-500">Due date: Tomorrow</p>
-	</div>
-</div>
-<div class="flex items-start gap-3 p-4 border border-gray-200 rounded-lg shadow-sm mb-3">
-	<div class="flex-1">
-		<p class="text-sm font-medium mb-1">Phone call with Utrecht Municipality</p>
-		<p class="text-xs text-gray-500">Due date: This week</p>
-	</div>
-</div>
-<div class="flex items-start gap-3 p-4 border border-gray-200 rounded-lg shadow-sm">
-	<div class="flex-1">
-		<p class="text-sm font-medium mb-1">Prepare monthly report</p>
-		<p class="text-xs text-gray-500">Due date: End of week</p>
-	</div>
-</div>
-@endsection
 

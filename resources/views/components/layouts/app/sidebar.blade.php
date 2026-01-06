@@ -18,64 +18,54 @@
                 <x-app-logo />
             </a>
 
-            @if(auth()->user()->department === 'Management')
             <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Platform')" class="grid">
+                @if(auth()->user()->department === 'Management')
+                <flux:navlist.group :heading="__('Platform')" expandable>
                     <flux:navlist.item icon="pencil" :href="route('management')" :current="request()->routeIs('management') || request()->routeIs('management.*')" wire:navigate>{{ __('Admin dashboard') }}</flux:navlist.item>
                     <flux:navlist.item icon="user-group" :href="route('management.roles.index')" :current="request()->routeIs('management.roles.*')" wire:navigate>{{ __('Roles') }}</flux:navlist.item>
                     <flux:navlist.item icon="users" :href="route('management.users.index')" :current="request()->routeIs('management.users.*')" wire:navigate>{{ __('Users') }}</flux:navlist.item>
                 </flux:navlist.group>
-            </flux:navlist>
-            @endif
+                @endif
 
-            @if(auth()->user()->department === 'Sales' || auth()->user()->department === 'Management')
-            <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Sales')">
+                @if(auth()->user()->department === 'Sales' || auth()->user()->department === 'Management')
+                <flux:navlist.group :heading="__('Sales')" expandable>
                     <flux:navlist.item icon="banknotes" :href="route('sales.dashboard')" :current="request()->routeIs('sales.dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                     <flux:navlist.item icon="document-text" :href="route('offertes.index')" :current="request()->routeIs('offertes.*')" wire:navigate>{{ __('Offertes') }}</flux:navlist.item>
-                    <flux:navlist.item icon="user" :href="route('customers.index')" :current="request()->routeIs('customers.*')" wire:navigate>{{ __('Customers') }}</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('customers.index')" :current="request()->routeIs('customers.*')" wire:navigate>{{ __('Customers') }}</flux:navlist.item>
                 </flux:navlist.group>
-            </flux:navlist>
-            @endif
+                @endif
 
-            @if(auth()->user()->department === 'Purchasing' || auth()->user()->department === 'Management')
-            <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Purchasing')">
+                @if(auth()->user()->department === 'Purchasing' || auth()->user()->department === 'Management')
+                <flux:navlist.group :heading="__('Purchasing')" expandable>
                     <flux:navlist.item icon="plus" :href="route('purchasing.dashboard')" :current="request()->routeIs('purchasing.dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                     <flux:navlist.item icon="cube" :href="route('product.stock')" :current="request()->routeIs('product.stock')" wire:navigate>{{ __('Stock') }}</flux:navlist.item>
                     <flux:navlist.item icon="shopping-cart" :href="route('products.order')" :current="request()->routeIs('products.order')" wire:navigate>{{ __('Order') }}</flux:navlist.item>
                     <flux:navlist.item icon="truck" :href="route('orders.logistics')" :current="request()->routeIs('orders.logistics')" wire:navigate>{{ __('Logistics') }}</flux:navlist.item>
                 </flux:navlist.group>
-            </flux:navlist>
-            @endif
+                @endif
 
-            @if(auth()->user()->department === 'Finance' || auth()->user()->department === 'Management')
-            <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Finance')">
+                @if(auth()->user()->department === 'Finance' || auth()->user()->department === 'Management')
+                <flux:navlist.group :heading="__('Finance')" expandable>
                     <flux:navlist.item icon="wallet" :href="route('finance.dashboard')" :current="request()->routeIs('finance.dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                     <flux:navlist.item icon="document-text" :href="route('contracts.index')" :current="request()->routeIs('contracts.*')" wire:navigate>{{ __('Contracts') }}</flux:navlist.item>
                     <flux:navlist.item icon="receipt-percent" :href="route('facturen.index')" :current="request()->routeIs('facturen.*')" wire:navigate>{{ __('Invoices') }}</flux:navlist.item>
                 </flux:navlist.group>
-            </flux:navlist>
-            @endif
+                @endif
 
-            @if(auth()->user()->department === 'Technician' || auth()->user()->department === 'Management')
-            <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Technician')">
+                @if(auth()->user()->department === 'Technician' || auth()->user()->department === 'Management')
+                <flux:navlist.group :heading="__('Technician')" expandable>
                     <flux:navlist.item icon="wrench" :href="route('technician.dashboard')" :current="request()->routeIs('technician.dashboard') || request()->routeIs('technician.*')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                     <flux:navlist.item icon="calendar-days" :href="route('technician.planning')" :current="request()->routeIs('technician.planning')" wire:navigate>{{ __('Planning') }}</flux:navlist.item>
                 </flux:navlist.group>
-            </flux:navlist>
-            @endif
+                @endif
 
-            @if(auth()->user()->department === 'Planner' || auth()->user()->department === 'Management')
-            <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Planner')">
+                @if(auth()->user()->department === 'Planner' || auth()->user()->department === 'Management')
+                <flux:navlist.group :heading="__('Planner')" expandable>
                     <flux:navlist.item icon="calendar" :href="route('planner.dashboard')" :current="request()->routeIs('planner.dashboard') || request()->routeIs('planner.*')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                     <flux:navlist.item icon="ticket" :href="route('planner.tickets.index')" :current="request()->routeIs('planner.tickets.*')" wire:navigate>{{ __('Tickets') }}</flux:navlist.item>
                 </flux:navlist.group>
+                @endif
             </flux:navlist>
-            @endif
 
             <flux:spacer />
 

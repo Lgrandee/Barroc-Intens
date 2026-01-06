@@ -9,6 +9,13 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\DashboardController;
+use App\Livewire\Dashboards\AdminDashboard;
+use App\Livewire\Dashboards\SalesDashboard;
+use App\Livewire\Dashboards\FinanceDashboard;
+use App\Livewire\Dashboards\PurchasingDashboard;
+use App\Livewire\Dashboards\TechnicianDashboard;
+use App\Livewire\Dashboards\PlannerDashboard;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
@@ -17,29 +24,32 @@ Route::get('/', function () {
     return redirect()->route('login');
 })->name('home');
 
-// Afdelingsroutes (beschermd met auth)
-Route::view('sales', 'sales.dashboard')->middleware('auth')->name('sales');
-Route::view('purchasing', 'purchasing.dashboard')->middleware('auth')->name('purchasing');
-Route::view('finance', 'finance.dashboard')->middleware('auth')->name('finance');
-Route::view('technician', 'technician.dashboard')->middleware('auth')->name('technician');
-Route::view('planner', 'planner.dashboard')->middleware('auth')->name('planner');
-Route::view('admin', 'admin.dashboard')->middleware('auth')->name('management');
+// Afdelingsroutes (beschermd met auth en departmentRole) - Using Livewire components for real-time updates
+Route::get('sales', SalesDashboard::class)->middleware(['auth', 'departmentRole:Sales'])->name('sales');
+Route::get('purchasing', PurchasingDashboard::class)->middleware(['auth', 'departmentRole:Purchasing'])->name('purchasing');
+Route::get('finance', FinanceDashboard::class)->middleware(['auth', 'departmentRole:Finance'])->name('finance');
+Route::get('technician', TechnicianDashboard::class)->middleware(['auth', 'departmentRole:Technician'])->name('technician');
+Route::get('planner', PlannerDashboard::class)->middleware(['auth', 'departmentRole:Planner'])->name('planner');
+Route::get('admin', AdminDashboard::class)->middleware(['auth', 'departmentRole:Management'])->name('management');
 
 // Sales Department
-Route::view('sales', 'sales.dashboard')->middleware('auth')->name('sales.dashboard');
-Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
-Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
-Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customers.show');
-Route::get('/customers/{customer}/edit', [CustomerController::class, 'goToEdit'])->name('customers.edit');
-Route::put('/customers/{customer}', [CustomerController::class, 'edit'])->name('customers.update');
-Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+Route::middleware(['auth', 'departmentRole:Sales'])->group(function () {
+    Route::get('sales', SalesDashboard::class)->name('sales.dashboard');
+    Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+    Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
+    Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+    Route::get('/customers/{customer}/edit', [CustomerController::class, 'goToEdit'])->name('customers.edit');
+    Route::put('/customers/{customer}', [CustomerController::class, 'edit'])->name('customers.update');
+    Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+    Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customers.show');
+});
 
 
-Route::view('purchasing', 'purchasing.dashboard')->middleware('auth')->name('purchasing.dashboard');
-Route::view('finance', 'finance.dashboard')->middleware('auth')->name('finance.dashboard');
-Route::view('technician', 'technician.dashboard')->middleware('auth')->name('technician.dashboard');
-Route::view('planner', 'planner.dashboard')->middleware('auth')->name('planner.dashboard');
+
+Route::get('purchasing', PurchasingDashboard::class)->middleware(['auth', 'departmentRole:Purchasing'])->name('purchasing.dashboard');
+Route::get('finance', FinanceDashboard::class)->middleware(['auth', 'departmentRole:Finance'])->name('finance.dashboard');
+Route::get('technician', TechnicianDashboard::class)->middleware(['auth', 'departmentRole:Technician'])->name('technician.dashboard');
+Route::get('planner', PlannerDashboard::class)->middleware(['auth', 'departmentRole:Planner'])->name('planner.dashboard');
 
 // Technician - Onderhoud routes
 Route::get('/technician/planning', [MaintenanceController::class, 'planning'])->middleware('auth')->name('technician.planning');
@@ -61,14 +71,17 @@ Route::get('/contracts/{id}', [ContractController::class, 'show'])->middleware('
 Route::get('/contracts/{id}/pdf', [ContractController::class, 'downloadPdf'])->middleware('auth')->name('contracts.pdf');
 
 // Offerte routes - alleen voor Sales en Management
-Route::get('/offertes', [OfferteController::class, 'index'])->middleware('auth')->name('offertes.index');
-Route::get('/offertes/create', [OfferteController::class, 'create'])->middleware('auth')->name('offertes.create');
-Route::post('/offertes', [OfferteController::class, 'store'])->middleware('auth')->name('offertes.store');
-Route::get('/offertes/{id}', [OfferteController::class, 'show'])->middleware('auth')->name('offertes.show');
-Route::get('/offertes/{id}/edit', [OfferteController::class, 'edit'])->middleware('auth')->name('offertes.edit');
-Route::put('/offertes/{id}', [OfferteController::class, 'update'])->middleware('auth')->name('offertes.update');
-Route::post('/offertes/{id}/send-to-customer', [OfferteController::class, 'sendToCustomer'])->middleware('auth')->name('offertes.send');
-Route::get('/offertes/{id}/pdf', [OfferteController::class, 'downloadPdf'])->middleware('auth')->name('offertes.pdf');
+Route::middleware(['auth', 'departmentRole:Sales'])->group(function () {
+    Route::get('/offertes', [OfferteController::class, 'index'])->name('offertes.index');
+    Route::get('/offertes/create', [OfferteController::class, 'create'])->name('offertes.create');
+    Route::post('/offertes', [OfferteController::class, 'store'])->name('offertes.store');
+    Route::get('/offertes/{id}', [OfferteController::class, 'show'])->name('offertes.show');
+    Route::get('/offertes/{id}/edit', [OfferteController::class, 'edit'])->name('offertes.edit');
+    Route::put('/offertes/{id}', [OfferteController::class, 'update'])->name('offertes.update');
+    Route::post('/offertes/{id}/send', [OfferteController::class, 'sendToCustomer'])->name('offertes.send');
+    Route::get('/offertes/{id}/pdf', [OfferteController::class, 'downloadPdf'])->name('offertes.pdf');
+});
+
 
 // Factuur routes - alleen voor Finance en Management
 Route::get('/facturen', [FactuurController::class, 'index'])->middleware('auth')->name('facturen.index');
@@ -80,15 +93,17 @@ Route::get('/facturen/{id}/send', [FactuurController::class, 'send'])->middlewar
 Route::post('/facturen/{id}/send', [FactuurController::class, 'sendEmail'])->middleware('auth')->name('facturen.sendEmail');
 Route::get('/facturen/{id}/pdf', [FactuurController::class, 'downloadPdf'])->middleware('auth')->name('facturen.pdf');
 // Management - Rollen beheer
-Route::get('/management/roles', [RoleController::class, 'index'])->middleware('auth')->name('management.roles.index');
+Route::middleware(['auth', 'departmentRole:Management'])->group(function () {
+    Route::get('/management/roles', [RoleController::class, 'index'])->name('management.roles.index');
 
-// Management - Gebruikersbeheer
-Route::get('/management/users', [UserManagementController::class, 'index'])->middleware('auth')->name('management.users.index');
-Route::get('/management/users/create', [UserManagementController::class, 'create'])->middleware('auth')->name('management.users.create');
-Route::post('/management/users', [UserManagementController::class, 'store'])->middleware('auth')->name('management.users.store');
-Route::get('/management/users/{id}/edit', [UserManagementController::class, 'edit'])->middleware('auth')->name('management.users.edit');
-Route::put('/management/users/{id}', [UserManagementController::class, 'update'])->middleware('auth')->name('management.users.update');
-Route::delete('/management/users/{id}', [UserManagementController::class, 'destroy'])->middleware('auth')->name('management.users.destroy');
+    // Management - Gebruikersbeheer
+    Route::get('/management/users', [UserManagementController::class, 'index'])->name('management.users.index');
+    Route::get('/management/users/create', [UserManagementController::class, 'create'])->name('management.users.create');
+    Route::post('/management/users', [UserManagementController::class, 'store'])->name('management.users.store');
+    Route::get('/management/users/{id}/edit', [UserManagementController::class, 'edit'])->name('management.users.edit');
+    Route::put('/management/users/{id}', [UserManagementController::class, 'update'])->name('management.users.update');
+    Route::delete('/management/users/{id}', [UserManagementController::class, 'destroy'])->name('management.users.destroy');
+});
 
 //Purchasing Department
 Route::get('/product-stock', [ProductController::class, 'showStock'])->middleware('auth')->name('product.stock');
@@ -106,15 +121,15 @@ Route::view('none', 'none')->middleware('auth')->name('none');
 
 
 
-Route::view('dashboard', 'admin.dashboard')
+Route::get('dashboard', AdminDashboard::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::view('admin/dashboard', 'admin.dashboard')
+Route::get('admin/dashboard', AdminDashboard::class)
     ->middleware(['auth', 'verified'])
     ->name('admin.dashboard');
 
-Route::view('admin/sales', 'sales.dashboard')
+Route::get('admin/sales', SalesDashboard::class)
     ->middleware(['auth', 'verified'])
     ->name('admin.sales.dashboard');
 

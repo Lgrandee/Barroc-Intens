@@ -9,20 +9,43 @@
         <h1 class="text-3xl font-semibold text-black dark:text-white">Contract Overview</h1>
         <p class="text-sm text-gray-600 dark:text-gray-300">View active, expired and upcoming expiring contracts</p>
       </div>
-      <a href="{{ route('contracts.create') }}" class="inline-flex items-center gap-2 rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-yellow-300 transition-colors">
-        <span class="inline-block h-2 w-2 rounded-full bg-black"></span>
-        New contract
-      </a>
     </header>
+
+    <!-- Statistics Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg p-4 shadow">
+        <div class="text-sm text-gray-600 dark:text-gray-300 mb-1">Active Contracts</div>
+        <div class="text-2xl font-semibold text-black dark:text-white">{{ $totalActive ?? 0 }}</div>
+        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">Currently active</div>
+      </div>
+
+      <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg p-4 shadow">
+        <div class="text-sm text-gray-600 dark:text-gray-300 mb-1">Total Contracts</div>
+        <div class="text-2xl font-semibold text-black dark:text-white">{{ \App\Models\Contract::count() }}</div>
+        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">All contracts</div>
+      </div>
+
+      <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg p-4 shadow">
+        <div class="text-sm text-gray-600 dark:text-gray-300 mb-1">Expiring Soon</div>
+        <div class="text-2xl font-semibold text-orange-600">0</div>
+        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">Next 30 days</div>
+      </div>
+
+      <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg p-4 shadow">
+        <div class="text-sm text-gray-600 dark:text-gray-300 mb-1">Expired</div>
+        <div class="text-2xl font-semibold text-red-600">0</div>
+        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">Inactive</div>
+      </div>
+    </div>
 
     <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden">
       <!-- Header with New contract button -->
       <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900">
         <h2 class="text-lg font-semibold text-black dark:text-white">Contracts</h2>
-        <div class="inline-flex items-center gap-2 rounded-full bg-green-400 text-black py-1 pr-3 text-xs font-semibold">
-          <span class="inline-block h-2 w-2 rounded-full bg-green-400"></span>
-          Active: {{ $totalActive ?? 0 }}
-        </div>
+        <a href="{{ route('contracts.create') }}" class="inline-flex items-center gap-2 rounded-md bg-yellow-400 px-3 py-1.5 text-sm font-semibold text-black shadow hover:bg-yellow-300 transition-colors">
+          <span class="inline-block h-2 w-2 rounded-full bg-black"></span>
+          New contract
+        </a>
       </div>
 
       <div class="p-4">

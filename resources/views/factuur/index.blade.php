@@ -1,9 +1,14 @@
 <x-layouts.app :title="'Factuur Overzicht'">
-  <main class="p-6">
-    <header class="mb-6">
-      <a href="{{ route('finance.dashboard') }}" class="text-indigo-600 hover:text-indigo-700 text-sm font-medium mb-2 inline-block">← Terug naar Index</a>
-      <h1 class="text-2xl font-semibold">Factuur Overzicht</h1>
-      <p class="text-sm text-gray-500">Beheer en monitor alle facturen</p>
+  <style>
+    /* Light-only page background override */
+    html:not(.dark) body { background-color: #f3f4f6 !important; }
+  </style>
+  <main class="p-6 min-h-screen">
+    <header class="mb-6 flex items-start justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-semibold text-black dark:text-white">Factuur Overzicht</h1>
+        <p class="text-sm text-gray-600 dark:text-gray-300">Beheer en monitor alle facturen</p>
+      </div>
     </header>
 
     @if (session('success'))
@@ -31,48 +36,51 @@
           : 0;
       @endphp
 
-      <div class="bg-white border border-gray-200 rounded-lg p-4">
-        <div class="text-sm text-gray-500 mb-1">Totaal Facturen</div>
-        <div class="text-2xl font-semibold text-gray-900">€{{ number_format($totalAmount, 0, ',', '.') }}</div>
-        <div class="text-xs text-gray-500 mt-1">{{ \App\Models\Factuur::count() }} facturen deze maand</div>
+      <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg p-4 shadow">
+        <div class="text-sm text-gray-600 dark:text-gray-300 mb-1">Totaal Facturen</div>
+        <div class="text-2xl font-semibold text-black dark:text-white">€{{ number_format($totalAmount, 0, ',', '.') }}</div>
+        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ \App\Models\Factuur::count() }} facturen deze maand</div>
       </div>
 
-      <div class="bg-white border border-gray-200 rounded-lg p-4">
-        <div class="text-sm text-gray-500 mb-1">Openstaand</div>
-        <div class="text-2xl font-semibold text-gray-900">€{{ number_format($openstaand, 0, ',', '.') }}</div>
-        <div class="text-xs text-gray-500 mt-1">{{ \App\Models\Factuur::whereIn('status', ['verzonden', 'concept'])->count() }} facturen te betalen</div>
+      <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg p-4 shadow">
+        <div class="text-sm text-gray-600 dark:text-gray-300 mb-1">Openstaand</div>
+        <div class="text-2xl font-semibold text-black dark:text-white">€{{ number_format($openstaand, 0, ',', '.') }}</div>
+        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ \App\Models\Factuur::whereIn('status', ['verzonden', 'concept'])->count() }} facturen te betalen</div>
       </div>
 
-      <div class="bg-white border border-gray-200 rounded-lg p-4">
-        <div class="text-sm text-gray-500 mb-1">Verlopen</div>
+      <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg p-4 shadow">
+        <div class="text-sm text-gray-600 dark:text-gray-300 mb-1">Verlopen</div>
         <div class="text-2xl font-semibold text-red-600">€{{ number_format($verlopen, 0, ',', '.') }}</div>
-        <div class="text-xs text-gray-500 mt-1">{{ \App\Models\Factuur::where('status', 'verlopen')->count() }} facturen > 30 dagen</div>
+        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ \App\Models\Factuur::where('status', 'verlopen')->count() }} facturen > 30 dagen</div>
       </div>
 
-      <div class="bg-white border border-gray-200 rounded-lg p-4">
-        <div class="text-sm text-gray-500 mb-1">Gemiddelde Betaaltijd</div>
-        <div class="text-2xl font-semibold text-gray-900">{{ number_format($overdueDays ?? 0, 1) }}</div>
-        <div class="text-xs text-gray-500 mt-1">dagen in november</div>
+      <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg p-4 shadow">
+        <div class="text-sm text-gray-600 dark:text-gray-300 mb-1">Gemiddelde Betaaltijd</div>
+        <div class="text-2xl font-semibold text-black dark:text-white">{{ number_format($overdueDays ?? 0, 1) }}</div>
+        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">dagen in november</div>
       </div>
     </div>
 
-    <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+    <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden">
       <!-- Header with New factuur button -->
-      <div class="flex items-center justify-between p-4 border-b border-gray-100">
-        <div class="flex items-center gap-4">
-          <h2 class="text-lg font-medium">📄 Facturen</h2>
-          <div class="flex gap-2">
-            <button class="text-sm text-gray-600 hover:text-gray-900">📤 Verzenden</button>
-            <button class="text-sm text-gray-600 hover:text-gray-900">🗑️ Verwijderen</button>
-            <button class="text-sm text-gray-600 hover:text-gray-900">👤 Exporteren</button>
-          </div>
-        </div>
-        <a href="{{ route('facturen.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
-          + Nieuwe Factuur
+      <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900">
+        <h2 class="text-lg font-semibold text-black dark:text-white">Facturen</h2>
+        <a href="{{ route('facturen.create') }}" class="inline-flex items-center gap-2 rounded-md bg-yellow-400 px-3 py-1.5 text-sm font-semibold text-black shadow hover:bg-yellow-300 transition-colors">
+          <span class="inline-block h-2 w-2 rounded-full bg-black"></span>
+          Nieuwe Factuur
         </a>
       </div>
 
-      @livewire('factuur-table')
+      <div class="p-4">
+        <div class="rounded-lg border border-gray-100 dark:border-zinc-700 bg-white dark:bg-zinc-900">
+          @livewire('factuur-table')
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer text -->
+    <div class="mt-6 text-center text-sm text-gray-600 dark:text-gray-300">
+      Factuur overzicht — beheer en monitor
     </div>
   </main>
 </x-layouts.app>
