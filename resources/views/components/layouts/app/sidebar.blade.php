@@ -9,6 +9,7 @@
                 @apply bg-gray-400 dark:bg-zinc-600 font-semibold;
             }
         </style>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body class="min-h-screen bg-[#FAF9F6] dark:bg-zinc-800">
         <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">

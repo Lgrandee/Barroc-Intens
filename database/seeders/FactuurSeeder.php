@@ -14,11 +14,13 @@ class FactuurSeeder extends Seeder
      */
     public function run(): void
     {
+        // Create many invoices spanning the years for a rich dataset
         Customer::all()->each(function ($customer) {
-        Factuur::factory()->create([
-        'name_company_id' => $customer->id
-        ]);
-    });
-
+            // Create 5-15 invoices per customer across different years
+            $count = rand(5, 15);
+            Factuur::factory()->count($count)->create([
+                'name_company_id' => $customer->id
+            ]);
+        });
     }
 }

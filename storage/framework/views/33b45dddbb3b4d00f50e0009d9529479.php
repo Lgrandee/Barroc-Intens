@@ -9,6 +9,7 @@
                 @apply bg-gray-400 dark:bg-zinc-600 font-semibold;
             }
         </style>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body class="min-h-screen bg-[#FAF9F6] dark:bg-zinc-800">
         <?php if (isset($component)) { $__componentOriginal17e56bc23bb0192e474b351c4358d446 = $component; } ?>
