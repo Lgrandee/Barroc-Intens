@@ -1,3 +1,4 @@
+<x-layouts.app>
 <!doctype html>
 <html lang="nl">
 <head>
@@ -64,3 +65,4 @@
 
 </body>
 </html>
+</x-layouts.app>
