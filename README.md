@@ -20,14 +20,14 @@ Inlog gegevens voor Barroc Intens.
 (het wachtwoord is voor alle afdelingen hetzelfde).
 Admin.
 - Gebruikersnaam: admin@barroc.nl
-- Wachtwoord: password123
+- Wachtwoord: "password123".
 Sales.
-- Gebruikersnaam: sales@barroc.nl
+- Gebruikersnaam: sales@barroc.nl.
 Purchasing.
-- Gebruikersnaam: purchasing@barroc.nl
+- Gebruikersnaam: purchasing@barroc.nl.
 Financing.
-- Gebruikersnaam: finance@barroc.nl
+- Gebruikersnaam: finance@barroc.nl.
 Technician.
-- Gebruikersnaam: technician@barroc.nl
+- Gebruikersnaam: technician@barroc.nl.
 Planner.
-- Gebruikersnaam: planner@barroc.nl
+- Gebruikersnaam: planner@barroc.nl.
