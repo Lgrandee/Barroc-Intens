@@ -11,3 +11,7 @@ Hieronder vindt u alle benodigde informatie voor het correct opstarten van de Ba
 
 De website is nu klaar voor gebruik. 
 Let op! zorg dat je een manier hebt om de website lokaal te draaien. denk aan laravel herd.
+
+Voor herd kunt u dit gebruiken
+- Open herd > Add Project > Selecteer Barroc-Intens Project map.
+- Open http://barocc-intens.test
