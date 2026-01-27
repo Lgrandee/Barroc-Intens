@@ -15,3 +15,19 @@ Let op! zorg dat je een manier hebt om de website lokaal te draaien. denk aan la
 Voor herd kunt u dit gebruiken
 - Open herd > Add Project > Selecteer Barroc-Intens Project map.
 - Open http://barocc-intens.test
+
+Inlog gegevens voor Barroc Intens.
+(het wachtwoord is voor alle afdelingen hetzelfde)
+Admin
+- Gebruikersnaam: admin@barroc.nl
+- Wachtwoord: password123
+Sales
+- Gebruikersnaam: sales@barroc.nl
+Purchasing
+- Gebruikersnaam: purchasing@barroc.nl
+Financing
+- Gebruikersnaam: finance@barroc.nl
+Technician
+- Gebruikersnaam: technician@barroc.nl
+Planner
+- Gebruikersnaam: planner@barroc.nl
