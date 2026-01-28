@@ -5,77 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gebruikersbeheer</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        /* Light-only page background override */
+        html:not(.dark) body { background-color: #f3f4f6 !important; }
+    </style>
 </head>
 <body class="bg-gray-50">
     <x-layouts.app :title="'Werknemers Beheer'">
-        <main class="p-6">
-            <header class="mb-6">
-                <h1 class="text-2xl font-semibold text-gray-900">Werknemers Beheer</h1>
-                <p class="text-sm text-gray-500">Beheer alle werknemers en hun rechten</p>
+        <main class="p-6 min-h-screen">
+            <header class="mb-6 flex items-start justify-between gap-4">
+                <div>
+                    <h1 class="text-3xl font-semibold text-black dark:text-white">Werknemers Beheer</h1>
+                    <p class="text-sm text-gray-600 dark:text-gray-300">Beheer alle werknemers en hun rechten</p>
+                </div>
             </header>
 
             <!-- Action Buttons -->
-            <div class="flex gap-3 mb-6">
-                <a href="{{ route('management.users.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 font-medium text-sm">
-                    + Nieuwe Werknemer
-                </a>
-                <button class="px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50 font-medium text-sm">
-                    Bulk Import
-                </button>
-                <button class="px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50 font-medium text-sm">
-                    Export Lijst
-                </button>
-                <div class="ml-auto">
-                    <a href="{{ route('management.roles.index') }}" class="px-4 py-2 border border-indigo-600 text-indigo-600 rounded hover:bg-indigo-50 font-medium text-sm">
-                        👑 Bekijk Rollen
+            <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow overflow-hidden mb-6">
+                <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900 flex-wrap gap-3">
+                    <a href="{{ route('management.users.create') }}" class="inline-flex items-center gap-2 rounded-md bg-yellow-400 px-3 py-1.5 text-sm font-semibold text-black shadow hover:bg-yellow-300 transition-colors">
+                        <span class="inline-block h-2 w-2 rounded-full bg-black"></span>
+                        Nieuwe Werknemer
                     </a>
+                    <button class="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-black dark:text-white border border-gray-300 dark:border-zinc-600 rounded-md bg-white dark:bg-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors">
+                        Bulk Import
+                    </button>
+                    <button class="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-black dark:text-white border border-gray-300 dark:border-zinc-600 rounded-md bg-white dark:bg-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors">
+                        Export Lijst
+                    </button>
+                    <div class="ml-auto">
+                        <a href="{{ route('management.roles.index') }}" class="inline-flex items-center gap-2 rounded-md border border-gray-300 dark:border-zinc-600 px-3 py-1.5 text-sm font-semibold text-black dark:text-white bg-white dark:bg-zinc-800 shadow hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors">
+                            👑 Bekijk Rollen
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <!-- Search and Filters -->
-            <div class="flex gap-3 mb-6">
-                <div class="relative flex-1 max-w-md">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                        </svg>
-                    </span>
-                    <input type="text" id="searchInput" placeholder="Zoek op naam of e-mail..."
-                        class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+            <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden mb-6 p-4">
+                <div class="flex gap-3 flex-wrap">
+                    <div class="relative flex-1 min-w-48">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                            <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </span>
+                        <input type="text" id="searchInput" placeholder="Zoek op naam of e-mail..."
+                            class="w-full pl-10 pr-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent dark:focus:border-transparent">
+                    </div>
+                    <select id="roleFilter" class="px-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400">
+                        <option value="">Alle Rollen</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Purchasing">Purchasing</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Technician">Technician</option>
+                        <option value="Planner">Planner</option>
+                        <option value="Management">Management</option>
+                    </select>
+                    <select id="statusFilter" class="px-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400">
+                        <option value="">Alle Statussen</option>
+                        <option value="active">Actief</option>
+                        <option value="inactive">Inactief</option>
+                        <option value="vacation">Vakantie</option>
+                    </select>
                 </div>
-                <select id="roleFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-gray-700">
-                    <option value="">Alle Rollen</option>
-                    <option value="Sales">Sales</option>
-                    <option value="Purchasing">Purchasing</option>
-                    <option value="Finance">Finance</option>
-                    <option value="Technician">Technician</option>
-                    <option value="Planner">Planner</option>
-                    <option value="Management">Management</option>
-                </select>
-                <select id="statusFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-gray-700">
-                    <option value="">Alle Statussen</option>
-                    <option value="active">Actief</option>
-                    <option value="inactive">Inactief</option>
-                    <option value="vacation">Vakantie</option>
-                </select>
             </div>
 
             <!-- Users Table -->
-            <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
+            <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-zinc-700">
+                    <thead class="bg-gray-50 dark:bg-zinc-900">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Werknemer</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Laatst Actief</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acties</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Werknemer</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Contact</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Rol</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Laatst Actief</th>
+                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Acties</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
+                    <tbody class="bg-white dark:bg-zinc-800 divide-y divide-gray-200 dark:divide-zinc-700">
                         @forelse($users as $user)
-                        <tr class="hover:bg-gray-50" data-role="{{ $user->department }}" data-status="{{ $user->status }}">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-zinc-700" data-role="{{ $user->department }}" data-status="{{ $user->status }}">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 h-10 w-10">
@@ -89,14 +100,14 @@
                                         </div>
                                     </div>
                                     <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">{{ $user->name }}</div>
-                                        <div class="text-xs text-gray-500">ID: #{{ str_pad($user->id, 3, '0', STR_PAD_LEFT) }}</div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->name }}</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">ID: #{{ str_pad($user->id, 3, '0', STR_PAD_LEFT) }}</div>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $user->email }}</div>
-                                <div class="text-xs text-gray-500">{{ $user->phone_num ?? 'Geen telefoon' }}</div>
+                                <div class="text-sm text-gray-900 dark:text-white">{{ $user->email }}</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">{{ $user->phone_num ?? 'Geen telefoon' }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
@@ -126,7 +137,7 @@
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                 {{ $user->last_active ? $user->last_active->format('d-m-Y, H:i') : 'Nooit' }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -146,7 +157,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                            <td colspan="6" class="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
                                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                                 </svg>
@@ -158,15 +169,15 @@
                 </table>
 
                 <!-- Pagination -->
-                <div class="flex flex-col items-center gap-3 px-4 py-3 border-t border-gray-200 bg-gray-50">
-                    <div class="text-sm text-gray-700">
+                <div class="flex flex-col items-center gap-3 px-4 py-3 border-t border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900">
+                    <div class="text-sm text-gray-700 dark:text-gray-300">
                         Showing {{ $users->firstItem() ?? 0 }}–{{ $users->lastItem() ?? 0 }} of {{ $users->total() }}
                     </div>
                     <div class="flex gap-1 items-center">
                         @if($users->onFirstPage())
-                            <span class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-400 cursor-not-allowed">‹</span>
+                            <span class="px-3 py-1 border border-gray-300 dark:border-zinc-600 rounded text-sm text-gray-400 dark:text-gray-600 cursor-not-allowed">‹</span>
                         @else
-                            <a href="{{ $users->previousPageUrl() }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">‹</a>
+                            <a href="{{ $users->previousPageUrl() }}" class="px-3 py-1 border border-gray-300 dark:border-zinc-600 rounded text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700">‹</a>
                         @endif
 
                         @php
@@ -177,34 +188,39 @@
                         @endphp
 
                         @if ($start > 1)
-                            <a href="{{ $users->url(1) }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">1</a>
+                            <a href="{{ $users->url(1) }}" class="px-3 py-1 border border-gray-300 dark:border-zinc-600 rounded text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700">1</a>
                             @if ($start > 2)
-                                <span class="px-2 text-gray-500">...</span>
+                                <span class="px-2 text-gray-500 dark:text-gray-400">...</span>
                             @endif
                         @endif
 
                         @for ($page = $start; $page <= $end; $page++)
                             @if ($page == $currentPage)
-                                <span class="px-3 py-1 border border-indigo-600 bg-indigo-600 text-white rounded text-sm font-medium">{{ $page }}</span>
+                                <span class="px-3 py-1 border border-yellow-400 bg-yellow-400 text-black rounded text-sm font-medium">{{ $page }}</span>
                             @else
-                                <a href="{{ $users->url($page) }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">{{ $page }}</a>
+                                <a href="{{ $users->url($page) }}" class="px-3 py-1 border border-gray-300 dark:border-zinc-600 rounded text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700">{{ $page }}</a>
                             @endif
                         @endfor
 
                         @if ($end < $lastPage)
                             @if ($end < $lastPage - 1)
-                                <span class="px-2 text-gray-500">...</span>
+                                <span class="px-2 text-gray-500 dark:text-gray-400">...</span>
                             @endif
-                            <a href="{{ $users->url($lastPage) }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">{{ $lastPage }}</a>
+                            <a href="{{ $users->url($lastPage) }}" class="px-3 py-1 border border-gray-300 dark:border-zinc-600 rounded text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700">{{ $lastPage }}</a>
                         @endif
 
                         @if($users->hasMorePages())
-                            <a href="{{ $users->nextPageUrl() }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">›</a>
+                            <a href="{{ $users->nextPageUrl() }}" class="px-3 py-1 border border-gray-300 dark:border-zinc-600 rounded text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700">›</a>
                         @else
-                            <span class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-400 cursor-not-allowed">›</span>
+                            <span class="px-3 py-1 border border-gray-300 dark:border-zinc-600 rounded text-sm text-gray-400 dark:text-gray-600 cursor-not-allowed">›</span>
                         @endif
                     </div>
                 </div>
+            </div>
+
+            <!-- Footer text -->
+            <div class="mt-6 text-center text-sm text-gray-600 dark:text-gray-300">
+                Werknemers overzicht — beheer en rechten
             </div>
         </main>
     </x-layouts.app>
