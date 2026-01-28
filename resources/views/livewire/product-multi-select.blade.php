@@ -1,6 +1,6 @@
 <div>
   <div class="space-y-2">
-    <label class="text-sm font-semibold text-gray-700">Products</label>
+    <label class="font-semibold text-gray-800 dark:text-gray-200">Selecteer producten</label>
 
     {{-- Search input --}}
     <div class="relative">

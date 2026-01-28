@@ -21,7 +21,6 @@
           @csrf
 
           <div>
-            <label class="font-semibold text-xl text-gray-800 dark:text-gray-200">Kies klant of zoek...</label>
             @livewire('customer-search', ['name' => 'name_company_id', 'required' => true])
           </div>
 
@@ -60,7 +59,6 @@
           </div>
 
           <div>
-            <label class="font-semibold text-gray-800 dark:text-gray-200">Producten</label>
             @livewire('product-multi-select', ['name' => 'products'])
           </div>
 

@@ -80,6 +80,7 @@ Route::middleware(['auth', 'departmentRole:Sales'])->group(function () {
     Route::put('/offertes/{id}', [OfferteController::class, 'update'])->name('offertes.update');
     Route::post('/offertes/{id}/send', [OfferteController::class, 'sendToCustomer'])->name('offertes.send');
     Route::get('/offertes/{id}/pdf', [OfferteController::class, 'downloadPdf'])->name('offertes.pdf');
+    Route::get('/algemene-voorwaarden/pdf', [OfferteController::class, 'downloadTermsPdf'])->name('general-terms.pdf');
 });
 
 
