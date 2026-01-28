@@ -1,5 +1,5 @@
 <x-layouts.app title="Klantenoverzicht">
-    <div class="p-6 bg-[#FAF9F6]">
+    <div class="p-6 bg-[#f3f4f6]">
         
         <!-- Header Section similar to dashboards -->
         <div class="mb-6">

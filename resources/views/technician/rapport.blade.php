@@ -18,11 +18,11 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Left Section: Rapport Form -->
             <div class="lg:col-span-2">
-                <div class="bg-white rounded-lg border border-gray-200 p-6">
+                <div class="bg-[#f3f4f6] rounded-lg border border-gray-200 p-6">
                     <h2 class="text-lg font-semibold text-gray-900 mb-4">Rapport invullen</h2>
 
                     @if(session('success'))
-                    <div class="mb-4 p-3 bg-green-50 border border-green-200 text-green-800 rounded-lg text-sm">
+                    <div class="mb-4 p-3 bg-[#f3f4f6] border border-green-200 text-green-800 rounded-lg text-sm">
                         {{ session('success') }}
                     </div>
                     @endif
@@ -97,7 +97,7 @@
                             </button>
                             <a
                                 href="{{ route('technician.onderhoud.show', $task->id) }}"
-                                class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium text-sm">
+                                class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-[#f3f4f6] font-medium text-sm">
                                 Annuleren
                             </a>
                         </div>
@@ -108,7 +108,7 @@
             <!-- Right Section: Task Info -->
             <div class="lg:col-span-1">
                 <!-- Taak Samenvatting -->
-                <div class="bg-white rounded-lg border border-gray-200 p-6 mb-4">
+                <div class="bg-[#f3f4f6] rounded-lg border border-gray-200 p-6 mb-4">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Taak samenvatting</h3>
                     <dl class="space-y-3">
                         <div>
@@ -132,11 +132,11 @@
 
                 <!-- Producten -->
                 @if($task->feedback?->products && $task->feedback->products->count() > 0)
-                <div class="bg-white rounded-lg border border-gray-200 p-6">
+                <div class="bg-[#f3f4f6] rounded-lg border border-gray-200 p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Product(en)</h3>
                     <div class="space-y-2">
                         @foreach($task->feedback->products as $product)
-                        <div class="flex items-center justify-between p-2 bg-gray-50 rounded text-sm">
+                        <div class="flex items-center justify-between p-2 bg-[#f3f4f6] rounded text-sm">
                             <div class="flex-1">
                                 <span class="font-medium text-gray-900">{{ $product->product_name }}</span>
                                 @if($product->pivot->quantity > 1)

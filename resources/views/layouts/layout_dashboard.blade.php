@@ -1,5 +1,5 @@
 <x-layouts.app :title="$title ?? 'Dashboard'">
-  <main class="p-6 bg-[#FAF9F6]">
+  <main class="p-6 bg-[#f3f4f6]">
 
     <div class="@yield('welcome_classes','bg-gradient-to-br from-indigo-800 to-indigo-900') text-white rounded-xl p-6 mb-6 shadow-lg">
       @hasSection('welcome')

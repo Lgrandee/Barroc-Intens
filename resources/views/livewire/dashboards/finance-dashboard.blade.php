@@ -1,7 +1,7 @@
 <div wire:poll.2s>
 @php($title = 'Finance Dashboard')
 
-<div class="p-6 bg-[#FAF9F6]">
+<div class="p-6 bg-[#f3f4f6]">
     <div class="bg-gradient-to-br from-yellow-500 to-orange-600 text-white rounded-xl p-6 mb-6 shadow-lg">
         <h1 class="text-xl font-semibold mb-1">Welkom, {{ auth()->user()->name ?? '' }}</h1>
         <p class="text-sm text-white/90 mb-4">Je hebt {{ $recentInvoices->where('status', '!=', 'betaald')->count() }} openstaande facturen en {{ $reminders->count() }} herinneringen voor deze week</p>

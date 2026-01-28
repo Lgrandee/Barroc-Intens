@@ -1,7 +1,7 @@
 <div wire:poll.2s>
 @php($title = 'Planner Dashboard')
 
-<div class="p-6 bg-[#FAF9F6]">
+<div class="p-6 bg-[#f3f4f6]">
     <div class="bg-gradient-to-br from-purple-600 to-purple-800 text-white rounded-xl p-6 mb-6 shadow-lg">
         <h1 class="text-xl font-semibold mb-1">Goedemorgen, {{ auth()->user()->name ?? 'Gebruiker' }} 👋</h1>
         <p class="text-sm text-white/90 mb-4">Je hebt {{ $plannedTasksCount }} taken ingepland voor deze week en {{ $backlogCount }} achterstallige taken</p>

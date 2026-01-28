@@ -1,5 +1,5 @@
 <x-layouts.app title="Klant Bewerken">
-    <div class="p-6 bg-[#FAF9F6] min-h-screen">
+    <div class="p-6 bg-[#f3f4f6] min-h-screen">
         <div class="max-w-3xl mx-auto">
             <!-- Header -->
             <div class="mb-6">

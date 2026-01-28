@@ -6,7 +6,7 @@
             </header>
 
             <!-- Main Content -->
-            <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <div class="bg-[#f3f4f6] rounded-lg border border-gray-200 p-6">
                 <div class="mb-6">
                     <h2 class="text-lg font-semibold text-gray-900 mb-2">Onderhoudsactiviteiten</h2>
                     <p class="text-sm text-gray-600">Alle geplande en uitgevoerde onderhoudstaken</p>
@@ -47,7 +47,7 @@
                 <!-- Tasks Table -->
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
+                        <thead class="bg-[#f3f4f6]">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Datum</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Klant</th>
@@ -57,9 +57,9 @@
                                 <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acties</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody class="bg-[#f3f4f6] divide-y divide-gray-200">
                             @forelse($maintenanceTasks as $task)
-                            <tr class="hover:bg-gray-50"
+                            <tr class="hover:bg-[#f3f4f6]"
                                 data-customer="{{ $task->feedback?->customer?->name_company ?? 'Onbekend' }}"
                                 data-technician="{{ $task->user?->name ?? 'Niet toegewezen' }}"
                                 data-task="{{ $task->feedback?->description ?? 'Onderhoud' }}">
@@ -77,15 +77,15 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if($task->status === 'voltooid')
-                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#f3f4f6] text-green-800">
                                             Voltooid
                                         </span>
                                     @elseif($task->status === 'probleem')
-                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#f3f4f6] text-red-800">
                                             Probleem
                                         </span>
                                     @else
-                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
+                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#f3f4f6] text-orange-800">
                                             Open
                                         </span>
                                     @endif
@@ -120,7 +120,7 @@
 
                 <!-- Pagination -->
                 @if($maintenanceTasks->hasPages())
-                <div class="flex flex-col items-center gap-3 px-4 py-3 border-t border-gray-200 bg-gray-50 mt-4">
+                <div class="flex flex-col items-center gap-3 px-4 py-3 border-t border-gray-200 bg-[#f3f4f6] mt-4">
                     <div class="text-sm text-gray-700">
                         Showing {{ $maintenanceTasks->firstItem() ?? 0 }}–{{ $maintenanceTasks->lastItem() ?? 0 }} of {{ $maintenanceTasks->total() }}
                     </div>
@@ -128,7 +128,7 @@
                         @if($maintenanceTasks->onFirstPage())
                             <span class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-400 cursor-not-allowed">‹</span>
                         @else
-                            <a href="{{ $maintenanceTasks->previousPageUrl() }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">‹</a>
+                            <a href="{{ $maintenanceTasks->previousPageUrl() }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-[#f3f4f6]">‹</a>
                         @endif
 
                         @php
@@ -139,7 +139,7 @@
                         @endphp
 
                         @if ($start > 1)
-                            <a href="{{ $maintenanceTasks->url(1) }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">1</a>
+                            <a href="{{ $maintenanceTasks->url(1) }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-[#f3f4f6]">1</a>
                             @if ($start > 2)
                                 <span class="px-2 text-gray-500">...</span>
                             @endif
@@ -149,7 +149,7 @@
                             @if ($page == $currentPage)
                                 <span class="px-3 py-1 border border-indigo-600 bg-indigo-600 text-white rounded text-sm font-medium">{{ $page }}</span>
                             @else
-                                <a href="{{ $maintenanceTasks->url($page) }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">{{ $page }}</a>
+                                <a href="{{ $maintenanceTasks->url($page) }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-[#f3f4f6]">{{ $page }}</a>
                             @endif
                         @endfor
 
@@ -157,11 +157,11 @@
                             @if ($end < $lastPage - 1)
                                 <span class="px-2 text-gray-500">...</span>
                             @endif
-                            <a href="{{ $maintenanceTasks->url($lastPage) }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">{{ $lastPage }}</a>
+                            <a href="{{ $maintenanceTasks->url($lastPage) }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-[#f3f4f6]">{{ $lastPage }}</a>
                         @endif
 
                         @if($maintenanceTasks->hasMorePages())
-                            <a href="{{ $maintenanceTasks->nextPageUrl() }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">›</a>
+                            <a href="{{ $maintenanceTasks->nextPageUrl() }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-[#f3f4f6]">›</a>
                         @else
                             <span class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-400 cursor-not-allowed">›</span>
                         @endif
