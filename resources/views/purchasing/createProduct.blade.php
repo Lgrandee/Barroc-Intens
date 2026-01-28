@@ -1,49 +1,50 @@
-<!doctype html>
-<html lang="nl">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <title>Nieuw Product</title>
-</head>
-<body class="bg-gray-100">
-  <header class="p-6 bg-white shadow">
-    <h1 class="text-2xl font-semibold">Product toevoegen</h1>
-    <p class="text-gray-500">Voeg een nieuw product toe aan het systeem.</p>
-  </header>
+<x-layouts.app title="Product Toevoegen">
+    <div class="max-w-3xl mx-auto p-6 bg-gray-100 min-h-screen">
+        <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
+            <div class="border-b border-gray-100 pb-4 mb-6">
+                <h1 class="text-2xl font-semibold text-gray-900">Product Toevoegen</h1>
+                <p class="text-gray-500 text-sm mt-1">Voeg een nieuw product toe aan het assortiment</p>
+            </div>
 
-  <main class="max-w-3xl mx-auto p-6">
-    <div class="bg-white border border-gray-200 rounded-lg p-6">
-      <form action="{{ route('products.store') }}" method="POST" class="flex flex-col gap-4">
-        @csrf
+            <form action="{{ route('products.store') }}" method="POST" class="space-y-6">
+                @csrf
 
-        <div class="flex flex-col gap-1">
-          <label for="product_name" class="font-medium text-gray-700 text-sm">Productnaam</label>
-          <input type="text" name="product_name" id="product_name" placeholder="Productnaam" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
+                <div>
+                    <label for="product_name" class="block font-medium text-sm text-gray-700 mb-1">Productnaam</label>
+                    <input type="text" name="product_name" id="product_name" placeholder="Bijv. Koffiebonen Extra Dark" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" required>
+                </div>
+
+                <div>
+                    <label for="stock" class="block font-medium text-sm text-gray-700 mb-1">Initiële Voorraad</label>
+                    <input type="number" name="stock" id="stock" placeholder="0" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" required>
+                </div>
+
+                <div>
+                    <label for="price" class="block font-medium text-sm text-gray-700 mb-1">Prijs (per stuk)</label>
+                    <div class="relative rounded-md shadow-sm">
+                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                            <span class="text-gray-500 sm:text-sm">€</span>
+                        </div>
+                        <input type="number" step="0.01" name="price" id="price" placeholder="0.00" class="block w-full rounded-md border-gray-300 pl-7 focus:border-indigo-500 focus:ring-indigo-500 text-sm" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="type" class="block font-medium text-sm text-gray-700 mb-1">Type</label>
+                    <select name="type" id="type" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" required>
+                        <option value="beans">Boon (Beans)</option>
+                        <option value="parts">Onderdeel (Parts)</option>
+                        <option value="machines">Machine</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
+                    <a href="{{ route('product.stock') }}" class="text-gray-600 hover:text-gray-900 text-sm font-medium underline-offset-4 hover:underline">Annuleren</a>
+                    <button type="submit" class="inline-flex justify-center border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md transition-colors">
+                        Product Opslaan
+                    </button>
+                </div>
+            </form>
         </div>
-
-        <div class="flex flex-col gap-1">
-          <label for="stock" class="font-medium text-gray-700 text-sm">Voorraad</label>
-          <input type="number" name="stock" id="stock" placeholder="Voorraad" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
-        </div>
-
-        <div class="flex flex-col gap-1">
-          <label for="price" class="font-medium text-gray-700 text-sm">Prijs</label>
-          <input type="text" name="price" id="price" placeholder="Prijs" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
-        </div>
-
-        <div class="flex flex-col gap-1">
-          <label for="type" class="font-medium text-gray-700 text-sm">Type</label>
-          <select name="type" id="type" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
-            <option value="beans">Beans</option>
-            <option value="parts">Parts</option>
-            <option value="machines">Machines</option>
-          </select>
-        </div>
-
-        <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">Product Toevoegen</button>
-      </form>
     </div>
-  </main>
-</body>
-</html>
+</x-layouts.app>

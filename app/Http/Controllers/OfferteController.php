@@ -176,9 +176,10 @@ class OfferteController extends Controller
         }
         $offerte->products()->sync($syncData);
 
-        // Als offerte wordt geaccepteerd, maak automatisch een factuur aan
+        // Als offerte wordt geaccepteerd, maak automatisch een factuur en contract aan
         if ($validated['status'] === 'accepted' && $oldStatus !== 'accepted') {
             $this->createFactuurFromOfferte($offerte);
+            return redirect()->route('offertes.show', $offerte->id)->with('success', 'Contract aangemaakt. Factuur aangemaakt.');
         }
 
         return redirect()->route('offertes.show', $offerte->id)->with('success', 'Offerte bijgewerkt.');

@@ -2,6 +2,38 @@
   <style>
     /* Light-only page background override */
     html:not(.dark) body { background-color: #f3f4f6 !important; }
+
+    /* Slide up animation */
+    @keyframes slideUpIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Fade out animation */
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+    }
+
+    .notification-popup {
+      animation: slideUpIn 0.5s ease-out forwards;
+    }
+
+    .notification-popup.fade-out {
+      animation: fadeOut 1.5s ease-out forwards;
+    }
   </style>
   <main class="p-6 max-w-6xl mx-auto">
     <header class="mb-6 flex items-start justify-between gap-4">
@@ -37,7 +69,7 @@
             });
             $totalIncVat = $totalExVat * 1.21;
           @endphp
-          <div class="text-lg font-semibold text-yellow-500">€{{ number_format($totalIncVat, 2, ',', '.') }}</div>
+          <div class="text-lg font-semibold text-black">€{{ number_format($totalIncVat, 2, ',', '.') }}</div>
         </div>
         <div>
           <div class="text-sm font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-2">Offertedatum</div>
@@ -46,9 +78,86 @@
       </div>
     </div>
 
+    <!-- Producten Table -->
+    <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden mb-6">
+      <div class="p-5 border-b border-gray-100 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900">
+        <h2 class="text-lg font-semibold text-black dark:text-white">Producten</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-gray-200 dark:border-zinc-700">
+              <th class="px-5 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Productnaam</th>
+              <th class="px-5 py-3 text-right text-sm font-semibold text-gray-700 dark:text-gray-300">Prijs per stuk</th>
+              <th class="px-5 py-3 text-right text-sm font-semibold text-gray-700 dark:text-gray-300">Aantal</th>
+              <th class="px-5 py-3 text-right text-sm font-semibold text-gray-700 dark:text-gray-300">Totaal</th>
+            </tr>
+          </thead>
+          <tbody>
+            @forelse($offerte->products as $product)
+              @php
+                $qty = $product->pivot->quantity ?? 1;
+                $lineTotal = $product->price * $qty;
+              @endphp
+              <tr class="border-b border-gray-100 dark:border-zinc-700 hover:bg-gray-50 dark:hover:bg-zinc-700">
+                <td class="px-5 py-3 text-sm text-black dark:text-white">{{ $product->product_name }}</td>
+                <td class="px-5 py-3 text-sm text-right text-gray-700 dark:text-gray-300">€{{ number_format($product->price, 2, ',', '.') }}</td>
+                <td class="px-5 py-3 text-sm text-right text-gray-700 dark:text-gray-300">{{ $qty }}</td>
+                <td class="px-5 py-3 text-sm text-right font-semibold text-black dark:text-white">€{{ number_format($lineTotal, 2, ',', '.') }}</td>
+              </tr>
+            @empty
+              <tr>
+                <td colspan="4" class="px-5 py-3 text-center text-sm text-gray-600 dark:text-gray-400">Geen producten gevonden</td>
+              </tr>
+            @endforelse
+          </tbody>
+        </table>
+      </div>
+      <div class="px-5 py-3 bg-gray-50 dark:bg-zinc-900 border-t border-gray-200 dark:border-zinc-700">
+        <div class="flex justify-end gap-8">
+          <div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Subtotaal (excl. BTW)</div>
+            <div class="text-lg font-semibold text-black dark:text-white">€{{ number_format($totalExVat, 2, ',', '.') }}</div>
+          </div>
+          <div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">BTW (21%)</div>
+            <div class="text-lg font-semibold text-black dark:text-white">€{{ number_format($totalExVat * 0.21, 2, ',', '.') }}</div>
+          </div>
+          <div class="pl-8 border-l border-gray-200 dark:border-zinc-700">
+            <div class="text-sm text-gray-600 dark:text-gray-400">Totaal (incl. BTW)</div>
+            <div class="text-xl font-semibold text-black dark:text-white">€{{ number_format($totalIncVat, 2, ',', '.') }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    @if(session('success') && str_contains(session('success'), 'Contract aangemaakt'))
+      <div id="contract-notification" class="notification-popup bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-xl shadow p-5 mb-6">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="text-green-600 dark:text-green-400 text-3xl">✓</div>
+            <div>
+              <div class="font-semibold text-green-900 dark:text-green-100">Contract automatisch aangemaakt</div>
+              <div class="text-sm text-green-700 dark:text-green-300">
+                Contract CON-{{ date('Y', strtotime($offerte->contract->start_date ?? now())) }}-{{ str_pad($offerte->contract->id ?? '', 3, '0', STR_PAD_LEFT) }}
+                is aangemaakt op {{ \Carbon\Carbon::parse($offerte->contract->created_at ?? now())->format('d-m-Y H:i') }}
+                voor {{ $offerte->customer->name_company ?? 'Onbekend' }} • Duur: {{ \Carbon\Carbon::parse($offerte->contract->start_date)->diffInMonths(\Carbon\Carbon::parse($offerte->contract->end_date)) }} maanden
+              </div>
+            </div>
+          </div>
+          @if($offerte->contract)
+            <a href="{{ route('contracts.show', $offerte->contract->id) }}"
+              class="px-4 py-2 bg-yellow-400 text-black rounded-md hover:bg-yellow-300 text-sm font-semibold transition-colors">
+              📋 Bekijk Contract
+            </a>
+          @endif
+        </div>
+      </div>
+    @endif
+
     <!-- Factuur Status -->
-    @if($offerte->status === 'accepted' && $offerte->factuur)
-      <div class="bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-xl shadow p-5 mb-6">
+    @if(session('success') && str_contains(session('success'), 'Factuur aangemaakt') && $offerte->factuur)
+      <div id="factuur-notification" class="notification-popup bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-xl shadow p-5 mb-6">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">
             <div class="text-green-600 dark:text-green-400 text-3xl">✓</div>
@@ -57,6 +166,7 @@
               <div class="text-sm text-green-700 dark:text-green-300">
                 Factuur FACT-{{ date('Y', strtotime($offerte->factuur->invoice_date)) }}-{{ str_pad($offerte->factuur->id, 3, '0', STR_PAD_LEFT) }}
                 is aangemaakt op {{ \Carbon\Carbon::parse($offerte->factuur->created_at)->format('d-m-Y H:i') }}
+                voor {{ $offerte->customer->name_company ?? 'Onbekend' }} • Bedrag: €{{ number_format($totalIncVat, 2, ',', '.') }}
               </div>
             </div>
           </div>
@@ -214,5 +324,20 @@
       button.classList.add('bg-green-600', 'cursor-default');
       button.textContent = 'Goedgekeurd';
     }
+  </script>
+
+  <script>
+    // Auto-hide notifications after 10 seconds
+    document.addEventListener('DOMContentLoaded', function() {
+      const notifications = document.querySelectorAll('.notification-popup');
+      notifications.forEach(notification => {
+        setTimeout(() => {
+          notification.classList.add('fade-out');
+          setTimeout(() => {
+            notification.style.display = 'none';
+          }, 1500); // Wait for fade-out animation to complete (1.5s)
+        }, 10000); // 10 seconds
+      });
+    });
   </script>
 </x-layouts.app>
