@@ -59,6 +59,6 @@ class CustomerController extends Controller
         $customer->notes = $request->notes;
         $customer->save();
 
-        return redirect()->route('customers.index');
+        return redirect()->route('customers.show', $customer->id);
     }
 }
