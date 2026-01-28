@@ -34,7 +34,7 @@
 
         <!-- Customers Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach ($customers as $customer) 
+            @foreach ($customers as $customer)
                 <div class="bg-white border border-gray-200 rounded-lg p-5 hover:border-blue-500 hover:shadow-md transition group">
                     <div class="flex justify-between items-start mb-4">
                         <div class="flex items-center gap-3">
@@ -67,7 +67,7 @@
                             <p class="font-semibold truncate">{{ $customer->address }}, {{ $customer->zipcode }}</p>
                         </div>
                     </div>
-                    
+
                     <div class="flex gap-2 pt-4 border-t border-gray-100">
                         <a href="{{ route('customers.show', ['customer' => $customer->id]) }}" class="flex-1 text-center border border-gray-200 rounded-md py-2 text-sm text-gray-600 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50 transition">
                             Details

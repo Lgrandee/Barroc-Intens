@@ -16,7 +16,7 @@ return new class extends Migration
             $table->enum('catagory', ['meeting', 'installation', 'service']);
             $table->foreignId('feedback_id')->nullable()->constrained('feedbacks')->onDelete('set null');
             $table->string('location');
-            $table->dateTime('scheduled_time');
+            $table->dateTime('scheduled_time')->nullable();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->enum('status', ['open', 'voltooid', 'probleem', 'te_laat'])->default('open');
             $table->enum('priority', ['laag', 'medium', 'hoog'])->nullable();

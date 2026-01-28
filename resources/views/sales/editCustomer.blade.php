@@ -61,7 +61,7 @@
                     <div class="flex-1">
                         <h3 class="text-lg font-semibold text-red-800 mb-1">Klant Verwijderen</h3>
                         <p class="text-red-700 mb-4 text-sm">Dit zal de klant en alle gerelateerde gegevens permanent verwijderen. Deze actie kan niet ongedaan worden gemaakt.</p>
-                        
+
                         <form action="{{ route('customers.destroy', ['customer' => $customer->id]) }}" method="POST">
                             @csrf
                             @method('DELETE')
@@ -72,4 +72,8 @@
             </div>
         </div>
     </div>
-</x-layouts.app>
+
+  </main>
+
+</body>
+</html>
