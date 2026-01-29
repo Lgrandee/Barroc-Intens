@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             OrderLogisticsSeeder::class,
             FeedbackSeeder::class,
             PlanningTicketSeeder::class,
+            RoleSeeder::class,
         ]);
     }
 }
