@@ -109,6 +109,9 @@ Route::middleware(['auth', 'departmentRole:Management'])->group(function () {
 Route::get('/product-stock', [ProductController::class, 'showStock'])->middleware('auth')->name('product.stock');
 Route::get('/products/create', [ProductController::class, 'create'])->middleware('auth')->name('products.create');
 Route::post('/products', [ProductController::class, 'store'])->middleware('auth')->name('products.store');
+Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->middleware('auth')->name('products.edit');
+Route::put('/products/{id}', [ProductController::class, 'update'])->middleware('auth')->name('products.update');
+Route::delete('/products/{id}', [ProductController::class, 'destroy'])->middleware('auth')->name('products.destroy');
 // Product ordering (bestellen)
 Route::get('/products/order', [ProductController::class, 'orderForm'])->middleware('auth')->name('products.order');
 Route::post('/products/order', [ProductController::class, 'order'])->middleware('auth')->name('products.order.store');

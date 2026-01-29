@@ -1,8 +1,25 @@
-<x-layouts.app title="Product Bestellen">
+<x-layouts.app :title="'Product bewerken'">
     <div class="max-w-6xl mx-auto p-6 bg-gray-100 min-h-screen">
+
+        <div class="max-w-6xl mx-auto p-6 bg-gray-100 min-h-screen">
+        <header class="mb-6">
+            <div class="text-center mb-4">
+                <h1 class="text-3xl font-semibold text-black dark:text-white">Product bewerken</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Pas de gegevens van het product aan</p>
+            </div>
+            <a href="{{ route('product.stock') }}" class="inline-flex items-center gap-2 rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-yellow-300 transition-colors">
+                <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4A1 1 0 0110.707 6.293L8.414 8.586H16a1 1 0 110 2H8.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"/></svg>
+                Terug naar voorraad
+            </a>
+        </header>
         @if(session('success'))
             <div class="mb-4 bg-green-50 border border-green-200 text-green-700 rounded p-4">
                 {{ session('success') }}
+            </div>
+        @endif
+        @if($errors->has('order'))
+            <div class="mb-4 bg-red-50 border border-red-200 text-red-700 rounded p-4">
+                {{ $errors->first('order') }}
             </div>
         @endif
 
@@ -41,10 +58,14 @@
             </div>
             @endforeach
 
-            <div class="p-4 flex justify-end gap-3 bg-gray-50 border-t border-gray-200">
-                <a href="{{ route('product.stock') }}" class="px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-white transition bg-white shadow-sm">Terug</a>
-                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition shadow-sm">Bestelling Plaatsen</button>
+            <div class="p-4 flex justify-between items-center bg-gray-50 border-t border-gray-200">
+                <a href="{{ route('product.stock') }}" class="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white hover:underline">Annuleer</a>
+                <button type="submit" class="px-4 py-2 bg-yellow-400 text-black rounded-md text-sm font-medium hover:bg-yellow-300 transition shadow-sm inline-flex items-center gap-2">
+                    <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 00-1.414 0L9 11.586 6.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l7-7a1 1 0 000-1.414z"/></svg>
+                    Opslaan
+                </button>
             </div>
+            <div id="product-warning" class="hidden text-red-600 text-sm mt-2"></div>
         </form>
     </div>
 
@@ -67,6 +88,24 @@
                 let v = parseInt(input.value, 10);
                 if (isNaN(v) || v < 0) input.value = 0;
             });
+        });
+
+        // Validatie: minstens één product geselecteerd
+        document.querySelector('form').addEventListener('submit', function(e) {
+            let hasProduct = false;
+            document.querySelectorAll('input[type="number"][name^="quantities["]').forEach(input => {
+                if (parseInt(input.value, 10) > 0) {
+                    hasProduct = true;
+                }
+            });
+            const warning = document.getElementById('product-warning');
+            if (!hasProduct) {
+                e.preventDefault();
+                warning.textContent = 'Selecteer minstens één product om te bestellen.';
+                warning.classList.remove('hidden');
+            } else {
+                warning.classList.add('hidden');
+            }
         });
     </script>
 </x-layouts.app>
