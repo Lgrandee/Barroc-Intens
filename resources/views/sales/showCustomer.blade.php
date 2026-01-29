@@ -60,14 +60,28 @@
                         </div>
 
                         <div>
+                            <h3 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Adres</h3>
+                            <p class="text-gray-900 dark:text-gray-100">{{ $customer->address ?? '-' }}</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Plaats</h3>
+                            <p class="text-gray-900 dark:text-gray-100">{{ $customer->city ?? '-' }}</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Postcode</h3>
+                            <p class="text-gray-900 dark:text-gray-100">{{ $customer->zipcode ?? '-' }}</p>
+                        </div>
+                        <div>
                             <h3 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">BKR Status</h3>
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                                 @if($customer->bkr_status === 'approved')
                                     bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200
-                                @elseif($customer->bkr_status === 'rejected')
+                                @elseif($customer->bkr_status === 'denied')
                                     bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200
-                                @else
+                                @elseif($customer->bkr_status === 'pending')
                                     bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200
+                                @else
+                                    bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200
                                 @endif">
                                 {{ ucfirst($customer->bkr_status ?? 'pending') }}
                             </span>

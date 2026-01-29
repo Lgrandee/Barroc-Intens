@@ -32,9 +32,23 @@
                         <input type="text" id="phone_number" name="phone_number" placeholder="Telefoonnummer..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
                     </div>
 
+
                     <div>
                         <label for="bkr_number" class="block font-medium text-gray-700 mb-1 text-sm">BKR Nummer</label>
                         <input type="text" id="bkr_number" name="bkr_number" placeholder="BKR nummer..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+
+                    <div>
+                        <label for="address" class="block font-medium text-gray-700 mb-1 text-sm">Adres</label>
+                        <input type="text" id="address" name="address" placeholder="Adres..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="city" class="block font-medium text-gray-700 mb-1 text-sm">Plaats</label>
+                        <input type="text" id="city" name="city" placeholder="Plaats..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="zipcode" class="block font-medium text-gray-700 mb-1 text-sm">Postcode</label>
+                        <input type="text" id="zipcode" name="zipcode" placeholder="Postcode..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
                     </div>
                 </div>
 

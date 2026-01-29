@@ -47,6 +47,18 @@
                             <input type="text" id="bkr_number" name="bkr_number" value="{{ $customer->bkr_number }}" placeholder="BKR nummer..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-zinc-700 dark:border-zinc-600 dark:text-white dark:focus:ring-blue-400">
                         </div>
 
+                        <div class="flex flex-col gap-1">
+                            <label for="address" class="font-medium text-gray-700 dark:text-gray-300 text-sm">Adres</label>
+                            <input type="text" id="address" name="address" value="{{ $customer->address }}" placeholder="Adres..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-zinc-700 dark:border-zinc-600 dark:text-white dark:focus:ring-blue-400">
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label for="city" class="font-medium text-gray-700 dark:text-gray-300 text-sm">Plaats</label>
+                            <input type="text" id="city" name="city" value="{{ $customer->city }}" placeholder="Plaats..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-zinc-700 dark:border-zinc-600 dark:text-white dark:focus:ring-blue-400">
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label for="zipcode" class="font-medium text-gray-700 dark:text-gray-300 text-sm">Postcode</label>
+                            <input type="text" id="zipcode" name="zipcode" value="{{ $customer->zipcode }}" placeholder="Postcode..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-zinc-700 dark:border-zinc-600 dark:text-white dark:focus:ring-blue-400">
+                        </div>
                         <div class="flex flex-col gap-1 md:col-span-2">
                             <label for="notes" class="font-medium text-gray-700 dark:text-gray-300 text-sm">Notities</label>
                             <textarea id="notes" name="notes" rows="4" placeholder="Voeg notities toe over deze klant..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-zinc-700 dark:border-zinc-600 dark:text-white dark:focus:ring-blue-400">{{ $customer->notes }}</textarea>

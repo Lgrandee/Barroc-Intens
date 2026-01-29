@@ -25,6 +25,9 @@ class CustomerController extends Controller
         $newCustomer->email = $request->email;
         $newCustomer->phone_number = $request->phone_number;
         $newCustomer->bkr_number = $request->bkr_number;
+        $newCustomer->address = $request->address;
+        $newCustomer->city = $request->city;
+        $newCustomer->zipcode = $request->zipcode;
         $newCustomer->bkr_status = 'pending';
         $newCustomer->save();
 
@@ -56,6 +59,9 @@ class CustomerController extends Controller
         $customer->email = $request->email;
         $customer->phone_number = $request->phone_number;
         $customer->bkr_number = $request->bkr_number;
+        $customer->address = $request->address;
+        $customer->city = $request->city;
+        $customer->zipcode = $request->zipcode;
         $customer->notes = $request->notes;
         $customer->save();
 
