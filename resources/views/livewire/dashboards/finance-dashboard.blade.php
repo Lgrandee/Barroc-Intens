@@ -6,9 +6,9 @@
         <h1 class="text-xl font-semibold mb-1">Welkom, {{ auth()->user()->name ?? '' }}</h1>
         <p class="text-sm text-white/90 mb-4">Je hebt {{ $recentInvoices->where('status', '!=', 'betaald')->count() }} openstaande facturen en {{ $reminders->count() }} herinneringen voor deze week</p>
         <div class="flex flex-wrap gap-3">
-            <button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">Nieuwe Factuur</button>
-            <button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">Factuur Overzicht</button>
-            <button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">Ticket Overzicht</button>
+            <a href="{{ route('facturen.create') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Nieuwe Factuur</a>
+            <a href="{{ route('facturen.index') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Factuur Overzicht</a>
+            <a href="{{ route('planner.tickets.index') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">Ticket Overzicht</a>
         </div>
     </div>
 
@@ -125,7 +125,7 @@
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
                 <div class="flex items-center justify-between p-4 border-b border-gray-100">
                     <h2 class="text-lg font-medium">Recente Facturen</h2>
-                    <button class="text-sm text-gray-600">Alles Bekijken</button>
+                    <a href="{{ route('facturen.index') }}" class="text-sm text-gray-600 hover:text-gray-900">Alles Bekijken</a>
                 </div>
                 <div class="divide-y divide-gray-100">
                     @forelse($recentInvoices as $invoice)
