@@ -48,69 +48,45 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 space-y-6">
-            <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-                <!-- Alpine Component -->
-                <div x-data="salesChart()" x-init="initChart()" class="flex flex-col">
-                    <div class="flex items-center justify-between p-4 border-b border-gray-100">
-                        <h2 class="text-lg font-medium">Sales Pipeline</h2>
-                        <div class="flex gap-2">
-                            <button @click="setFilter('maand')" :class="filter === 'maand' ? 'bg-blue-100 text-blue-700 border-blue-200' : 'bg-white text-gray-600 border-gray-200'" class="px-3 py-1 text-sm rounded border">Maand</button>
-                            <button @click="setFilter('kwartaal')" :class="filter === 'kwartaal' ? 'bg-blue-100 text-blue-700 border-blue-200' : 'bg-white text-gray-600 border-gray-200'" class="px-3 py-1 text-sm rounded border">Kwartaal</button>
-                            <button @click="setFilter('jaar')" :class="filter === 'jaar' ? 'bg-blue-100 text-blue-700 border-blue-200' : 'bg-white text-gray-600 border-gray-200'" class="px-3 py-1 text-sm rounded border">Jaar</button>
-                        </div>
-                    </div>
-                    <div class="p-4" wire:ignore>
-                        <div class="relative h-64 w-full">
-                            <canvas x-ref="canvas"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+    <div class="space-y-6">
+        <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+            <!-- Alpine Component -->
+            <div x-data="salesChart()" x-init="initChart()" class="flex flex-col">
                 <div class="flex items-center justify-between p-4 border-b border-gray-100">
-                    <h2 class="text-lg font-medium">Recente Deals</h2>
-                    <a href="{{ route('offertes.index') }}" class="text-sm text-gray-600">Alle Deals</a>
-                </div>
-                <div class="divide-y divide-gray-100">
-                    @forelse($recentDeals as $deal)
-                    <div class="flex items-center p-4">
-                        <div class="flex-1">
-                            <h4 class="font-medium">Offerte #{{ $deal->id }}</h4>
-                            <p class="text-sm text-gray-500">{{ $deal->customer->name_company ?? 'Onbekend' }} - Status: {{ $deal->status }}</p>
-                        </div>
-                        <div class="text-right">
-                            <div class="font-medium">{{ $deal->valid_until ? \Carbon\Carbon::parse($deal->valid_until)->format('d M Y') : '-' }}</div>
-                        </div>
+                    <h2 class="text-lg font-medium">Sales Pipeline</h2>
+                    <div class="flex gap-2">
+                        <button @click="setFilter('maand')" :class="filter === 'maand' ? 'bg-blue-100 text-blue-700 border-blue-200' : 'bg-white text-gray-600 border-gray-200'" class="px-3 py-1 text-sm rounded border">Maand</button>
+                        <button @click="setFilter('kwartaal')" :class="filter === 'kwartaal' ? 'bg-blue-100 text-blue-700 border-blue-200' : 'bg-white text-gray-600 border-gray-200'" class="px-3 py-1 text-sm rounded border">Kwartaal</button>
+                        <button @click="setFilter('jaar')" :class="filter === 'jaar' ? 'bg-blue-100 text-blue-700 border-blue-200' : 'bg-white text-gray-600 border-gray-200'" class="px-3 py-1 text-sm rounded border">Jaar</button>
                     </div>
-                    @empty
-                    <div class="p-4 text-gray-500 text-center">Geen recente deals.</div>
-                    @endforelse
+                </div>
+                <div class="p-4" wire:ignore>
+                    <div class="relative h-64 w-full">
+                        <canvas x-ref="canvas"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div>
-            <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                <div class="flex items-center justify-between p-4 border-b border-gray-100">
-                    <h2 class="text-lg font-medium">Taken & Activiteiten</h2>
-                    <button class="text-sm text-gray-600">+ Taak</button>
-                </div>
-                <div class="p-4 space-y-4">
-                    @forelse($recentTasks as $task)
-                    <div class="flex items-start gap-3 p-3 border border-gray-200 rounded-lg">
-                        <div class="w-4 h-4 border-2 border-gray-300 rounded mt-1"></div>
-                        <div class="flex-1">
-                            <p class="text-sm font-medium">{{ $task->catagory }} - {{ $task->location ?? 'Geen locatie' }}</p>
-                            <p class="text-xs text-gray-500">Gepland: {{ $task->scheduled_time ? \Carbon\Carbon::parse($task->scheduled_time)->format('d M Y H:i') : 'Niet gepland' }}</p>
-                        </div>
+        <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+            <div class="flex items-center justify-between p-4 border-b border-gray-100">
+                <h2 class="text-lg font-medium">Recente Deals</h2>
+                <a href="{{ route('offertes.index') }}" class="text-sm text-gray-600">Alle Deals</a>
+            </div>
+            <div class="divide-y divide-gray-100">
+                @forelse($recentDeals as $deal)
+                <div class="flex items-center p-4">
+                    <div class="flex-1">
+                        <h4 class="font-medium">Offerte #{{ $deal->id }}</h4>
+                        <p class="text-sm text-gray-500">{{ $deal->customer->name_company ?? 'Onbekend' }} - Status: {{ $deal->status }}</p>
                     </div>
-                    @empty
-                    <div class="p-4 text-gray-500 text-center">Geen taken gevonden.</div>
-                    @endforelse
+                    <div class="text-right">
+                        <div class="font-medium">{{ $deal->valid_until ? \Carbon\Carbon::parse($deal->valid_until)->format('d M Y') : '-' }}</div>
+                    </div>
                 </div>
+                @empty
+                <div class="p-4 text-gray-500 text-center">Geen recente deals.</div>
+                @endforelse
             </div>
         </div>
     </div>
