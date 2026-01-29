@@ -156,7 +156,6 @@
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
                 <div class="flex items-center justify-between p-4 border-b border-gray-100">
                     <h2 class="text-lg font-medium">Betalingsherinneringen</h2>
-                    <button class="text-sm text-gray-600">+ Herinnering</button>
                 </div>
                 <div class="p-3 space-y-2">
                     @forelse($reminders as $reminder)
