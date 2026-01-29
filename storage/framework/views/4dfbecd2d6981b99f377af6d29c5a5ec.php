@@ -163,7 +163,6 @@
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
                 <div class="flex items-center justify-between p-4 border-b border-gray-100">
                     <h2 class="text-lg font-medium">Betalingsherinneringen</h2>
-                    <button class="text-sm text-gray-600">Instellingen</button>
                 </div>
                 <div class="p-3 space-y-2">
                     <!--[if BLOCK]><![endif]--><?php $__empty_1 = true; $__currentLoopData = $reminders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $reminder): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
