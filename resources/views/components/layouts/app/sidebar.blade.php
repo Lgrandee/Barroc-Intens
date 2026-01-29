@@ -8,6 +8,7 @@
             .dark [data-flux-navlist-item][aria-current="page"] {
                 @apply bg-gray-400 dark:bg-zinc-600 font-semibold;
             }
+            html body { background-color: #f3f4f6 !important; }
         </style>
     </head>
     <body class="min-h-screen bg-[#FAF9F6] dark:bg-zinc-800">
