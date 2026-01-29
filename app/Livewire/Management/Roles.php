@@ -12,7 +12,8 @@ class Roles extends Component
     public $showModal = false;
     public $isEditing = false;
     public $viewOnly = false;
-    
+    public $search = '';
+
     // Form properties
     public $roleId;
     #[Validate('required|min:3')]
@@ -62,9 +63,24 @@ class Roles extends Component
         $this->loadRoles();
     }
 
+    public function updatedSearch()
+    {
+        $this->loadRoles();
+    }
+
     public function loadRoles()
     {
-        $this->roles = Role::all();
+        $query = Role::query();
+
+        if ($this->search) {
+            $query->where(function($q) {
+                $q->where('name', 'like', '%' . $this->search . '%')
+                  ->orWhere('label', 'like', '%' . $this->search . '%')
+                  ->orWhere('description', 'like', '%' . $this->search . '%');
+            });
+        }
+
+        $this->roles = $query->get();
     }
 
     public function create()
@@ -84,7 +100,7 @@ class Roles extends Component
         $this->description = $role->description;
         // Ensure permissions is an array, default to empty
         $this->selectedPermissions = $role->permissions ?? [];
-        
+
         $this->isEditing = true;
         $this->viewOnly = false;
         $this->showModal = true;
@@ -98,7 +114,7 @@ class Roles extends Component
         $this->label = $role->label;
         $this->description = $role->description;
         $this->selectedPermissions = $role->permissions ?? [];
-        
+
         $this->isEditing = false;
         $this->viewOnly = true;
         $this->showModal = true;
