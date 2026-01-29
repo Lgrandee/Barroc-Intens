@@ -96,6 +96,19 @@ class ProductController extends Controller
         return view('purchasing.editProduct', compact('product'));
     }
 
+    // Update a product
+    public function update(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $product->product_name = $request->product_name;
+        $product->stock = $request->stock;
+        $product->price = $request->price;
+        $product->type = $request->type;
+        $product->save();
+
+        return redirect()->route('product.stock')->with('success', 'Product bijgewerkt.');
+    }
+
     // Delete a product
     public function destroy($id)
     {

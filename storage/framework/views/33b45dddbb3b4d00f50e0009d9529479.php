@@ -188,6 +188,7 @@
             [data-flux-sidebar]::-webkit-scrollbar-thumb:hover {
                 background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%);
             }
+            html body { background-color: #f3f4f6 !important; }
         </style>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>

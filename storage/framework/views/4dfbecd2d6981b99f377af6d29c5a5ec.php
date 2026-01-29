@@ -1,7 +1,7 @@
 <div>
 <?php ($title = 'Admin Dashboard'); ?>
 
-<div class="p-6 bg-[#FAF9F6]">
+<div class="p-6 bg-[#F3F4F6]">
     <div class="bg-gradient-to-br from-blue-700 to-blue-500 text-white rounded-xl p-6 mb-6 shadow-lg">
         <h1 class="text-xl font-semibold mb-1">Welkom, <?php echo e(auth()->user()->name ?? ''); ?></h1>
         <p class="text-sm text-white/90 mb-4">Je hebt <?php echo e($openInvoicesCount); ?> openstaande facturen en <?php echo e($reminders->count()); ?> herinneringen voor deze week</p>
