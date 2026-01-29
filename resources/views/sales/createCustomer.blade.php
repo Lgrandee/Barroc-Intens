@@ -9,7 +9,7 @@
             </div>
 
             <!-- Form -->
-            <form action="{{ route('customers.store') }}" method="POST" class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+            <form action="{{ route('customers.store') }}" method="POST" class="bg-white border border-gray-200 rounded-lg p-6 shadow-xl">
                 @csrf
                 <div class="space-y-4">
                     <div>
@@ -38,13 +38,13 @@
                     </div>
                 </div>
 
-      <button type="submit" class="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
-        ➕ Klant toevoegen
+      <button type="submit" class="mt-4 w-full flex items-center justify-center gap-2 bg-yellow-400 text-black py-2 rounded-md hover:bg-yellow-300 transition">
+        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 00-1.414 0L9 11.586 6.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l7-7a1 1 0 000-1.414z"/></svg>
+        Klant toevoegen
       </button>
 
     </form>
 
   </main>
 
-</body>
-</html>
+</x-layouts.app>
