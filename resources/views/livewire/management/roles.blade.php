@@ -4,6 +4,23 @@
         <p class="text-sm text-gray-500">Beheer gebruikersrollen en permissies</p>
     </header>
 
+    @if (session()->has('success'))
+        <div class="mb-6 bg-green-50 border-l-4 border-green-500 p-4">
+            <div class="flex">
+                <div class="shrink-0">
+                    <svg class="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-green-700">
+                        {{ session('success') }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <!-- Action Buttons -->
     <div class="flex gap-3 mb-6">
         <button wire:click="create" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 font-medium text-sm transition flex items-center gap-2">
@@ -50,7 +67,7 @@
                 </div>
             </div>
 
-            <div class="mb-4 flex-grow">
+            <div class="mb-4 grow">
                 <p class="text-sm text-gray-600">{{ $role->description ?? 'Geen beschrijving' }}</p>
                 <div class="mt-2">
                     <span class="text-xs text-gray-500">{{ is_array($role->permissions) ? count($role->permissions) : 0 }} permissies actief</span>
@@ -82,7 +99,7 @@
 
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+            <div class="relative z-10 inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full" x-on:click.stop>
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="sm:flex sm:items-start">
                         <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">

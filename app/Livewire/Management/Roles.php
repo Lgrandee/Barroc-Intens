@@ -110,6 +110,7 @@ class Roles extends Component
 
         $this->loadRoles();
         $this->showModal = false;
+        session()->flash('success', $this->isEditing ? 'Rol succesvol bijgewerkt.' : 'Nieuwe rol succesvol aangemaakt.');
         $this->resetForm();
     }
 
