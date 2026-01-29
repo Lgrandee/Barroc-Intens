@@ -90,11 +90,51 @@
     </div>
 
     <!-- Pagination -->
-    <div class="mt-6 flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4">
-        <span class="text-gray-500 text-sm">Toont {{ $customers->count() }} van {{ $customers->total() }} klanten</span>
+    <div class="mt-6 flex flex-col items-center gap-3 bg-white border border-gray-200 rounded-lg px-4 py-3">
+        <div class="text-sm text-gray-700">
+            Showing {{ $customers->firstItem() ?? 0 }}–{{ $customers->lastItem() ?? 0 }} of {{ $customers->total() }}
+        </div>
+        <div class="flex gap-1 items-center">
+            @if($customers->onFirstPage())
+                <span class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-400 cursor-not-allowed">‹</span>
+            @else
+                <button wire:click="previousPage" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">‹</button>
+            @endif
 
-        <div>
-            {!! $customers->links() !!}
+            @php
+                $currentPage = $customers->currentPage();
+                $lastPage = $customers->lastPage();
+                $start = max(1, $currentPage - 2);
+                $end = min($lastPage, $currentPage + 2);
+            @endphp
+
+            @if ($start > 1)
+                <button wire:click="gotoPage(1)" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">1</button>
+                @if ($start > 2)
+                    <span class="px-2 text-gray-500">...</span>
+                @endif
+            @endif
+
+            @for ($page = $start; $page <= $end; $page++)
+                @if ($page == $currentPage)
+                    <span class="px-3 py-1 border border-yellow-400 bg-yellow-400 text-black rounded text-sm font-medium">{{ $page }}</span>
+                @else
+                    <button wire:click="gotoPage({{ $page }})" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">{{ $page }}</button>
+                @endif
+            @endfor
+
+            @if ($end < $lastPage)
+                @if ($end < $lastPage - 1)
+                    <span class="px-2 text-gray-500">...</span>
+                @endif
+                <button wire:click="gotoPage({{ $lastPage }})" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">{{ $lastPage }}</button>
+            @endif
+
+            @if($customers->hasMorePages())
+                <button wire:click="nextPage" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">›</button>
+            @else
+                <span class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-400 cursor-not-allowed">›</span>
+            @endif
         </div>
     </div>
 </div>

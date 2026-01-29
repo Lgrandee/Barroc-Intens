@@ -31,6 +31,57 @@
             @empty
                 <div class="p-6 text-center text-gray-500">Er zijn nog geen bestellingen in de backlog.</div>
             @endforelse
+
+            <!-- Pagination -->
+            @if($logs->hasPages())
+            <div class="flex flex-col items-center gap-3 px-4 py-3 border-t border-gray-200 bg-gray-50">
+                <div class="text-sm text-gray-700">
+                    Showing {{ $logs->firstItem() ?? 0 }}–{{ $logs->lastItem() ?? 0 }} of {{ $logs->total() }}
+                </div>
+                <div class="flex gap-1 items-center">
+                    @if($logs->onFirstPage())
+                        <span class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-400 cursor-not-allowed">‹</span>
+                    @else
+                        <a href="{{ $logs->previousPageUrl() }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">‹</a>
+                    @endif
+
+                    @php
+                        $currentPage = $logs->currentPage();
+                        $lastPage = $logs->lastPage();
+                        $start = max(1, $currentPage - 2);
+                        $end = min($lastPage, $currentPage + 2);
+                    @endphp
+
+                    @if ($start > 1)
+                        <a href="{{ $logs->url(1) }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">1</a>
+                        @if ($start > 2)
+                            <span class="px-2 text-gray-500">...</span>
+                        @endif
+                    @endif
+
+                    @for ($page = $start; $page <= $end; $page++)
+                        @if ($page == $currentPage)
+                            <span class="px-3 py-1 border border-yellow-400 bg-yellow-400 text-black rounded text-sm font-medium">{{ $page }}</span>
+                        @else
+                            <a href="{{ $logs->url($page) }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">{{ $page }}</a>
+                        @endif
+                    @endfor
+
+                    @if ($end < $lastPage)
+                        @if ($end < $lastPage - 1)
+                            <span class="px-2 text-gray-500">...</span>
+                        @endif
+                        <a href="{{ $logs->url($lastPage) }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">{{ $lastPage }}</a>
+                    @endif
+
+                    @if($logs->hasMorePages())
+                        <a href="{{ $logs->nextPageUrl() }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">›</a>
+                    @else
+                        <span class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-400 cursor-not-allowed">›</span>
+                    @endif
+                </div>
+            </div>
+            @endif
         </div>
 
         <div class="p-4 flex justify-between items-center bg-gray-50 border-t border-gray-200 mt-4">
