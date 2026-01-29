@@ -46,6 +46,18 @@ class ProductController extends Controller
         ]);
 
         $quantities = $data['quantities'] ?? [];
+        $hasProduct = false;
+        foreach ($quantities as $qty) {
+            if ((int)$qty > 0) {
+                $hasProduct = true;
+                break;
+            }
+        }
+        if (!$hasProduct) {
+            return redirect()->route('products.order')
+                ->withErrors(['order' => 'Selecteer minstens één product om te bestellen.'])
+                ->withInput();
+        }
 
         DB::transaction(function () use ($quantities) {
             foreach ($quantities as $productId => $qty) {
@@ -63,8 +75,6 @@ class ProductController extends Controller
                         'price' => $product->price ?? 0,
                     ]);
                 } catch (\Exception $e) {
-                    // Als het niet lukt om de log-entry aan te maken, rollback explicit niet nodig
-                    // omdat we binnen een DB::transaction zitten; rethrow om de transactie te laten falen
                     throw $e;
                 }
             }
@@ -78,5 +88,32 @@ class ProductController extends Controller
     {
         $logs = OrderLogistic::with('product')->orderBy('created_at', 'desc')->get();
         return view('purchasing.orderLogistics', compact('logs'));
+    }
+    // Show the edit form for a product
+    public function edit($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('purchasing.editProduct', compact('product'));
+    }
+
+    // Update a product
+    public function update(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $product->product_name = $request->product_name;
+        $product->stock = $request->stock;
+        $product->price = $request->price;
+        $product->type = $request->type;
+        $product->save();
+
+        return redirect()->route('product.stock')->with('success', 'Product bijgewerkt.');
+    }
+
+    // Delete a product
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return redirect()->route('product.stock')->with('success', 'Product verwijderd.');
     }
 }

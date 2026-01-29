@@ -35,7 +35,7 @@ class Offerte extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'offerte_products')->withPivot('quantity')->withTimestamps();
+        return $this->belongsToMany(Product::class, 'offerte_products')->withTimestamps();
     }
 
     public function factuur()

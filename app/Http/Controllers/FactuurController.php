@@ -55,12 +55,7 @@ class FactuurController extends Controller
         $paymentTermsDays = (int) ($validated['payment_terms_days'] ?? 30);
         $dueDate = \Carbon\Carbon::parse($validated['invoice_date'])->addDays($paymentTermsDays);
 
-        // Check if invoice is overdue on creation (shouldn't be, but safety check)
-        $status = $validated['status'];
-        if ($status === 'verzonden' && now()->gt($dueDate)) {
-            $status = 'verlopen';
-        }
-
+        // Always create as 'concept' first - only mark as 'verzonden' when actually sent from send page
         $factuur = Factuur::create([
             'name_company_id' => $validated['name_company_id'],
             'invoice_date' => $validated['invoice_date'],
@@ -69,8 +64,8 @@ class FactuurController extends Controller
             'payment_method' => $validated['payment_method'],
             'description' => $validated['description'] ?? null,
             'notes' => $validated['notes'] ?? null,
-            'status' => $status,
-            'sent_at' => $status === 'verzonden' ? now() : null,
+            'status' => 'concept',
+            'sent_at' => null,
         ]);
 
         // Attach products with quantities
@@ -81,11 +76,12 @@ class FactuurController extends Controller
         }
         $factuur->products()->sync($syncData);
 
-        // Redirect based on status
+        // Redirect based on user's choice
         if ($validated['status'] === 'concept') {
             return redirect()->route('facturen.edit', $factuur->id)->with('success', 'Factuur concept opgeslagen.');
         }
 
+        // User chose "Maak aan en verstuur" - go to send page
         return redirect()->route('facturen.send', $factuur->id)->with('success', 'Factuur aangemaakt. Verstuur naar klant.');
     }
 
@@ -115,6 +111,7 @@ class FactuurController extends Controller
             'product_ids.*' => ['required', 'exists:products,id'],
             'product_quantities' => ['required', 'array'],
             'product_quantities.*' => ['required', 'integer', 'min:1'],
+            'description' => ['nullable', 'string', 'max:1000'],
             'notes' => ['nullable', 'string', 'max:5000'],
         ]);
 
@@ -122,6 +119,8 @@ class FactuurController extends Controller
 
         $factuur->update([
             'name_company_id' => $validated['name_company_id'],
+            'description' => $validated['description'] ?? null,
+            'notes' => $validated['notes'] ?? null,
         ]);
 
         // Sync products with quantities

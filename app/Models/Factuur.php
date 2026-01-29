@@ -25,6 +25,13 @@ class Factuur extends Model
         'paid_at',
     ];
 
+    protected $casts = [
+        'invoice_date' => 'datetime',
+        'due_date' => 'datetime',
+        'sent_at' => 'datetime',
+        'paid_at' => 'datetime',
+    ];
+
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'name_company_id');
@@ -33,7 +40,6 @@ class Factuur extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class, 'factuur_products')
-                    ->withPivot('quantity')
                     ->withTimestamps();
     }
 
@@ -45,7 +51,8 @@ class Factuur extends Model
     public function getTotalAmountAttribute()
     {
         return $this->products->sum(function ($product) {
-            return $product->price * $product->pivot->quantity;
+            $qty = $product->pivot->quantity ?? 1;
+            return $product->price * $qty;
         });
     }
 }

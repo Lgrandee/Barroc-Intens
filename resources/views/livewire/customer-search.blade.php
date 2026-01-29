@@ -1,5 +1,5 @@
 <div>
-  <label for="name_company_id" class="font-semibold text-gray-700">Customer</label>
+  <label for="name_company_id" class="font-semibold text-gray-800 dark:text-gray-200">Zoek klant of bedrijf</label>
 
   @if($selectedId)
     {{-- Selected customer display --}}

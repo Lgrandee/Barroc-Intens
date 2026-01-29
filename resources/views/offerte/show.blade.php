@@ -1,7 +1,6 @@
 <x-layouts.app :title="'Offerte Goedkeuren & Verzenden'">
   <style>
     /* Light-only page background override */
-    html:not(.dark) body { background-color: #f3f4f6 !important; }
 
     /* Slide up animation */
     @keyframes slideUpIn {
@@ -36,13 +35,13 @@
     }
   </style>
   <main class="p-6 max-w-6xl mx-auto">
-    <header class="mb-6 flex items-start justify-between gap-4">
-      <div>
+    <header class="mb-6">
+      <div class="text-center mb-4">
         <h1 class="text-3xl font-semibold text-black dark:text-white">Offerte Goedkeuren & Verzenden</h1>
         <p class="text-sm text-gray-600 dark:text-gray-300">Laatste controle en verzending naar klant</p>
       </div>
-      <a href="{{ route('offertes.index') }}" class="inline-flex items-center gap-2 rounded-md bg-yellow-400 px-3 py-1.5 text-sm font-semibold text-black shadow hover:bg-yellow-300 transition-colors">
-        <span class="inline-block h-2 w-2 rounded-full bg-black"></span>
+      <a href="{{ route('offertes.index') }}" class="inline-flex items-center gap-2 rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-yellow-300 transition-colors">
+        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4A1 1 0 0110.707 6.293L8.414 8.586H16a1 1 0 110 2H8.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"/></svg>
         Terug naar overzicht
       </a>
     </header>
@@ -147,8 +146,9 @@
           </div>
           @if($offerte->contract)
             <a href="{{ route('contracts.show', $offerte->contract->id) }}"
-              class="px-4 py-2 bg-yellow-400 text-black rounded-md hover:bg-yellow-300 text-sm font-semibold transition-colors">
-              📋 Bekijk Contract
+              class="inline-flex items-center gap-2 px-4 py-2 bg-yellow-400 text-black rounded-md hover:bg-yellow-300 text-sm font-semibold transition-colors">
+              <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 011 1v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7z"/></svg>
+              Bekijk Contract
             </a>
           @endif
         </div>
@@ -171,8 +171,9 @@
             </div>
           </div>
           <a href="{{ route('facturen.edit', $offerte->factuur->id) }}"
-            class="px-4 py-2 bg-yellow-400 text-black rounded-md hover:bg-yellow-300 text-sm font-semibold transition-colors">
-            📄 Bekijk Factuur
+            class="inline-flex items-center gap-2 px-4 py-2 bg-yellow-400 text-black rounded-md hover:bg-yellow-300 text-sm font-semibold transition-colors">
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M4 4a2 2 0 012-2h4l4 4v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/></svg>
+            Bekijk Factuur
           </a>
         </div>
       </div>
@@ -183,7 +184,8 @@
       <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden">
         <div class="p-5 border-b border-gray-100 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900">
           <h2 class="text-lg font-semibold text-black dark:text-white flex items-center gap-2">
-            ✓ Controle Checklist
+            <svg class="h-5 w-5 text-green-600" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            Controle Checklist
           </h2>
         </div>
         <div class="p-5 space-y-3">
@@ -220,11 +222,11 @@
 
       <!-- Right: E-mail Preview -->
       <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden">
-        <div class="p-5 border-b border-gray-100 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900 flex items-center justify-between">
+        <div class="p-5 border-b border-gray-100 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900">
           <h2 class="text-lg font-semibold text-black dark:text-white flex items-center gap-2">
-            📧 E-mail Preview
+            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+            E-mail Preview
           </h2>
-          <a href="{{ route('offertes.edit', $offerte->id) }}" class="text-yellow-500 hover:text-yellow-400 text-sm font-semibold transition-colors">✏️ Bewerk</a>
         </div>
         <div class="p-5 space-y-4 text-sm">
           <div>
@@ -266,19 +268,19 @@
           </div>
 
           <div class="border-t border-gray-200 dark:border-zinc-700 pt-4 space-y-2">
-            <a href="{{ route('offertes.pdf', $offerte->id) }}" class="flex items-center gap-2 text-yellow-500 hover:text-yellow-400 transition-colors">
-              <span>📄</span>
+            <a href="{{ route('offertes.pdf', $offerte->id) }}" class="flex items-center gap-2 text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-200 transition-colors">
+              <svg class="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path d="M4 4a2 2 0 012-2h4l4 4v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/></svg>
               <div>
                 <div class="font-medium">Offerte-OFF-{{ date('Y', strtotime($offerte->created_at)) }}-{{ str_pad($offerte->id, 3, '0', STR_PAD_LEFT) }}.pdf</div>
-                <div class="text-xs text-yellow-600 dark:text-yellow-400">PDF Document • Klik om te downloaden</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">PDF Document • Klik om te downloaden</div>
               </div>
             </a>
             <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-              <span>📄</span>
-              <div>
-                <div class="font-medium">Algemene-voorwaarden-2025.pdf</div>
-                <div class="text-xs text-gray-500 dark:text-gray-500">PDF Document • 880 KB</div>
-              </div>
+              <svg class="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path d="M4 4a2 2 0 012-2h4l4 4v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/></svg>
+              <a href="{{ route('general-terms.pdf') }}" class="flex-1">
+                <div class="font-medium text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-200">Algemene-voorwaarden-2025.pdf</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">PDF Document • Klik om te downloaden</div>
+              </a>
             </div>
           </div>
         </div>
@@ -287,14 +289,15 @@
 
     <!-- Actions -->
     <div class="flex justify-between items-center mt-6">
-      <a href="{{ route('offertes.edit', $offerte->id) }}" class="text-yellow-500 hover:text-yellow-400 text-sm font-semibold transition-colors">
-        🔙 Bewerk
+      <a href="{{ route('offertes.edit', $offerte->id) }}" class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200 text-sm font-semibold transition-colors">
+        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+        Terug naar bewerken
       </a>
       <div class="flex gap-3">
         <form method="POST" action="{{ route('offertes.send', $offerte->id) }}">
           @csrf
           <button type="submit" class="inline-flex items-center gap-2 rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-yellow-300 transition-colors">
-            <span class="inline-block h-2 w-2 rounded-full bg-black"></span>
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
             Verstuur naar klant
           </button>
         </form>

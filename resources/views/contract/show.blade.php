@@ -1,7 +1,6 @@
 <x-layouts.app :title="'Contract Details'">
   <style>
     /* Light-only page background override for consistency */
-    html:not(.dark) body { background-color: #f3f4f6 !important; }
   </style>
   <main class="p-6 min-h-screen max-w-5xl mx-auto">
     <header class="mb-6 flex items-start justify-between gap-4">

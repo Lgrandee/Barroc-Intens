@@ -1,6 +1,5 @@
 <x-layouts.app title="Klant Bewerken">
-
-    <div class="p-6 bg-gray-50 dark:bg-zinc-900 min-h-screen">
+    <div class="p-6 bg-[#f3f4f6] min-h-screen">
         <div class="max-w-3xl mx-auto">
             <!-- Header Section -->
             <header class="mb-6 flex flex-col items-center gap-2">

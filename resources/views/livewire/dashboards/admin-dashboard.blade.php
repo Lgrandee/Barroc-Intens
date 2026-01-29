@@ -1,7 +1,7 @@
-<div wire:poll.2s>
+<div>
 @php($title = 'Admin Dashboard')
 
-<div class="p-6 bg-[#FAF9F6]">
+<div class="p-6 bg-[#F3F4F6]">
     <div class="bg-gradient-to-br from-blue-700 to-blue-500 text-white rounded-xl p-6 mb-6 shadow-lg">
         <h1 class="text-xl font-semibold mb-1">Welkom, {{ auth()->user()->name ?? '' }}</h1>
         <p class="text-sm text-white/90 mb-4">Je hebt {{ $openInvoicesCount }} openstaande facturen en {{ $reminders->count() }} herinneringen voor deze week</p>
@@ -51,17 +51,86 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2 space-y-6">
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                <div class="flex items-center justify-between p-4 border-b border-gray-100">
-                    <h2 class="text-lg font-medium">Cashflow Overzicht</h2>
-                    <div class="flex gap-2">
-                        <button class="px-3 py-1 text-sm bg-yellow-100 text-yellow-700 rounded border border-yellow-200">Maand</button>
-                        <button class="px-3 py-1 text-sm bg-white text-gray-600 rounded border border-gray-200">Kwartaal</button>
-                        <button class="px-3 py-1 text-sm bg-white text-gray-600 rounded border border-gray-200">Jaar</button>
+                <!-- Chart with Alpine handling everything -->
+                <div x-data="{
+                    chart: null,
+                    filter: 'maand',
+                    loading: false,
+                    chartOptions: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: { mode: 'index', intersect: false },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { display: true, borderDash: [2, 4] },
+                                ticks: {
+                                    callback: function(value) {
+                                        return '€' + value.toLocaleString('nl-NL');
+                                    }
+                                }
+                            },
+                            x: { grid: { display: false } }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                padding: 12,
+                                cornerRadius: 8,
+                                callbacks: {
+                                    label: function(context) {
+                                        return '€' + context.parsed.y.toLocaleString('nl-NL');
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    createChart(data) {
+                        if (this.chart) {
+                            this.chart.destroy();
+                        }
+                        const ctx = this.$refs.canvas.getContext('2d');
+                        this.chart = new Chart(ctx, {
+                            type: 'line',
+                            data: data,
+                            options: this.chartOptions
+                        });
+                    },
+                    initChart() {
+                        if (typeof Chart === 'undefined') return;
+                        this.createChart(@js($chartData));
+                    },
+                    setFilter(newFilter) {
+                        if (this.loading) return;
+                        this.filter = newFilter;
+                        this.loading = true;
+                        $wire.getChartData(newFilter).then(data => {
+                            if (data && data.labels && data.datasets) {
+                                this.createChart(data);
+                            }
+                            this.loading = false;
+                        }).catch(err => {
+                            console.error('Chart data error:', err);
+                            this.loading = false;
+                        });
+                    }
+                }" x-init="initChart()" class="flex flex-col">
+                    <div class="flex items-center justify-between p-4 border-b border-gray-100">
+                        <h2 class="text-lg font-medium">Cashflow Overzicht</h2>
+                        <div class="flex gap-2">
+                            <button @click="setFilter('maand')" :class="filter === 'maand' ? 'bg-yellow-100 text-yellow-700 border-yellow-200' : 'bg-white text-gray-600 border-gray-200'" class="px-3 py-1 text-sm rounded border">Maand</button>
+                            <button @click="setFilter('kwartaal')" :class="filter === 'kwartaal' ? 'bg-yellow-100 text-yellow-700 border-yellow-200' : 'bg-white text-gray-600 border-gray-200'" class="px-3 py-1 text-sm rounded border">Kwartaal</button>
+                            <button @click="setFilter('jaar')" :class="filter === 'jaar' ? 'bg-yellow-100 text-yellow-700 border-yellow-200' : 'bg-white text-gray-600 border-gray-200'" class="px-3 py-1 text-sm rounded border">Jaar</button>
+                        </div>
                     </div>
-                </div>
-                <div class="p-4">
-                    <div class="bg-gray-50 border-2 border-dashed border-gray-200 rounded-lg p-8 text-center">
-                        <p class="text-gray-500">Hier komt een lijngrafiek met inkomsten vs uitgaven</p>
+                    <div class="p-4 relative">
+                        <div x-show="loading" class="absolute inset-0 bg-white/50 flex items-center justify-center z-10">
+                            <span class="text-gray-500">Laden...</span>
+                        </div>
+                        <div class="relative h-64 w-full">
+                            <canvas x-ref="canvas"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 <x-layouts.app title="Nieuwe Klant">
-    <div class="p-6 bg-[#FAF9F6] min-h-screen flex justify-center">
+    <div class="p-6 bg-[#f3f4f6] min-h-screen flex justify-center">
         <div class="w-full max-w-xl">
             <!-- Header -->
             <div class="mb-6">

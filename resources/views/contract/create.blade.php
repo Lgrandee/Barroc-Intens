@@ -1,11 +1,8 @@
 <x-layouts.app :title="'New contract'">
-  <style>
-    /* Light-only page background override for consistency */
-    html:not(.dark) body { background-color: #f3f4f6 !important; }
-  </style>
+
   <main class="p-6 min-h-screen max-w-4xl mx-auto">
-    <header class="mb-6 flex items-start justify-between gap-4">
-      <div>
+    <header class="mb-6">
+      <div class="text-center mb-4">
         <h1 class="text-3xl font-semibold text-black dark:text-white">Create new contract</h1>
         <p class="text-sm text-gray-600 dark:text-gray-300">Create a new contract for an existing customer and product</p>
       </div>

@@ -7,7 +7,7 @@
             </header>
 
             <!-- Main Content -->
-            <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <div class="bg-[#f3f4f6] rounded-lg border border-gray-200 p-6">
                 <!-- Search and Filter -->
                 <form method="GET" action="{{ route('technician.planning') }}" class="flex gap-3 mb-6" id="filterForm">
                     <div class="relative flex-1">
@@ -47,7 +47,7 @@
                 <!-- Tasks Table -->
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
+                        <thead class="bg-[#f3f4f6]">
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Klant</th>
@@ -58,16 +58,16 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acties</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody class="bg-[#f3f4f6] divide-y divide-gray-200">
                             @forelse($planningTickets as $task)
-                            <tr class="hover:bg-gray-50">
+                            <tr class="hover:bg-[#f3f4f6]">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if($task->catagory === 'service')
-                                    <span class="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800">Onderhoud</span>
+                                    <span class="px-2 py-1 text-xs font-semibold rounded bg-[#f3f4f6] text-blue-800">Onderhoud</span>
                                     @elseif($task->catagory === 'installation')
-                                    <span class="px-2 py-1 text-xs font-semibold rounded bg-purple-100 text-purple-800">Installatie</span>
+                                    <span class="px-2 py-1 text-xs font-semibold rounded bg-[#f3f4f6] text-purple-800">Installatie</span>
                                     @else
-                                    <span class="px-2 py-1 text-xs font-semibold rounded bg-gray-100 text-gray-800">Afspraak</span>
+                                    <span class="px-2 py-1 text-xs font-semibold rounded bg-[#f3f4f6] text-gray-800">Afspraak</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -84,13 +84,13 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if($task->status === 'voltooid')
-                                    <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Voltooid</span>
+                                    <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#f3f4f6] text-green-800">Voltooid</span>
                                     @elseif($task->status === 'probleem')
-                                    <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Probleem</span>
+                                    <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#f3f4f6] text-red-800">Probleem</span>
                                     @elseif($task->status === 'te_laat')
-                                    <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Te laat</span>
+                                    <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#f3f4f6] text-yellow-800">Te laat</span>
                                     @else
-                                    <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">Open</span>
+                                    <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#f3f4f6] text-orange-800">Open</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">

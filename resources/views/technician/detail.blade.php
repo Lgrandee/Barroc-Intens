@@ -19,7 +19,7 @@
             <!-- Left Section: Details -->
             <div class="lg:col-span-2 space-y-6">
                 <!-- Klant Informatie -->
-                <div class="bg-white rounded-lg border border-gray-200 p-6">
+                <div class="bg-[#f3f4f6] rounded-lg border border-gray-200 p-6">
                     <h2 class="text-lg font-semibold text-gray-900 mb-4">Klant Informatie</h2>
                     <dl class="grid grid-cols-1 gap-4">
                         <div>
@@ -48,7 +48,7 @@
                 </div>
 
                 <!-- Taak Informatie -->
-                <div class="bg-white rounded-lg border border-gray-200 p-6">
+                <div class="bg-[#f3f4f6] rounded-lg border border-gray-200 p-6">
                     <h2 class="text-lg font-semibold text-gray-900 mb-4">Taak Informatie</h2>
                     <dl class="grid grid-cols-1 gap-4">
                         <div class="grid grid-cols-2 gap-4">
@@ -60,11 +60,11 @@
                                 <dt class="text-sm font-medium text-gray-500">Status</dt>
                                 <dd class="mt-1">
                                     @if(\Carbon\Carbon::parse($task->scheduled_time)->isFuture())
-                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
+                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#f3f4f6] text-orange-800">
                                             Open
                                         </span>
                                     @else
-                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#f3f4f6] text-green-800">
                                             Voltooid
                                         </span>
                                     @endif
@@ -94,7 +94,7 @@
                             <dt class="text-sm font-medium text-gray-500">Product(en) voor onderhoud</dt>
                             <dd class="mt-2 space-y-2">
                                 @foreach($task->feedback->products as $product)
-                                <div class="flex items-center justify-between p-2 bg-gray-50 rounded text-sm">
+                                <div class="flex items-center justify-between p-2 bg-[#f3f4f6] rounded text-sm">
                                     <div class="flex-1">
                                         <span class="font-medium text-gray-900">{{ $product->product_name }}</span>
                                         @if($product->pivot->quantity > 1)
@@ -113,7 +113,7 @@
 
             <!-- Right Section: Technicus Info -->
             <div class="lg:col-span-1">
-                <div class="bg-white rounded-lg border border-gray-200 p-6">
+                <div class="bg-[#f3f4f6] rounded-lg border border-gray-200 p-6">
                     <h2 class="text-lg font-semibold text-gray-900 mb-4">Toegewezen Technicus</h2>
                     <div class="space-y-4">
                         <div class="flex items-center">
@@ -154,15 +154,15 @@
                         <div class="mb-3">
                             <span class="text-xs font-medium text-gray-500">Status:</span>
                             @if($task->status === 'voltooid')
-                            <span class="ml-2 px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                            <span class="ml-2 px-2 py-1 text-xs font-semibold rounded-full bg-[#f3f4f6] text-green-800">
                                 Voltooid
                             </span>
                             @elseif($task->status === 'probleem')
-                            <span class="ml-2 px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                            <span class="ml-2 px-2 py-1 text-xs font-semibold rounded-full bg-[#f3f4f6] text-red-800">
                                 Probleem
                             </span>
                             @elseif($task->status === 'te_laat')
-                            <span class="ml-2 px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                            <span class="ml-2 px-2 py-1 text-xs font-semibold rounded-full bg-[#f3f4f6] text-yellow-800">
                                 Te laat
                             </span>
                             @endif
@@ -186,7 +186,7 @@
 
                 <!-- Rapport Weergave (indien ingevuld) -->
                 @if($task->feedback?->feedback)
-                <div class="bg-white rounded-lg border border-gray-200 p-6 mt-4">
+                <div class="bg-[#f3f4f6] rounded-lg border border-gray-200 p-6 mt-4">
                     <h3 class="text-lg font-semibold text-gray-900 mb-3">Rapport</h3>
                     <div class="prose prose-sm max-w-none">
                         <p class="text-sm text-gray-700 whitespace-pre-line">{{ $task->feedback->feedback }}</p>

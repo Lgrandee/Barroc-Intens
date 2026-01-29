@@ -105,6 +105,12 @@ class OfferteController extends Controller
         return $pdf->download($filename);
     }
 
+    public function downloadTermsPdf()
+    {
+        $pdf = Pdf::loadView('offerte.terms-pdf');
+        return $pdf->download('Algemene-voorwaarden-2025.pdf');
+    }
+
     public function edit($id)
     {
         $user = Auth::user();
