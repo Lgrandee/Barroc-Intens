@@ -11,6 +11,7 @@ class Roles extends Component
     public $roles;
     public $showModal = false;
     public $isEditing = false;
+    public $viewOnly = false;
     
     // Form properties
     public $roleId;
@@ -70,6 +71,7 @@ class Roles extends Component
     {
         $this->resetForm();
         $this->isEditing = false;
+        $this->viewOnly = false;
         $this->showModal = true;
     }
 
@@ -84,6 +86,21 @@ class Roles extends Component
         $this->selectedPermissions = $role->permissions ?? [];
         
         $this->isEditing = true;
+        $this->viewOnly = false;
+        $this->showModal = true;
+    }
+
+    public function preview($id)
+    {
+        $role = Role::findOrFail($id);
+        $this->roleId = $role->id;
+        $this->name = $role->name;
+        $this->label = $role->label;
+        $this->description = $role->description;
+        $this->selectedPermissions = $role->permissions ?? [];
+        
+        $this->isEditing = false;
+        $this->viewOnly = true;
         $this->showModal = true;
     }
 
@@ -127,6 +144,7 @@ class Roles extends Component
         $this->label = '';
         $this->description = '';
         $this->selectedPermissions = [];
+        $this->viewOnly = false;
         $this->resetValidation();
     }
 
