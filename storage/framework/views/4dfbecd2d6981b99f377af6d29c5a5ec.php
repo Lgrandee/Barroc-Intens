@@ -138,7 +138,7 @@
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
                 <div class="flex items-center justify-between p-4 border-b border-gray-100">
                     <h2 class="text-lg font-medium">Recente Facturen</h2>
-                    <button class="text-sm text-gray-600">Alles Bekijken</button>
+                    <a href="<?php echo e(route('facturen.index')); ?>" class="text-sm text-gray-600 hover:text-gray-900">Alles Bekijken</a>
                 </div>
                 <div class="divide-y divide-gray-100">
                     <!--[if BLOCK]><![endif]--><?php $__empty_1 = true; $__currentLoopData = $recentInvoices; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $invoice): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
