@@ -1,7 +1,4 @@
 <x-layouts.app :title="'Product bewerken'">
-    <style>
-        html:not(.dark) body { background-color: #f3f4f6 !important; }
-    </style>
     <main class="p-6 min-h-screen max-w-2xl mx-auto">
         <header class="mb-6">
             <div class="text-center mb-4">

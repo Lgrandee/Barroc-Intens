@@ -1,7 +1,6 @@
 <x-layouts.app :title="'Offerte Goedkeuren & Verzenden'">
   <style>
     /* Light-only page background override */
-    html:not(.dark) body { background-color: #f3f4f6 !important; }
 
     /* Slide up animation */
     @keyframes slideUpIn {

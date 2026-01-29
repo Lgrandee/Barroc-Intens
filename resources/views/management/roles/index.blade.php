@@ -7,7 +7,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         /* Light-only page background override */
-        html:not(.dark) body { background-color: #f3f4f6 !important; }
     </style>
 </head>
 <body class="bg-gray-50">
