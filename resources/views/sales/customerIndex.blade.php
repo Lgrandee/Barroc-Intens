@@ -15,17 +15,7 @@
                 <input type="text" placeholder="Zoek op naam, bedrijf, e-mail..." class="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500">
             </div>
 
-            <button class="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-600 hover:border-blue-500 hover:text-blue-600 transition">
-                🏷️ Status <span class="text-blue-600">(1)</span>
-            </button>
-
-            <button class="px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-600 hover:border-blue-500 hover:text-blue-600 transition">
-                📅 Datum
-            </button>
-
-            <button class="px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-600 hover:border-blue-500 hover:text-blue-600 transition">
-                💰 Omzet
-            </button>
+            <!-- Filter buttons removed: dead -->
 
             <a href="{{ route('customers.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700 flex items-center gap-2 transition shadow-sm">
                 ＋ Nieuwe Klant

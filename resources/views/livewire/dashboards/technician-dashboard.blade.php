@@ -6,9 +6,7 @@
         <h1 class="text-xl font-semibold mb-1">Goedemorgen, {{ auth()->user()->name ?? 'Gebruiker' }} 👋</h1>
         <p class="text-sm text-white/90 mb-4">Je hebt {{ $scheduledServicesCount }} geplande services en {{ $urgentTickets->where('priority', 'hoog')->count() }} urgente tickets voor deze week</p>
         <div class="flex flex-wrap gap-3">
-            <button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">+ Nieuwe Afspraak</button>
-            <button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">+ Ticket Aanmaken</button>
-            <button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">📅 Planning</button>
+             <a href="{{ route('technician.planning') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">📅 Planning</a>
         </div>
     </div>
 
@@ -52,8 +50,7 @@
                 <div class="flex items-center justify-between p-4 border-b border-gray-100">
                     <h2 class="text-lg font-medium">Planning Deze Week</h2>
                     <div class="flex gap-2">
-                        <button class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded border border-red-200">Week</button>
-                        <button class="px-3 py-1 text-sm bg-white text-gray-600 rounded border border-gray-200">Maand</button>
+                         <!-- Toggles removed: dead -->
                     </div>
                 </div>
                 <div class="p-4 space-y-3">
@@ -78,7 +75,7 @@
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
                 <div class="flex items-center justify-between p-4 border-b border-gray-100">
                     <h2 class="text-lg font-medium">Urgente Tickets</h2>
-                    <button class="text-sm text-gray-600">Alle Tickets</button>
+                    <a href="{{ route('technician.planning') }}" class="text-sm text-gray-600 hover:text-gray-900">Alle Tickets</a>
                 </div>
                 <div class="divide-y divide-gray-100">
                     @forelse($urgentTickets as $ticket)
@@ -101,7 +98,7 @@
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
                 <div class="flex items-center justify-between p-4 border-b border-gray-100">
                     <h2 class="text-lg font-medium">Voorraad Status</h2>
-                    <button class="text-sm text-gray-600">Alles Bekijken</button>
+                    <!-- Button removed: dead -->
                 </div>
                 <div class="p-4 space-y-3">
                     @forelse($stockAlerts as $product)

@@ -6,9 +6,8 @@
         <h1 class="text-xl font-semibold mb-1">Goedemorgen, {{ auth()->user()->name ?? 'Gebruiker' }} 👋</h1>
         <p class="text-sm text-white/90 mb-4">Je hebt {{ $plannedTasksCount }} taken ingepland voor deze week en {{ $backlogCount }} achterstallige taken</p>
         <div class="flex flex-wrap gap-3">
-            <button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">+ Nieuwe Planning</button>
-            <button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">👥 Teamcapaciteit</button>
-            <button class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded">📊 Overzicht</button>
+             <a href="{{ route('planner.tickets.create') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">+ Nieuwe Planning</a>
+             <a href="{{ route('planner.tickets.index') }}" class="bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded hover:bg-white/20 transition">📊 Overzicht</a>
         </div>
     </div>
 
@@ -52,8 +51,7 @@
                 <div class="flex items-center justify-between p-4 border-b border-gray-100">
                     <h2 class="text-lg font-medium">Wekelijks Overzicht</h2>
                     <div class="flex gap-2">
-                        <button class="px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded border border-purple-200">Deze Week</button>
-                        <button class="px-3 py-1 text-sm bg-white text-gray-600 rounded border border-gray-200">Volgende Week</button>
+                        <!-- Toggles removed: dead -->
                     </div>
                 </div>
                 <div class="p-4">
@@ -74,7 +72,7 @@
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
                 <div class="flex items-center justify-between p-4 border-b border-gray-100">
                     <h2 class="text-lg font-medium">Team Planning</h2>
-                    <button class="text-sm text-gray-600">Kalender Weergave</button>
+                    <!-- Button removed: dead -->
                 </div>
                 <div class="divide-y divide-gray-100">
                     @forelse($teamSchedule as $member)
@@ -102,10 +100,10 @@
 
         <div>
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                <div class="flex items-center justify-between p-4 border-b border-gray-100">
-                    <h2 class="text-lg font-medium">Urgente Aanpassingen</h2>
-                    <button class="text-sm text-gray-600">Alle Meldingen</button>
-                </div>
+                    <div class="flex items-center justify-between p-4 border-b border-gray-100">
+                        <h2 class="text-lg font-medium">Urgente Aanpassingen</h2>
+                        <a href="{{ route('planner.tickets.index') }}" class="text-sm text-gray-600 hover:text-gray-900">Alle Meldingen</a>
+                    </div>
                 <div class="divide-y divide-gray-100">
                     @forelse($urgentChanges as $change)
                     <div class="p-4">

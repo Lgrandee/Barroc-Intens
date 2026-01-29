@@ -49,8 +49,7 @@
 @section('alerts')
 <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
 	<div class="flex items-center justify-between p-4 border-b border-gray-100">
-		<h2 class="text-lg font-medium">Sales Pipeline</h2>
-		<button class="text-sm text-gray-600">Grafiek Weergave</button>
+        <!-- Button removed: dead -->
 	</div>
 	<div class="p-4">
 		<div class="bg-gray-50 border-2 border-dashed border-gray-200 rounded-lg p-8 text-center">
@@ -88,8 +87,7 @@
 @section('activity')
 <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
 	<div class="flex items-center justify-between p-4 border-b border-gray-100">
-		<h2 class="text-lg font-medium">Taken & Activiteiten</h2>
-		<button class="text-sm text-gray-600">+ Taak</button>
+		<!-- Button removed: dead -->
 	</div>
 	<div class="p-4 space-y-4">
 		@forelse($recentTasks as $task)
