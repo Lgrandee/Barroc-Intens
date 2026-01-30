@@ -19,23 +19,23 @@
             <form method="GET" action="{{ route('planner.tickets.index') }}" class="flex gap-3 mb-6" id="filterForm">
                 <input type="text" name="search" placeholder="Zoek op onderwerp, klant of ticketnummer"
                     value="{{ request('search') }}"
-                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent">
 
-                <select name="status" onchange="document.getElementById('filterForm').submit()" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-gray-700">
+                <select name="status" onchange="document.getElementById('filterForm').submit()" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 text-gray-700">
                     <option value="">Alle statussen</option>
                     <option value="open" {{ request('status') === 'open' ? 'selected' : '' }}>Open</option>
                     <option value="te_laat" {{ request('status') === 'te_laat' ? 'selected' : '' }}>In behandeling</option>
                     <option value="voltooid" {{ request('status') === 'voltooid' ? 'selected' : '' }}>Gesloten</option>
                 </select>
 
-                <select name="priority" onchange="document.getElementById('filterForm').submit()" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-gray-700">
+                <select name="priority" onchange="document.getElementById('filterForm').submit()" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 text-gray-700">
                     <option value="">Alle prioriteiten</option>
                     <option value="hoog" {{ request('priority') === 'hoog' ? 'selected' : '' }}>Hoog</option>
                     <option value="medium" {{ request('priority') === 'medium' ? 'selected' : '' }}>Medium</option>
                     <option value="laag" {{ request('priority') === 'laag' ? 'selected' : '' }}>Laag</option>
                 </select>
 
-                <select name="department" onchange="document.getElementById('filterForm').submit()" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-gray-700">
+                <select name="department" onchange="document.getElementById('filterForm').submit()" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 text-gray-700">
                     <option value="">Alle afdelingen</option>
                     <option value="service" {{ request('department') === 'service' ? 'selected' : '' }}>Service</option>
                     <option value="installation" {{ request('department') === 'installation' ? 'selected' : '' }}>Installatie</option>

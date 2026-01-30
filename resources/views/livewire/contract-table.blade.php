@@ -6,17 +6,17 @@
         type="text"
         wire:model.live.debounce.100ms="search"
         placeholder="Search by contract number, customer or project"
-        class="flex-1 min-w-[300px] px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+        class="flex-1 min-w-[300px] px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
       />
 
-      <select wire:model.live="status" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      <select wire:model.live="status" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-900">
         <option value="all">All statuses</option>
         <option value="active">active</option>
         <option value="inactive">inactive</option>
         <option value="pending">pending</option>
       </select>
 
-      <select class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      <select class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-900">
         <option>All types</option>
       </select>
 
@@ -75,7 +75,7 @@
               </span>
             </td>
             <td class="px-4 py-4 text-left">
-              <div class="flex items-center gap-4 text-xl">
+              <div class="flex items-center gap-2">
                 <!-- Bekijken -->
                 <a href="{{ route('contracts.show', $contract->id) }}" title="Bekijken" class="hover:opacity-80">👁️</a>
                 <!-- Bewerken (nog niet beschikbaar) -->

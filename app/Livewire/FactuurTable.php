@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Factuur;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -50,6 +51,9 @@ class FactuurTable extends Component
     public function render()
     {
         $query = Factuur::with(['customer', 'products']);
+        $periodLabel = null;
+        $periodStart = null;
+        $periodEnd = null;
 
         // Zoekfunctie
         if ($this->search) {
@@ -68,18 +72,29 @@ class FactuurTable extends Component
 
         // Periode filter
         if ($this->period === 'this_month') {
-            $query->whereMonth('invoice_date', now()->month)
-                  ->whereYear('invoice_date', now()->year);
+            $periodStart = Carbon::now()->startOfMonth();
+            $periodEnd = Carbon::now()->endOfMonth();
+            $periodLabel = 'Deze maand';
+            $query->whereBetween('invoice_date', [$periodStart, $periodEnd]);
         } elseif ($this->period === 'last_30_days') {
-            $query->where('invoice_date', '>=', now()->subDays(30));
+            $periodEnd = Carbon::now();
+            $periodStart = Carbon::now()->subDays(30);
+            $periodLabel = 'Laatste 30 dagen';
+            $query->where('invoice_date', '>=', $periodStart);
         } elseif ($this->period === 'last_90_days') {
-            $query->where('invoice_date', '>=', now()->subDays(90));
+            $periodEnd = Carbon::now();
+            $periodStart = Carbon::now()->subDays(90);
+            $periodLabel = 'Laatste 90 dagen';
+            $query->where('invoice_date', '>=', $periodStart);
         }
 
         $facturen = $query->orderBy('invoice_date', 'desc')->paginate(10);
 
         return view('livewire.factuur-table', [
-            'facturen' => $facturen
+            'facturen' => $facturen,
+            'periodLabel' => $periodLabel,
+            'periodStart' => $periodStart,
+            'periodEnd' => $periodEnd,
         ]);
     }
 }

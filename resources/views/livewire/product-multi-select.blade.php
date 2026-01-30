@@ -8,7 +8,7 @@
         type="text"
         wire:model.live.debounce.100ms="search"
         placeholder="Search by product name"
-        class="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-indigo-500"
+        class="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-gray-900"
       />
 
       @if($search && $results->isEmpty() && $showDropdown)

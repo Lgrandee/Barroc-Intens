@@ -46,9 +46,51 @@ class MaintenanceController extends Controller
             $query->where('catagory', $request->category);
         }
 
+        // Period filter
+        $periodLabel = null;
+        $periodStart = null;
+        $periodEnd = null;
+
+        if ($request->filled('period')) {
+            $now = now();
+            switch ($request->period) {
+                case 'today':
+                    $periodStart = $now->copy();
+                    $periodEnd = $now->copy();
+                    $periodLabel = 'Vandaag';
+                    $query->whereDate('scheduled_time', $now->toDateString());
+                    break;
+                case 'tomorrow':
+                    $periodStart = $now->copy()->addDay();
+                    $periodEnd = $now->copy()->addDay();
+                    $periodLabel = 'Morgen';
+                    $query->whereDate('scheduled_time', $now->addDay()->toDateString());
+                    break;
+                case 'this_week':
+                    $periodStart = $now->copy()->startOfWeek();
+                    $periodEnd = $now->copy()->endOfWeek();
+                    $periodLabel = 'Deze week';
+                    $query->whereBetween('scheduled_time', [$periodStart, $periodEnd]);
+                    break;
+                case 'next_week':
+                    $periodStart = $now->copy()->addWeek()->startOfWeek();
+                    $periodEnd = $now->copy()->addWeek()->endOfWeek();
+                    $periodLabel = 'Volgende week';
+                    $query->whereBetween('scheduled_time', [$periodStart, $periodEnd]);
+                    break;
+                case 'this_month':
+                    $periodStart = $now->copy()->startOfMonth();
+                    $periodEnd = $now->copy()->endOfMonth();
+                    $periodLabel = 'Deze maand';
+                    $query->whereMonth('scheduled_time', $now->month)
+                          ->whereYear('scheduled_time', $now->year);
+                    break;
+            }
+        }
+
         $planningTickets = $query->orderBy('scheduled_time', 'desc')->paginate(15);
 
-        return view('technician.planning', compact('planningTickets'));
+        return view('technician.planning', compact('planningTickets', 'periodLabel', 'periodStart', 'periodEnd'));
     }
 
 
@@ -62,7 +104,6 @@ class MaintenanceController extends Controller
         $userId = Auth::id();
 
         $task = PlanningTicket::with(['user', 'feedback.customer', 'feedback.products'])
-            ->where('catagory', 'service')
             ->where('user_id', $userId)
             ->findOrFail($id);
 
@@ -77,7 +118,6 @@ class MaintenanceController extends Controller
         $userId = Auth::id();
 
         $task = PlanningTicket::with(['user', 'feedback.customer', 'feedback.products'])
-            ->where('catagory', 'service')
             ->where('user_id', $userId)
             ->findOrFail($id);
 
@@ -92,7 +132,6 @@ class MaintenanceController extends Controller
         $userId = Auth::id();
 
         $task = PlanningTicket::with('feedback')
-            ->where('catagory', 'service')
             ->where('user_id', $userId)
             ->findOrFail($id);
 

@@ -2,7 +2,14 @@
   <!-- Search and filter bar -->
   <div class="p-4 border-b border-gray-100 bg-gray-50">
     <div class="flex flex-wrap gap-3">
-      <select wire:model.live="status" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      <input
+        type="text"
+        wire:model.live.debounce.300ms="search"
+        placeholder="Zoek op factuurnummer, klantnaam..."
+        class="flex-1 min-w-[300px] px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+      />
+
+      <select wire:model.live="status" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-900">
         <option value="all">Alle statussen</option>
         <option value="concept">Concept</option>
         <option value="verzonden">Verzonden</option>
@@ -10,19 +17,12 @@
         <option value="verlopen">Verlopen</option>
       </select>
 
-      <select wire:model.live="period" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      <select wire:model.live="period" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-900">
         <option value="all">Alle periodes</option>
         <option value="this_month">Deze maand</option>
         <option value="last_30_days">Laatste 30 dagen</option>
         <option value="last_90_days">Laatste 90 dagen</option>
       </select>
-
-      <input
-        type="text"
-        wire:model.live.debounce.300ms="search"
-        placeholder="Zoek op factuurnummer, klantnaam..."
-        class="flex-1 min-w-[300px] px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-      />
 
       @if($search || $status !== 'all' || $period !== 'this_month')
         <button wire:click="resetFilters" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-300">
@@ -31,6 +31,18 @@
       @endif
     </div>
   </div>
+
+  @if($periodLabel && $periodStart && $periodEnd)
+  <div class="px-4 py-3 bg-blue-50 border-b border-blue-100">
+    <div class="flex items-center gap-2 text-sm">
+      <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+      </svg>
+      <span class="font-medium text-blue-900">{{ $periodLabel }}:</span>
+      <span class="text-blue-700">{{ $periodStart->format('d-m-Y') }} tot {{ $periodEnd->format('d-m-Y') }}</span>
+    </div>
+  </div>
+  @endif
 
   <!-- Table -->
   <div class="overflow-x-auto">
@@ -50,7 +62,7 @@
         @forelse($facturen as $factuur)
           <tr class="hover:bg-gray-50">
             <td class="px-4 py-4">
-              <div class="font-medium text-indigo-600">F{{ date('Y', strtotime($factuur->invoice_date)) }}-{{ str_pad($factuur->id, 3, '0', STR_PAD_LEFT) }}</div>
+              <div class="font-medium text-yellow-400">F{{ date('Y', strtotime($factuur->invoice_date)) }}-{{ str_pad($factuur->id, 3, '0', STR_PAD_LEFT) }}</div>
               @if($factuur->offerte_id)
                 <div class="text-xs text-gray-500 flex items-center gap-1 mt-1">
                   🔗 <a href="{{ route('offertes.show', $factuur->offerte_id) }}" class="text-indigo-600 hover:text-indigo-800">Offerte</a>

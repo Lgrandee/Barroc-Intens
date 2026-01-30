@@ -86,7 +86,7 @@
 
                     <form>
                         <textarea rows="4" placeholder="Antwoord of update toevoegen"
-                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent mb-3"></textarea>
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent mb-3"></textarea>
                         <div class="flex gap-3">
                             <button type="button" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium text-sm">
                                 Plaats bericht

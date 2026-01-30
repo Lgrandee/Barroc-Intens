@@ -14,41 +14,41 @@
                 <div class="space-y-4">
                     <div>
                         <label for="name_company" class="block font-medium text-gray-700 mb-1 text-sm">Bedrijfsnaam</label>
-                        <input type="text" id="name_company" name="name_company" placeholder="Bedrijfsnaam..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="text" id="name_company" name="name_company" placeholder="Bedrijfsnaam..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-gray-900 focus:border-gray-900" required>
                     </div>
 
                     <div>
                         <label for="contact_person" class="block font-medium text-gray-700 mb-1 text-sm">Contactpersoon</label>
-                        <input type="text" id="contact_person" name="contact_person" placeholder="Contactpersoon..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="text" id="contact_person" name="contact_person" placeholder="Contactpersoon..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-gray-900 focus:border-gray-900" required>
                     </div>
 
                     <div>
                         <label for="email" class="block font-medium text-gray-700 mb-1 text-sm">E-mailadres</label>
-                        <input type="email" id="email" name="email" placeholder="E-mailadres..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="email" id="email" name="email" placeholder="E-mailadres..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-gray-900 focus:border-gray-900" required>
                     </div>
 
                     <div>
                         <label for="phone_number" class="block font-medium text-gray-700 mb-1 text-sm">Telefoonnummer</label>
-                        <input type="text" id="phone_number" name="phone_number" placeholder="Telefoonnummer..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="text" id="phone_number" name="phone_number" placeholder="Telefoonnummer..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-gray-900 focus:border-gray-900" required>
                     </div>
 
 
                     <div>
                         <label for="bkr_number" class="block font-medium text-gray-700 mb-1 text-sm">BKR Nummer</label>
-                        <input type="text" id="bkr_number" name="bkr_number" placeholder="BKR nummer..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="text" id="bkr_number" name="bkr_number" placeholder="BKR nummer..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-gray-900 focus:border-gray-900" required>
                     </div>
 
                     <div>
                         <label for="address" class="block font-medium text-gray-700 mb-1 text-sm">Adres</label>
-                        <input type="text" id="address" name="address" placeholder="Adres..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="text" id="address" name="address" placeholder="Adres..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-gray-900 focus:border-gray-900" required>
                     </div>
                     <div>
                         <label for="city" class="block font-medium text-gray-700 mb-1 text-sm">Plaats</label>
-                        <input type="text" id="city" name="city" placeholder="Plaats..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="text" id="city" name="city" placeholder="Plaats..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-gray-900 focus:border-gray-900" required>
                     </div>
                     <div>
                         <label for="zipcode" class="block font-medium text-gray-700 mb-1 text-sm">Postcode</label>
-                        <input type="text" id="zipcode" name="zipcode" placeholder="Postcode..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="text" id="zipcode" name="zipcode" placeholder="Postcode..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-gray-900 focus:border-gray-900" required>
                     </div>
                 </div>
 

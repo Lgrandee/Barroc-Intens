@@ -18,11 +18,11 @@
                     @method('PUT')
                     <div>
                         <label for="product_name" class="block font-medium text-sm text-gray-700 mb-1">Productnaam</label>
-                        <input type="text" name="product_name" id="product_name" value="{{ old('product_name', $product->product_name) }}" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" required>
+                        <input type="text" name="product_name" id="product_name" value="{{ old('product_name', $product->product_name) }}" class="w-full border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:ring-gray-900 text-sm" required>
                     </div>
                     <div>
                         <label for="stock" class="block font-medium text-sm text-gray-700 mb-1">Voorraad</label>
-                        <input type="number" name="stock" id="stock" value="{{ old('stock', $product->stock) }}" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" required>
+                        <input type="number" name="stock" id="stock" value="{{ old('stock', $product->stock) }}" class="w-full border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:ring-gray-900 text-sm" required>
                     </div>
                     <div>
                         <label for="price" class="block font-medium text-sm text-gray-700 mb-1">Prijs (per stuk)</label>
@@ -30,12 +30,12 @@
                             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                 <span class="text-gray-500 sm:text-sm">€</span>
                             </div>
-                            <input type="number" step="0.01" name="price" id="price" value="{{ old('price', $product->price) }}" class="block w-full rounded-md border-gray-300 pl-7 focus:border-indigo-500 focus:ring-indigo-500 text-sm" required>
+                            <input type="number" step="0.01" name="price" id="price" value="{{ old('price', $product->price) }}" class="block w-full rounded-md border-gray-300 pl-7 focus:border-gray-900 focus:ring-gray-900 text-sm" required>
                         </div>
                     </div>
                     <div>
                         <label for="type" class="block font-medium text-sm text-gray-700 mb-1">Type</label>
-                        <select name="type" id="type" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" required>
+                        <select name="type" id="type" class="w-full border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:ring-gray-900 text-sm" required>
                             <option value="beans" {{ old('type', $product->type) == 'beans' ? 'selected' : '' }}>Boon (Beans)</option>
                             <option value="parts" {{ old('type', $product->type) == 'parts' ? 'selected' : '' }}>Onderdeel (Parts)</option>
                             <option value="machines" {{ old('type', $product->type) == 'machines' ? 'selected' : '' }}>Machine</option>

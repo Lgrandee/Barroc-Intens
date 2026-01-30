@@ -2,26 +2,26 @@
   <!-- Search and filter bar -->
   <div class="p-4 border-b border-gray-100 bg-gray-50">
     <div class="flex flex-wrap gap-3">
-      <select wire:model.live="status" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      <input
+        type="text"
+        wire:model.live.debounce.300ms="search"
+        placeholder="Zoek op nummer of klantnaam"
+        class="flex-1 min-w-[300px] px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+      />
+
+      <select wire:model.live="status" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-900">
         <option value="all">Alle statussen</option>
         <option value="pending">Verstuurd</option>
         <option value="accepted">Goedgekeurd</option>
         <option value="rejected">Verlopen</option>
       </select>
 
-      <select wire:model.live="period" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      <select wire:model.live="period" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-900">
         <option value="last_7_days">Laatste 7 dagen</option>
         <option value="last_30_days">Laatste 30 dagen</option>
         <option value="last_90_days">Laatste 90 dagen</option>
         <option value="all">Alle periodes</option>
       </select>
-
-      <input
-        type="text"
-        wire:model.live.debounce.300ms="search"
-        placeholder="Zoek op nummer of klantnaam"
-        class="flex-1 min-w-[300px] px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-      />
 
       @if($search || $status !== 'all' || $period !== 'last_7_days')
         <button wire:click="resetFilters" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-300">

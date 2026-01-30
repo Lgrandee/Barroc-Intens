@@ -64,7 +64,7 @@
                                     Volledige Naam <span class="text-red-500">*</span>
                                 </label>
                                 <input type="text" name="name" value="{{ old('name', $user->name ?? '') }}" required
-                                    class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                                     placeholder="Vul hier uw naam in...">
                                 @error('name')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -76,7 +76,7 @@
                                     E-mailadres <span class="text-red-500">*</span>
                                 </label>
                                 <input type="email" name="email" value="{{ old('email', $user->email ?? '') }}" required
-                                    class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                                     placeholder="naam@barroc.nl">
                                 @error('email')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -88,7 +88,7 @@
                                     Telefoonnummer
                                 </label>
                                 <input type="tel" name="phone_num" value="{{ old('phone_num', $user->phone_num ?? '') }}"
-                                    class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                                     placeholder="+31 6 12345678">
                                 @error('phone_num')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -116,7 +116,7 @@
                                     Rol/Afdeling <span class="text-red-500">*</span>
                                 </label>
                                 <select name="department" required
-                                    class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent">
                                     <option value="">Selecteer rol...</option>
                                     <option value="Sales" {{ (old('department', $user->department ?? '') === 'Sales') ? 'selected' : '' }}>Sales - Verkoop medewerker</option>
                                     <option value="Purchasing" {{ (old('department', $user->department ?? '') === 'Purchasing') ? 'selected' : '' }}>Purchasing - Inkoop medewerker</option>
@@ -135,7 +135,7 @@
                                     Status <span class="text-red-500">*</span>
                                 </label>
                                 <select name="status" required
-                                    class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent">
                                     <option value="active" {{ (old('status', $user->status ?? 'active') === 'active') ? 'selected' : '' }}>🟢 Actief</option>
                                     <option value="vacation" {{ (old('status', $user->status ?? '') === 'vacation') ? 'selected' : '' }}>🟡 Vakantie</option>
                                     <option value="inactive" {{ (old('status', $user->status ?? '') === 'inactive') ? 'selected' : '' }}>🔴 Inactief</option>
@@ -158,7 +158,7 @@
                                 </label>
                                 <div class="relative">
                                     <input type="password" name="password" id="password" required
-                                        class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent pr-10"
+                                        class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent pr-10"
                                         placeholder="••••••••" oninput="checkPasswordStrength()">
                                     <button type="button" onclick="togglePassword('password', this)" tabindex="-1" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-yellow-500 dark:hover:text-yellow-400">
                                         <svg id="icon-password" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -189,7 +189,7 @@
                                 </label>
                                 <div class="relative">
                                     <input type="password" name="password_confirmation" id="password_confirmation" required
-                                        class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent pr-10"
+                                        class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent pr-10"
                                         placeholder="••••••••" onblur="checkPasswordMatch()">
                                     <button type="button" onclick="togglePassword('password_confirmation', this)" tabindex="-1" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-yellow-500 dark:hover:text-yellow-400">
                                         <svg id="icon-password_confirmation" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -215,7 +215,7 @@
                                 </label>
                                 <div class="relative">
                                     <input type="password" name="password" id="edit_password"
-                                        class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent pr-10"
+                                        class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent pr-10"
                                         placeholder="••••••••" oninput="checkEditPasswordStrength()">
                                     <button type="button" onclick="togglePassword('edit_password', this)" tabindex="-1" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-yellow-500 dark:hover:text-yellow-400">
                                         <svg id="icon-edit_password" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -246,7 +246,7 @@
                                 </label>
                                 <div class="relative">
                                     <input type="password" name="password_confirmation" id="edit_password_confirmation"
-                                        class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent pr-10"
+                                        class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent pr-10"
                                         placeholder="••••••••" onblur="checkPasswordMatch()">
                                     <button type="button" onclick="togglePassword('edit_password_confirmation', this)" tabindex="-1" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-yellow-500 dark:hover:text-yellow-400">
                                         <svg id="icon-edit_password_confirmation" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -266,12 +266,12 @@
                         <div class="space-y-3">
                             <label class="flex items-center">
                                 <input type="checkbox" name="send_welcome_email" value="1" checked
-                                    class="rounded border-gray-300 dark:border-zinc-600 text-yellow-500 focus:ring-yellow-400">
+                                    class="rounded border-gray-300 dark:border-zinc-600 text-yellow-500 focus:ring-gray-900">
                                 <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Stuur welkomst e-mail naar werknemer</span>
                             </label>
                             <label class="flex items-center">
                                 <input type="checkbox" name="force_password_change" value="1"
-                                    class="rounded border-gray-300 dark:border-zinc-600 text-yellow-500 focus:ring-yellow-400">
+                                    class="rounded border-gray-300 dark:border-zinc-600 text-yellow-500 focus:ring-gray-900">
                                 <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Verplicht wachtwoord wijzigen bij eerste login</span>
                             </label>
                         </div>

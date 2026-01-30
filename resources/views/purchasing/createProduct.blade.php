@@ -11,12 +11,12 @@
 
                 <div>
                     <label for="product_name" class="block font-medium text-sm text-gray-700 mb-1">Productnaam</label>
-                    <input type="text" name="product_name" id="product_name" placeholder="Bijv. Koffiebonen Extra Dark" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" required>
+                    <input type="text" name="product_name" id="product_name" placeholder="Bijv. Koffiebonen Extra Dark" class="w-full border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:ring-gray-900 text-sm" required>
                 </div>
 
                 <div>
                     <label for="stock" class="block font-medium text-sm text-gray-700 mb-1">Initiële Voorraad</label>
-                    <input type="number" name="stock" id="stock" placeholder="0" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" required>
+                    <input type="number" name="stock" id="stock" placeholder="0" class="w-full border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:ring-gray-900 text-sm" required>
                 </div>
 
                 <div>
@@ -25,13 +25,13 @@
                         <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                             <span class="text-gray-500 sm:text-sm">€</span>
                         </div>
-                        <input type="number" step="0.01" name="price" id="price" placeholder="0.00" class="block w-full rounded-md border-gray-300 pl-7 focus:border-indigo-500 focus:ring-indigo-500 text-sm" required>
+                        <input type="number" step="0.01" name="price" id="price" placeholder="0.00" class="block w-full rounded-md border-gray-300 pl-7 focus:border-gray-900 focus:ring-gray-900 text-sm" required>
                     </div>
                 </div>
 
                 <div>
                     <label for="type" class="block font-medium text-sm text-gray-700 mb-1">Type</label>
-                    <select name="type" id="type" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" required>
+                    <select name="type" id="type" class="w-full border-gray-300 rounded-md shadow-sm focus:border-gray-900 focus:ring-gray-900 text-sm" required>
                         <option value="beans">Boon (Beans)</option>
                         <option value="parts">Onderdeel (Parts)</option>
                         <option value="machines">Machine</option>
@@ -40,7 +40,7 @@
 
                 <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
                     <a href="{{ route('product.stock') }}" class="text-gray-600 hover:text-gray-900 text-sm font-medium underline-offset-4 hover:underline">Annuleren</a>
-                    <button type="submit" class="inline-flex justify-center border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md transition-colors">
+                    <button type="submit" class="inline-flex justify-center border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 rounded-md transition-colors">
                         Product Opslaan
                     </button>
                 </div>

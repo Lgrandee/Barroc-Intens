@@ -50,9 +50,9 @@
                             </svg>
                         </span>
                         <input type="text" id="searchInput" placeholder="Zoek op naam of e-mail..."
-                            class="w-full pl-10 pr-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent dark:focus:border-transparent">
+                            class="w-full pl-10 pr-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent dark:focus:border-transparent">
                     </div>
-                    <select id="roleFilter" class="px-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400">
+                    <select id="roleFilter" class="px-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900">
                         <option value="">Alle Rollen</option>
                         <option value="Sales">Sales</option>
                         <option value="Purchasing">Purchasing</option>
@@ -61,7 +61,7 @@
                         <option value="Planner">Planner</option>
                         <option value="Management">Management</option>
                     </select>
-                    <select id="statusFilter" class="px-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400">
+                    <select id="statusFilter" class="px-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900">
                         <option value="">Alle Statussen</option>
                         <option value="active">Actief</option>
                         <option value="inactive">Inactief</option>
@@ -255,7 +255,7 @@
                                 <button type="button" onclick="closeImportModal()" class="w-full sm:w-auto px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-700 border border-gray-200 dark:border-zinc-700 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200">
                                     Annuleren
                                 </button>
-                                <button type="submit" class="w-full sm:w-auto px-6 py-2.5 text-sm font-semibold text-black bg-yellow-400 hover:bg-yellow-300 rounded-xl shadow-sm transition-all transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400">
+                                <button type="submit" class="w-full sm:w-auto px-6 py-2.5 text-sm font-semibold text-black bg-yellow-400 hover:bg-yellow-300 rounded-xl shadow-sm transition-all transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
                                     Importeren
                                 </button>
                             </div>

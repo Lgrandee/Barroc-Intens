@@ -31,7 +31,7 @@
                     </svg>
                 </span>
                 <input type="text" wire:model.live="search" wire:model.debounce.10ms="search" placeholder="Zoek op rol of permissie..."
-                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-2 focus:ring-gray-900 focus:border-transparent">
             </div>
 
             <div class="flex items-center gap-3 ml-auto">
@@ -182,7 +182,7 @@
                                                         <!-- Custom Checkbox Visual -->
                                                         <div class="h-5 w-5 rounded-md border-2 border-gray-300 bg-white transition-all duration-200
                                                             peer-checked:bg-yellow-400 peer-checked:border-yellow-400
-                                                            peer-focus:ring-2 peer-focus:ring-yellow-400/30 peer-focus:ring-offset-1
+                                                            peer-focus:ring-2 peer-focus:ring-gray-900/30 peer-focus:ring-offset-1
                                                             {{ $viewOnly ? 'peer-checked:bg-gray-400 peer-checked:border-gray-400' : '' }}">
                                                         </div>
 
@@ -222,7 +222,7 @@
                         </button>
                         @if(!$viewOnly)
                         <button type="button" wire:click="save"
-                            class="inline-flex items-center px-6 py-2.5 border border-transparent text-sm font-semibold rounded-xl shadow-lg shadow-yellow-400/30 text-black bg-yellow-400 hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 transition-all transform hover:-translate-y-0.5">
+                            class="inline-flex items-center px-6 py-2.5 border border-transparent text-sm font-semibold rounded-xl shadow-lg shadow-yellow-400/30 text-black bg-yellow-400 hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-all transform hover:-translate-y-0.5">
                             {{ $isEditing ? 'Wijzigingen Opslaan' : 'Rol Aanmaken' }}
                         </button>
                         @endif

@@ -20,7 +20,7 @@
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Kies klant of zoek...</label>
                             <select name="customer_id" required
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent">
                                 <option value="">Selecteer een klant</option>
                                 @foreach($customers as $customer)
                                 <option value="{{ $customer->id }}">{{ $customer->name_company }}</option>
@@ -39,7 +39,7 @@
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Onderwerp</label>
                             <input type="text" name="subject" required
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent">
                         </div>
 
                         <!-- Category and Priority -->
@@ -47,7 +47,7 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Categorie: Technisch</label>
                                 <select name="category" required
-                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent">
                                     <option value="service">Service</option>
                                     <option value="installation">Installatie</option>
                                     <option value="meeting">Meeting</option>
@@ -56,7 +56,7 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Prioriteit</label>
                                 <select name="priority"
-                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent">
                                     <option value="medium" selected>Medium</option>
                                     <option value="high">Hoog</option>
                                     <option value="low">Laag</option>
@@ -68,7 +68,7 @@
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Omschrijving</label>
                             <textarea name="description" rows="5" required placeholder="Beschrijf het probleem of verzoek"
-                                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"></textarea>
+                                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"></textarea>
                         </div>
 
                         <!-- Attachments -->
@@ -93,7 +93,7 @@
                         <div class="mb-6">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Toewijzen aan technicus (optioneel)</label>
                             <select name="technician_id"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent">
                                 <option value="">Automatisch toewijzen</option>
                                 @foreach($technicians as $tech)
                                 <option value="{{ $tech->id }}">{{ $tech->name }}</option>
