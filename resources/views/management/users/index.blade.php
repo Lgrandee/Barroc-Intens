@@ -41,7 +41,7 @@
             </div>
 
             <!-- Search and Filters -->
-            <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden mb-6 p-4">
+            <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-md overflow-hidden mb-6 p-4">
                 <div class="flex gap-3 flex-wrap">
                     <div class="relative flex-1 min-w-48">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3">

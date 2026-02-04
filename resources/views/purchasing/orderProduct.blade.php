@@ -4,8 +4,8 @@
         <div class="max-w-6xl mx-auto p-6 bg-gray-100 min-h-screen">
         <header class="mb-6">
             <div class="text-center mb-4">
-                <h1 class="text-3xl font-semibold text-black dark:text-white">Product bewerken</h1>
-                <p class="text-sm text-gray-600 dark:text-gray-300">Pas de gegevens van het product aan</p>
+                <h1 class="text-3xl font-semibold text-black dark:text-white">Product Bestellen</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Producten voorraad verhogen</p>
             </div>
             <a href="{{ route('product.stock') }}" class="inline-flex items-center gap-2 rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-yellow-300 transition-colors">
                 <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4A1 1 0 0110.707 6.293L8.414 8.586H16a1 1 0 110 2H8.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"/></svg>
@@ -23,6 +23,34 @@
             </div>
         @endif
 
+        <div class="bg-white border border-gray-200 rounded-lg p-4 mb-6 flex flex-wrap items-center gap-4 shadow-md">
+            <div class="flex-1 relative min-w-[240px]">
+                <span class="absolute left-3 top-2.5 text-gray-400">🔍</span>
+                <input
+                    type="text"
+                    id="product-search"
+                    placeholder="Zoek op productnaam of type..."
+                    class="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-yellow-500 focus:border-yellow-500"
+                />
+            </div>
+
+            <select
+                id="product-type-filter"
+                class="px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-600 focus:ring-yellow-500 focus:border-yellow-500"
+            >
+                <option value="all">Alle types</option>
+                <option value="beans">Boon (Beans)</option>
+                <option value="parts">Onderdeel (Parts)</option>
+                <option value="machines">Machine</option>
+            </select>
+
+            <button
+                type="button"
+                id="product-reset"
+                class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-300 hidden"
+            >Reset</button>
+        </div>
+
         <form action="{{ route('products.order.store') }}" method="POST" class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
             @csrf
 
@@ -35,11 +63,13 @@
             </div>
 
             @foreach ($products as $product)
-            <div class="grid grid-cols-5 items-center p-4 border-b border-gray-200 text-sm gap-2 hover:bg-gray-50 transition">
-                <div class="text-black font-medium">{{ $product->product_name }}</div>
+            <div class="grid grid-cols-5 items-center p-4 border-b border-gray-200 text-sm gap-2 hover:bg-gray-50 transition product-row"
+                 data-name="{{ strtolower($product->product_name) }}"
+                 data-type="{{ strtolower($product->type) }}">
+                <div class="text-black font-medium product-name">{{ $product->product_name }}</div>
                 <div class="text-black">{{ $product->stock }}</div>
                 <div class="text-black">€ {{ number_format($product->price ?? 0, 2, ',', '.') }}</div>
-                <div class="text-black capitalize">{{ $product->type }}</div>
+                <div class="text-black capitalize product-type">{{ $product->type }}</div>
 
                 <div class="flex justify-end items-center gap-2 text-black">
                     <div class="inline-flex items-center border rounded-md overflow-hidden bg-white">
@@ -57,6 +87,10 @@
                 </div>
             </div>
             @endforeach
+
+            <div id="no-results" class="hidden p-6 text-center text-gray-500">
+                Geen producten gevonden voor de huidige zoekopdracht.
+            </div>
 
             <!-- Pagination -->
             @if($products->hasPages())
@@ -113,7 +147,7 @@
                 <a href="{{ route('product.stock') }}" class="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white hover:underline">Annuleer</a>
                 <button type="submit" class="px-4 py-2 bg-yellow-400 text-black rounded-md text-sm font-medium hover:bg-yellow-300 transition shadow-sm inline-flex items-center gap-2">
                     <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 00-1.414 0L9 11.586 6.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l7-7a1 1 0 000-1.414z"/></svg>
-                    Opslaan
+                    Product(en) Bestellen
                 </button>
             </div>
             <div id="product-warning" class="hidden text-red-600 text-sm mt-2"></div>
@@ -158,5 +192,62 @@
                 warning.classList.add('hidden');
             }
         });
+
+        // Zoek & filter functionaliteit
+        const searchInput = document.getElementById('product-search');
+        const typeFilter = document.getElementById('product-type-filter');
+        const rows = Array.from(document.querySelectorAll('.product-row'));
+        const noResults = document.getElementById('no-results');
+
+        function toggleResetButton() {
+            const hasSearch = (searchInput.value || '').trim().length > 0;
+            const hasFilter = typeFilter.value !== 'all';
+            if (resetButton) {
+                resetButton.classList.toggle('hidden', !(hasSearch || hasFilter));
+            }
+        }
+
+        function applyFilters() {
+            const query = (searchInput.value || '').toLowerCase().trim();
+            const type = typeFilter.value;
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                const name = row.dataset.name || '';
+                const rowType = row.dataset.type || '';
+                const matchesQuery = !query || name.includes(query) || rowType.includes(query);
+                const matchesType = type === 'all' || rowType === type;
+
+                if (matchesQuery && matchesType) {
+                    row.classList.remove('hidden');
+                    visibleCount += 1;
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
+
+            if (noResults) {
+                noResults.classList.toggle('hidden', visibleCount > 0);
+            }
+
+            toggleResetButton();
+        }
+
+        const resetButton = document.getElementById('product-reset');
+
+        if (searchInput && typeFilter) {
+            searchInput.addEventListener('input', applyFilters);
+            typeFilter.addEventListener('change', applyFilters);
+        }
+
+        if (resetButton) {
+            resetButton.addEventListener('click', () => {
+                if (searchInput) searchInput.value = '';
+                if (typeFilter) typeFilter.value = 'all';
+                applyFilters();
+            });
+        }
+
+        applyFilters();
     </script>
 </x-layouts.app>

@@ -84,12 +84,8 @@ class OfferteController extends Controller
         }
         $offerte->products()->sync($syncData);
 
-        // Redirect based on status
-        if ($validated['status'] === 'draft') {
-            return redirect()->route('offertes.edit', $offerte->id)->with('success', 'Concept opgeslagen.');
-        }
-
-        return redirect()->route('offertes.show', $offerte->id)->with('success', 'Offerte aangemaakt.');
+        // Always redirect to show page (approval/send page)
+        return redirect()->route('offertes.show', $offerte->id)->with('success', 'Offerte aangemaakt. Controleer de details en verstuur naar de klant.');
     }
 
     public function downloadPdf($id)
