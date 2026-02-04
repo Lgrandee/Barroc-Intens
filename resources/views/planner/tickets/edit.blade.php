@@ -65,7 +65,7 @@
 									</select>
 								</div>
 								<div class="mb-4">
-									<label class="block text-sm font-medium text-gray-700 mb-1">Technieker</label>
+										<label class="block text-sm font-medium text-gray-700 mb-1">Technicus</label>
 									<select name="technician_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
 										<option value="">-- Geen --</option>
 										@foreach($technicians as $technician)
@@ -110,7 +110,7 @@
 						</div>
 					</div>
 				</form>
-				
+
 				<!-- Verborgen verwijder-formulier -->
 				<form id="delete-form" method="POST" action="{{ route('planner.tickets.destroy', $ticket->id) }}" style="display: none;">
 					@csrf

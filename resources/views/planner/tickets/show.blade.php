@@ -42,13 +42,6 @@
                     </p>
                 </div>
 
-                <!-- Actieknoppen -->
-                <div class="flex flex-wrap gap-3 mb-6">
-                    <button onclick="alert('Ticket toegewezen')" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium text-sm transition">Toewijzen</button>
-                    <button onclick="alert('Ticket geëscaleerd')" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium text-sm transition">Escaleren</button>
-                    <button onclick="confirm('Ticket sluiten?') && alert('Ticket gesloten')" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium text-sm transition">Sluit ticket</button>
-                </div>
-
                 <!-- Ticket details grid -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <!-- Linker sectie -->
@@ -80,9 +73,9 @@
                         <div class="bg-white rounded-lg border border-gray-200 p-6">
                             <h3 class="text-lg font-semibold text-black mb-4">Nieuw bericht</h3>
                             <form>
-                                <textarea rows="4" placeholder="Antwoord of update toevoegen" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent mb-3"></textarea>
+                                <textarea rows="4" placeholder="Antwoord of update toevoegen" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent mb-3"></textarea>
                                 <div class="flex gap-3">
-                                    <button type="button" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium text-sm transition">Plaats bericht</button>
+                                    <button type="button" class="px-4 py-2 bg-yellow-400 text-black rounded-md hover:bg-yellow-300 font-semibold text-sm transition-colors shadow-sm">Plaats bericht</button>
                                     <button type="button" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium text-sm transition">Opslaan als intern</button>
                                 </div>
                             </form>
@@ -193,10 +186,6 @@
                                     <dd class="mt-1 text-sm text-gray-900">{{ \Carbon\Carbon::parse($ticket->updated_at)->format('d M Y') }}</dd>
                                 </div>
                             </dl>
-                            <div class="mt-6 pt-4 border-t border-gray-200 flex gap-2">
-                                <button onclick="alert('Status gewijzigd')" class="flex-1 px-3 py-2 border border-gray-300 text-gray-700 rounded text-sm hover:bg-gray-50 transition">Wijzig status</button>
-                                <button onclick="alert('Bijlage toegevoegd')" class="flex-1 px-3 py-2 border border-gray-300 text-gray-700 rounded text-sm hover:bg-gray-50 transition">Voeg bijlage toe</button>
-                            </div>
                             @if($ticket->feedback?->customer)
                             <div class="mt-6 pt-4 border-t border-gray-200">
                                 <h4 class="text-sm font-medium text-gray-700 mb-2">Bijlagen</h4>
