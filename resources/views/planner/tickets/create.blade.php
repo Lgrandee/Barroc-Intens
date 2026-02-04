@@ -30,6 +30,11 @@
                                 @endforeach
                             </select>
                         </div>
+                        <!-- Afspraakdatum -->
+                        <div class="mb-4">
+                            <label for="appointment_date" class="block text-sm font-medium text-gray-700 mb-2">Afspraakdatum</label>
+                            <input type="date" name="appointment_date" id="appointment_date" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm">
+                        </div>
                         <!-- Ticket Number (auto) -->
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Ticketnummer (auto)</label>
@@ -54,8 +59,8 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Prioriteit</label>
                                 <select name="priority" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm">
                                     <option value="medium" selected>Medium</option>
-                                    <option value="high">Hoog</option>
-                                    <option value="low">Laag</option>
+                                    <option value="hoog">Hoog</option>
+                                    <option value="laag">Laag</option>
                                 </select>
                             </div>
                         </div>

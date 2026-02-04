@@ -28,10 +28,16 @@
                     </h2>
                     <p class="text-sm text-gray-600">
                         Aangemaakt door: {{ $ticket->feedback?->employee?->name ?? 'Onbekend' }} • Status:
-                        @if(\Carbon\Carbon::parse($ticket->scheduled_time)->isFuture())
+                        @if($ticket->status === 'open')
                             <span class="text-orange-600 font-medium">Open</span>
+                        @elseif($ticket->status === 'voltooid')
+                            <span class="text-green-600 font-medium">Voltooid</span>
+                        @elseif($ticket->status === 'probleem')
+                            <span class="text-red-600 font-medium">Probleem</span>
+                        @elseif($ticket->status === 'te_laat')
+                            <span class="text-orange-600 font-medium">Te laat</span>
                         @else
-                            <span class="text-green-600 font-medium">Gesloten</span>
+                            <span class="text-gray-600 font-medium">{{ ucfirst($ticket->status) }}</span>
                         @endif
                     </p>
                 </div>
@@ -157,9 +163,25 @@
                                     <dd class="mt-1 text-sm text-gray-900">{{ ucfirst($ticket->catagory) }}</dd>
                                 </div>
                                 <div>
+                                    <dt class="text-xs font-medium text-gray-500">Afspraakdatum</dt>
+                                    <dd class="mt-1 text-sm text-gray-900">{{ $ticket->appointment_date ? \Carbon\Carbon::parse($ticket->appointment_date)->format('d M Y') : '-' }}</dd>
+                                </div>
+                                <div>
+                                    <dt class="text-xs font-medium text-gray-500">Toegewezen aan</dt>
+                                    <dd class="mt-1 text-sm text-gray-900">{{ $ticket->user?->name ?? 'Niet toegewezen' }}</dd>
+                                </div>
+                                <div>
                                     <dt class="text-xs font-medium text-gray-500">Prioriteit</dt>
                                     <dd class="mt-1">
-                                        <span class="text-sm text-red-600 font-medium">Hoog</span>
+                                        @if($ticket->priority === 'hoog')
+                                            <span class="text-sm text-red-600 font-medium">Hoog</span>
+                                        @elseif($ticket->priority === 'medium')
+                                            <span class="text-sm text-yellow-600 font-medium">Medium</span>
+                                        @elseif($ticket->priority === 'laag')
+                                            <span class="text-sm text-green-600 font-medium">Laag</span>
+                                        @else
+                                            <span class="text-sm text-gray-500 font-medium">-</span>
+                                        @endif
                                     </dd>
                                 </div>
                                 <div>
