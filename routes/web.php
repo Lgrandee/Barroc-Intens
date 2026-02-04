@@ -106,6 +106,8 @@ Route::middleware(['auth', 'departmentRole:Management'])->group(function () {
     Route::post('/management/users', [UserManagementController::class, 'store'])->name('management.users.store');
     Route::get('/management/users/{id}/edit', [UserManagementController::class, 'edit'])->name('management.users.edit');
     Route::put('/management/users/{id}', [UserManagementController::class, 'update'])->name('management.users.update');
+    Route::get('/management/users/export', [UserManagementController::class, 'export'])->name('management.users.export');
+    Route::post('/management/users/import', [UserManagementController::class, 'import'])->name('management.users.import');
     Route::delete('/management/users/{id}', [UserManagementController::class, 'destroy'])->name('management.users.destroy');
 });
 

@@ -138,7 +138,7 @@
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
                 <div class="flex items-center justify-between p-4 border-b border-gray-100">
                     <h2 class="text-lg font-medium">Recente Facturen</h2>
-                    <button class="text-sm text-gray-600">Alles Bekijken</button>
+                    <a href="{{ route('facturen.index') }}" class="text-sm text-gray-600 hover:text-gray-900">Alles Bekijken</a>
                 </div>
                 <div class="divide-y divide-gray-100">
                     @forelse($recentInvoices as $invoice)
@@ -163,7 +163,6 @@
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
                 <div class="flex items-center justify-between p-4 border-b border-gray-100">
                     <h2 class="text-lg font-medium">Betalingsherinneringen</h2>
-                    <button class="text-sm text-gray-600">Instellingen</button>
                 </div>
                 <div class="p-3 space-y-2">
                     @forelse($reminders as $reminder)

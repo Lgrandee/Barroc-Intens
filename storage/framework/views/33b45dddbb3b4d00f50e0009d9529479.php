@@ -18,53 +18,58 @@
                 margin: 2px 0 !important;
             }
             
-            /* Hover effect - subtle lift and glow */
+            /* Hover effect - Neutral interaction */
             [data-flux-navlist-item]:hover,
             [data-flux-navlist] a:hover,
             [data-flux-sidebar] a[href]:hover {
-                background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(245, 158, 11, 0.08) 100%) !important;
+                background: rgba(0, 0, 0, 0.04) !important; /* Neutral gray hover */
                 transform: translateX(4px) !important;
-                box-shadow: 0 2px 8px rgba(251, 191, 36, 0.2) !important;
+                color: #1f2937 !important;
+            }
+            .dark [data-flux-navlist-item]:hover,
+            .dark [data-flux-navlist] a:hover,
+            .dark [data-flux-sidebar] a[href]:hover {
+                background: rgba(255, 255, 255, 0.05) !important;
+                color: #f3f4f6 !important;
             }
             
-            /* Active/clicked state - prominent pressed effect */
+            /* Active/clicked state - pressed */
             [data-flux-navlist-item]:active,
             [data-flux-navlist] a:active,
             [data-flux-sidebar] a[href]:active {
-                transform: translateX(2px) scale(0.95) !important;
-                background: linear-gradient(135deg, rgba(251, 191, 36, 0.35) 0%, rgba(245, 158, 11, 0.25) 100%) !important;
-                box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15) !important;
-                transition: all 0.05s ease !important;
+                transform: translateX(2px) scale(0.98) !important;
+                background: rgba(0, 0, 0, 0.08) !important;
             }
-            
-            /* Current page - very strong highlight */
+
+            /* Current page - The "Yellow Tint" Effect */
             [data-flux-navlist-item][aria-current="page"],
             [data-flux-navlist] a[aria-current="page"],
             [data-flux-sidebar] a[aria-current="page"],
-            [data-flux-navlist-item][data-current="true"],
-            [data-flux-navlist] a[data-current="true"],
-            a.is-active,
-            a.active {
-                background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%) !important;
-                color: #1f2937 !important;
-                font-weight: 700 !important;
-                box-shadow: 0 4px 16px rgba(251, 191, 36, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+            [data-flux-navlist-item][data-current],
+            [data-flux-navlist] a[data-current],
+            a[data-current],
+            .flux-navlist-item[data-current] {
+                background: rgba(251, 191, 36, 0.15) !important; /* Solid-ish tint */
+                color: #b45309 !important;
+                font-weight: 600 !important;
+                border: 1px solid rgba(251, 191, 36, 0.3) !important; /* Adding border to match outline variant */
+                border-left: 4px solid #f59e0b !important;
                 transform: translateX(0) !important;
-                border-left: 4px solid #B45309 !important;
             }
             
+            .dark [data-flux-navlist-item][aria-current="page"],
+            .dark [data-flux-navlist] a[aria-current="page"],
+            .dark [data-flux-navlist-item][data-current],
+            .dark [data-flux-navlist] a[data-current] {
+                color: #fbbf24 !important; /* Amber-400 text for dark mode */
+                background: linear-gradient(to right, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.05)) !important;
+            }
+
+            /* Hovering over the active item - keep it stable or slightly enhance */
             [data-flux-navlist-item][aria-current="page"]:hover,
-            [data-flux-navlist] a[aria-current="page"]:hover,
-            [data-flux-sidebar] a[aria-current="page"]:hover {
+            [data-flux-navlist] a[aria-current="page"]:hover {
+                background: linear-gradient(to right, rgba(251, 191, 36, 0.15), rgba(251, 191, 36, 0.1)) !important;
                 transform: translateX(0) !important;
-                box-shadow: 0 6px 20px rgba(251, 191, 36, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
-                background: linear-gradient(135deg, #FCD34D 0%, #FBBF24 100%) !important;
-            }
-            
-            [data-flux-navlist-item][aria-current="page"]:active,
-            [data-flux-navlist] a[aria-current="page"]:active {
-                transform: scale(0.98) !important;
-                box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4), inset 0 2px 4px rgba(0, 0, 0, 0.1) !important;
             }
             
             /* Icon styling for current page */
@@ -188,6 +193,7 @@
             [data-flux-sidebar]::-webkit-scrollbar-thumb:hover {
                 background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%);
             }
+            html body { background-color: #f3f4f6 !important; }
         </style>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
@@ -269,14 +275,14 @@
 <?php $component->withAttributes(['heading' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(__('Platform')),'expandable' => true]); ?>
                     <?php if (isset($component)) { $__componentOriginalda376aa217444bbd92367ba1444eb3b8 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalda376aa217444bbd92367ba1444eb3b8 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.item','data' => ['icon' => 'pencil','href' => route('management'),'current' => request()->routeIs('management') || request()->routeIs('management.*'),'wire:navigate' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.item','data' => ['icon' => 'pencil','href' => route('management'),'current' => request()->routeIs('management'),'wire:navigate' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('flux::navlist.item'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'pencil','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('management')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('management') || request()->routeIs('management.*')),'wire:navigate' => true]); ?><?php echo e(__('Admin dashboard')); ?> <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['icon' => 'pencil','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('management')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('management')),'wire:navigate' => true]); ?><?php echo e(__('Admin dashboard')); ?> <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalda376aa217444bbd92367ba1444eb3b8)): ?>
 <?php $attributes = $__attributesOriginalda376aa217444bbd92367ba1444eb3b8; ?>
@@ -467,14 +473,14 @@
 <?php endif; ?>
                     <?php if (isset($component)) { $__componentOriginalda376aa217444bbd92367ba1444eb3b8 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalda376aa217444bbd92367ba1444eb3b8 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.item','data' => ['icon' => 'shopping-cart','href' => route('products.order'),'current' => request()->routeIs('products.order'),'wire:navigate' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.item','data' => ['icon' => 'shopping-cart','href' => route('products.order'),'current' => request()->routeIs('products.order') || request()->routeIs('products.store'),'wire:navigate' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('flux::navlist.item'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'shopping-cart','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('products.order')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('products.order')),'wire:navigate' => true]); ?><?php echo e(__('Order')); ?> <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['icon' => 'shopping-cart','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('products.order')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('products.order') || request()->routeIs('products.store')),'wire:navigate' => true]); ?><?php echo e(__('Order')); ?> <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalda376aa217444bbd92367ba1444eb3b8)): ?>
 <?php $attributes = $__attributesOriginalda376aa217444bbd92367ba1444eb3b8; ?>
@@ -608,14 +614,14 @@
 <?php $component->withAttributes(['heading' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(__('Technician')),'expandable' => true]); ?>
                     <?php if (isset($component)) { $__componentOriginalda376aa217444bbd92367ba1444eb3b8 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalda376aa217444bbd92367ba1444eb3b8 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.item','data' => ['icon' => 'wrench','href' => route('technician.dashboard'),'current' => request()->routeIs('technician.dashboard') || request()->routeIs('technician.*'),'wire:navigate' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.item','data' => ['icon' => 'wrench','href' => route('technician.dashboard'),'current' => request()->routeIs('technician.dashboard'),'wire:navigate' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('flux::navlist.item'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'wrench','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('technician.dashboard')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('technician.dashboard') || request()->routeIs('technician.*')),'wire:navigate' => true]); ?><?php echo e(__('Dashboard')); ?> <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['icon' => 'wrench','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('technician.dashboard')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('technician.dashboard')),'wire:navigate' => true]); ?><?php echo e(__('Dashboard')); ?> <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalda376aa217444bbd92367ba1444eb3b8)): ?>
 <?php $attributes = $__attributesOriginalda376aa217444bbd92367ba1444eb3b8; ?>
@@ -627,14 +633,14 @@
 <?php endif; ?>
                     <?php if (isset($component)) { $__componentOriginalda376aa217444bbd92367ba1444eb3b8 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalda376aa217444bbd92367ba1444eb3b8 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.item','data' => ['icon' => 'calendar-days','href' => route('technician.planning'),'current' => request()->routeIs('technician.planning'),'wire:navigate' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.item','data' => ['icon' => 'calendar-days','href' => route('technician.planning'),'current' => request()->routeIs('technician.planning') || request()->routeIs('technician.onderhoud.*'),'wire:navigate' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('flux::navlist.item'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'calendar-days','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('technician.planning')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('technician.planning')),'wire:navigate' => true]); ?><?php echo e(__('Planning')); ?> <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['icon' => 'calendar-days','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('technician.planning')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('technician.planning') || request()->routeIs('technician.onderhoud.*')),'wire:navigate' => true]); ?><?php echo e(__('Planning')); ?> <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalda376aa217444bbd92367ba1444eb3b8)): ?>
 <?php $attributes = $__attributesOriginalda376aa217444bbd92367ba1444eb3b8; ?>
@@ -669,14 +675,14 @@
 <?php $component->withAttributes(['heading' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(__('Planner')),'expandable' => true]); ?>
                     <?php if (isset($component)) { $__componentOriginalda376aa217444bbd92367ba1444eb3b8 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalda376aa217444bbd92367ba1444eb3b8 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.item','data' => ['icon' => 'calendar','href' => route('planner.dashboard'),'current' => request()->routeIs('planner.dashboard') || request()->routeIs('planner.*'),'wire:navigate' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.item','data' => ['icon' => 'calendar','href' => route('planner.dashboard'),'current' => request()->routeIs('planner.dashboard'),'wire:navigate' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('flux::navlist.item'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'calendar','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('planner.dashboard')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('planner.dashboard') || request()->routeIs('planner.*')),'wire:navigate' => true]); ?><?php echo e(__('Dashboard')); ?> <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['icon' => 'calendar','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('planner.dashboard')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('planner.dashboard')),'wire:navigate' => true]); ?><?php echo e(__('Dashboard')); ?> <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalda376aa217444bbd92367ba1444eb3b8)): ?>
 <?php $attributes = $__attributesOriginalda376aa217444bbd92367ba1444eb3b8; ?>

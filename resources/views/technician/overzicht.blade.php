@@ -22,9 +22,9 @@
                         </span>
                         <input type="text" name="search" id="searchInput" placeholder="Zoek op klant, taak of technicus..."
                             value="{{ request('search') }}"
-                            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent">
                     </div>
-                    <select name="status" id="statusFilter" onchange="document.getElementById('filterForm').submit()" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-gray-700">
+                    <select name="status" id="statusFilter" onchange="document.getElementById('filterForm').submit()" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 text-gray-700">
                         <option value="">Alle statussen</option>
                         <option value="open" {{ request('status') === 'open' ? 'selected' : '' }}>Open</option>
                         <option value="voltooid" {{ request('status') === 'voltooid' ? 'selected' : '' }}>Voltooid</option>

@@ -26,12 +26,12 @@
                         <span class="inline-block h-2 w-2 rounded-full bg-black"></span>
                         Nieuwe Werknemer
                     </a>
-                    <button class="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-black dark:text-white border border-gray-300 dark:border-zinc-600 rounded-md bg-white dark:bg-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors">
+                    <button onclick="openImportModal()" class="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-black dark:text-white border border-gray-300 dark:border-zinc-600 rounded-md bg-white dark:bg-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors">
                         Bulk Import
                     </button>
-                    <button class="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-black dark:text-white border border-gray-300 dark:border-zinc-600 rounded-md bg-white dark:bg-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors">
+                    <a href="{{ route('management.users.export') }}" class="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-black dark:text-white border border-gray-300 dark:border-zinc-600 rounded-md bg-white dark:bg-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors">
                         Export Lijst
-                    </button>
+                    </a>
                     <div class="ml-auto">
                         <a href="{{ route('management.roles.index') }}" class="inline-flex items-center gap-2 rounded-md border border-gray-300 dark:border-zinc-600 px-3 py-1.5 text-sm font-semibold text-black dark:text-white bg-white dark:bg-zinc-800 shadow hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors">
                             👑 Bekijk Rollen
@@ -50,9 +50,9 @@
                             </svg>
                         </span>
                         <input type="text" id="searchInput" placeholder="Zoek op naam of e-mail..."
-                            class="w-full pl-10 pr-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent dark:focus:border-transparent">
+                            class="w-full pl-10 pr-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent dark:focus:border-transparent">
                     </div>
-                    <select id="roleFilter" class="px-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400">
+                    <select id="roleFilter" class="px-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900">
                         <option value="">Alle Rollen</option>
                         <option value="Sales">Sales</option>
                         <option value="Purchasing">Purchasing</option>
@@ -61,7 +61,7 @@
                         <option value="Planner">Planner</option>
                         <option value="Management">Management</option>
                     </select>
-                    <select id="statusFilter" class="px-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-400">
+                    <select id="statusFilter" class="px-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900">
                         <option value="">Alle Statussen</option>
                         <option value="active">Actief</option>
                         <option value="inactive">Inactief</option>
@@ -145,12 +145,13 @@
                                         class="text-orange-500 hover:text-orange-700 text-lg" title="Bewerken">
                                         ✏️
                                     </a>
-                                    <button class="text-orange-500 hover:text-orange-700 text-lg" title="Reset wachtwoord">
-                                        🔑
-                                    </button>
-                                    <button class="text-gray-400 hover:text-gray-600 text-lg" title="Meer opties">
-                                        ⋮
-                                    </button>
+                                    <form method="POST" action="{{ route('management.users.destroy', $user->id) }}" onsubmit="return confirm('Weet je zeker dat je deze gebruiker wilt verwijderen?');" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:text-red-700 text-lg" title="Verwijderen">
+                                            🗑️
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
@@ -217,6 +218,52 @@
                 </div>
             </div>
 
+            <!-- Import Modal (New) -->
+            <div id="importModal" class="hidden fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                <div class="flex items-center justify-center min-h-screen px-4 text-center">
+                    <div class="fixed inset-0 transition-opacity" aria-hidden="true" onclick="closeImportModal()" style="background-color: rgba(0, 0, 0, 0.2); backdrop-filter: blur(4px);"></div>
+
+                    <!-- Modal Panel -->
+                    <div class="relative inline-block w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-2xl dark:bg-zinc-900 rounded-2xl ring-1 ring-black/5">
+                        <div class="flex items-center justify-between mb-5">
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white" id="modal-title">Werknemers Importeren</h3>
+                            <button onclick="closeImportModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                        </div>
+                        
+                        <form action="{{ route('management.users.import') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="mb-6">
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                                    Upload een CSV bestand om meerdere werknemers tegelijk te importeren.
+                                </p>
+                                
+                                <div class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors cursor-pointer group">
+                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                        <svg class="w-8 h-8 mb-2 text-gray-400 group-hover:text-yellow-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Klik om te uploaden</span> of sleep bestand</p>
+                                    </div>
+                                    <input type="file" name="file" required accept=".csv,.txt" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                                </div>
+                                <div class="mt-2 text-xs text-gray-400 dark:text-gray-500">
+                                    Verwacht formaat: <code class="bg-gray-100 dark:bg-zinc-800 px-1 py-0.5 rounded text-gray-600 dark:text-gray-300 font-mono">ID;Naam;Email;Telefoon;Afdeling;Status</code>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
+                                <button type="button" onclick="closeImportModal()" class="w-full sm:w-auto px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-700 border border-gray-200 dark:border-zinc-700 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200">
+                                    Annuleren
+                                </button>
+                                <button type="submit" class="w-full sm:w-auto px-6 py-2.5 text-sm font-semibold text-black bg-yellow-400 hover:bg-yellow-300 rounded-xl shadow-sm transition-all transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
+                                    Importeren
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <!-- Footer text -->
             <div class="mt-6 text-center text-sm text-gray-600 dark:text-gray-300">
                 Werknemers overzicht — beheer en rechten
@@ -225,6 +272,14 @@
     </x-layouts.app>
 
     <script>
+        function openImportModal() {
+            document.getElementById('importModal').classList.remove('hidden');
+        }
+
+        function closeImportModal() {
+            document.getElementById('importModal').classList.add('hidden');
+        }
+
         // Combined search and filter functionality
         const searchInput = document.getElementById('searchInput');
         const roleFilter = document.getElementById('roleFilter');

@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     public function showStock()
     {
-        $products = Product::all();
+        $products = Product::paginate(15);
         return view('purchasing.productStock')->with('products', $products);
     }
 
@@ -33,7 +33,7 @@ class ProductController extends Controller
     // Show order form where user can enter quantities to order
     public function orderForm()
     {
-        $products = Product::all();
+        $products = Product::paginate(15);
         return view('purchasing.orderProduct', compact('products'));
     }
 
@@ -86,7 +86,7 @@ class ProductController extends Controller
     // Backlog / overzicht van bestellingen
     public function orderLogistics()
     {
-        $logs = OrderLogistic::with('product')->orderBy('created_at', 'desc')->get();
+        $logs = OrderLogistic::with('product')->orderBy('created_at', 'desc')->paginate(15);
         return view('purchasing.orderLogistics', compact('logs'));
     }
     // Show the edit form for a product
@@ -94,6 +94,19 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         return view('purchasing.editProduct', compact('product'));
+    }
+
+    // Update a product
+    public function update(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $product->product_name = $request->product_name;
+        $product->stock = $request->stock;
+        $product->price = $request->price;
+        $product->type = $request->type;
+        $product->save();
+
+        return redirect()->route('product.stock')->with('success', 'Product bijgewerkt.');
     }
 
     // Delete a product

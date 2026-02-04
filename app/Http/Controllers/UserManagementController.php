@@ -150,4 +150,107 @@ class UserManagementController extends Controller
         return redirect()->route('management.users.index')
             ->with('success', 'Werknemer succesvol verwijderd!');
     }
+
+    public function export()
+    {
+        $user = Auth::user();
+        if (!$user || $user->department !== 'Management') {
+            abort(403, 'Toegang geweigerd.');
+        }
+
+        $users = User::all();
+        $filename = "werknemers_export_" . date('Y-m-d') . ".csv";
+
+        $handle = fopen('php://output', 'w');
+        
+        // Add BOM for Excel compatibility
+        fputs($handle, "\xEF\xBB\xBF");
+
+        // Headers
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+
+        // CSV Header Row
+        fputcsv($handle, ['ID', 'Naam', 'Email', 'Telefoon', 'Afdeling', 'Status', 'Gemaakt op'], ';');
+
+        foreach ($users as $u) {
+            fputcsv($handle, [
+                $u->id,
+                $u->name,
+                $u->email,
+                $u->phone_num,
+                $u->department, // or function to get Dutch name
+                $u->status,
+                $u->created_at->format('Y-m-d H:i')
+            ], ';');
+        }
+
+        fclose($handle);
+        exit();
+    }
+
+    public function import(Request $request)
+    {
+        $user = Auth::user();
+        if (!$user || $user->department !== 'Management') {
+            abort(403, 'Toegang geweigerd.');
+        }
+
+        $request->validate([
+            'file' => 'required|file|mimes:csv,txt',
+        ]);
+
+        $file = $request->file('file');
+        
+        if (($handle = fopen($file->getRealPath(), 'r')) !== false) {
+            // Read header row
+            $header = fgetcsv($handle, 1000, ';'); // Assuming semicolon separator
+            
+            // Basic validation of header structure could go here
+            // Expected: ID, Naam, Email, Telefoon, Afdeling, Status, ...
+
+            $count = 0;
+            while (($data = fgetcsv($handle, 1000, ';')) !== false) {
+                // Skip empty rows
+                if (count($data) < 3) continue;
+
+                // $data indices map to the export column order
+                // 0: ID, 1: Name, 2: Email, 3: Phone, 4: Department, 5: Status
+                
+                $email = $data[2];
+                $name = $data[1];
+                
+                if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) continue;
+
+                User::updateOrCreate(
+                    ['email' => $email],
+                    [
+                        'name' => $name,
+                        'phone_num' => $data[3] ?? null,
+                        'department' => $this->validateDepartment($data[4] ?? 'Sales'),
+                        'status' => $this->validateStatus($data[5] ?? 'active'),
+                        'password' => Hash::make('Welkom01!'), // Default password for new imports
+                    ]
+                );
+                $count++;
+            }
+            fclose($handle);
+
+            return redirect()->route('management.users.index')->with('success', "$count gebruikers geïmporteerd/bijgewerkt.");
+        }
+
+        return redirect()->route('management.users.index')->with('error', 'Kon bestand niet lezen.');
+    }
+
+    private function validateDepartment($dept)
+    {
+        $valid = ['Sales', 'Purchasing', 'Finance', 'Technician', 'Planner', 'Management'];
+        return in_array($dept, $valid) ? $dept : 'Sales';
+    }
+
+    private function validateStatus($status)
+    {
+        $valid = ['active', 'inactive', 'vacation'];
+        return in_array($status, $valid) ? $status : 'active';
+    }
 }

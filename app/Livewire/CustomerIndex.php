@@ -11,8 +11,14 @@ class CustomerIndex extends Component
     use WithPagination;
 
     public $search = '';
+    public $bkrStatus = '';
 
     public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingBkrStatus()
     {
         $this->resetPage();
     }
@@ -26,7 +32,11 @@ class CustomerIndex extends Component
                   ->orWhere('email', 'like', '%' . $this->search . '%')
                   ->orWhere('phone_number', 'like', '%' . $this->search . '%');
             });
-        })->paginate(12);
+        })
+        ->when($this->bkrStatus !== '', function ($query) {
+            $query->where('bkr_status', $this->bkrStatus);
+        })
+        ->paginate(15);
 
         return view('livewire.customer-index', compact('customers'));
     }
