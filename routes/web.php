@@ -61,7 +61,10 @@ Route::post('/technician/onderhoud/{id}/rapport', [MaintenanceController::class,
 Route::get('/planner/tickets', [TicketController::class, 'index'])->middleware('auth')->name('planner.tickets.index');
 Route::get('/planner/tickets/create', [TicketController::class, 'create'])->middleware('auth')->name('planner.tickets.create');
 Route::post('/planner/tickets', [TicketController::class, 'store'])->middleware('auth')->name('planner.tickets.store');
+Route::get('/planner/tickets/{id}/edit', [TicketController::class, 'edit'])->middleware('auth')->name('planner.tickets.edit');
+Route::put('/planner/tickets/{id}', [TicketController::class, 'update'])->middleware('auth')->name('planner.tickets.update');
 Route::get('/planner/tickets/{id}', [TicketController::class, 'show'])->middleware('auth')->name('planner.tickets.show');
+Route::delete('/planner/tickets/{id}', [TicketController::class, 'destroy'])->middleware('auth')->name('planner.tickets.destroy');
 
 // Contract routes - alleen voor Finance en Admin
 Route::get('/contracts', [ContractController::class, 'index'])->middleware('auth')->name('contracts.index');

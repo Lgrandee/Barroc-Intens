@@ -12,6 +12,48 @@ use Illuminate\Support\Facades\Auth;
 class TicketController extends Controller
 {
     /**
+     * Show the form for editing the specified ticket
+     */
+    public function edit($id)
+    {
+        $ticket = PlanningTicket::with(['user', 'feedback.customer'])->findOrFail($id);
+        $customers = Customer::orderBy('name_company')->get();
+        $technicians = User::where('department', 'Technician')->get();
+        return view('planner.tickets.edit', compact('ticket', 'customers', 'technicians'));
+    }
+
+    /**
+     * Update the specified ticket in storage
+     */
+    public function update(Request $request, $id)
+    {
+        $ticket = PlanningTicket::with('feedback')->findOrFail($id);
+        $validated = $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'subject' => 'required|string|max:255',
+            'description' => 'required|string',
+            'category' => 'required|in:meeting,installation,service',
+            'priority' => 'nullable|in:low,medium,high',
+            'technician_id' => 'nullable|exists:users,id',
+        ]);
+
+        // Update feedback
+        $ticket->feedback->update([
+            'customer_id' => $request->customer_id,
+            'description' => $request->subject,
+            'feedback' => $request->description,
+        ]);
+
+        // Update ticket
+        $ticket->update([
+            'catagory' => $request->category,
+            'user_id' => $request->technician_id ?? $ticket->user_id,
+        ]);
+
+        return redirect()->route('planner.tickets.show', $ticket->id)
+            ->with('success', 'Ticket succesvol bijgewerkt!');
+    }
+    /**
      * Display ticket overview
      */
     public function index(Request $request)
@@ -104,5 +146,18 @@ class TicketController extends Controller
         $ticket = PlanningTicket::with(['user', 'feedback.customer', 'feedback.products'])->findOrFail($id);
 
         return view('planner.tickets.show', compact('ticket'));
+    }
+    /**
+     * Verwijder een ticket
+     */
+    public function destroy($id)
+    {
+        $ticket = PlanningTicket::findOrFail($id);
+        // Verwijder gekoppelde feedback indien gewenst
+        if ($ticket->feedback) {
+            $ticket->feedback->delete();
+        }
+        $ticket->delete();
+        return redirect()->route('planner.tickets.index')->with('success', 'Ticket succesvol verwijderd!');
     }
 }
