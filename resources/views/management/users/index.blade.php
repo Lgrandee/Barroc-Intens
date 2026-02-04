@@ -67,6 +67,9 @@
                         <option value="inactive">Inactief</option>
                         <option value="vacation">Vakantie</option>
                     </select>
+                    <button id="resetFiltersButton" type="button" onclick="resetFilters()" class="hidden px-4 py-2 bg-gray-200 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-300 dark:bg-zinc-700 dark:text-gray-200 dark:hover:bg-zinc-600">
+                        Reset
+                    </button>
                 </div>
             </div>
 
@@ -231,14 +234,14 @@
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
-                        
+
                         <form action="{{ route('management.users.import') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-6">
                                 <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
                                     Upload een CSV bestand om meerdere werknemers tegelijk te importeren.
                                 </p>
-                                
+
                                 <div class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors cursor-pointer group">
                                     <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                         <svg class="w-8 h-8 mb-2 text-gray-400 group-hover:text-yellow-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
@@ -250,7 +253,7 @@
                                     Verwacht formaat: <code class="bg-gray-100 dark:bg-zinc-800 px-1 py-0.5 rounded text-gray-600 dark:text-gray-300 font-mono">ID;Naam;Email;Telefoon;Afdeling;Status</code>
                                 </div>
                             </div>
-                            
+
                             <div class="flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
                                 <button type="button" onclick="closeImportModal()" class="w-full sm:w-auto px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-700 border border-gray-200 dark:border-zinc-700 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200">
                                     Annuleren
@@ -284,6 +287,14 @@
         const searchInput = document.getElementById('searchInput');
         const roleFilter = document.getElementById('roleFilter');
         const statusFilter = document.getElementById('statusFilter');
+        const resetFiltersButton = document.getElementById('resetFiltersButton');
+
+        function updateResetButton() {
+            const hasFilters = (searchInput?.value || roleFilter?.value || statusFilter?.value);
+            if (resetFiltersButton) {
+                resetFiltersButton.classList.toggle('hidden', !hasFilters);
+            }
+        }
 
         function filterTable() {
             const searchTerm = searchInput?.value.toLowerCase() || '';
@@ -307,12 +318,23 @@
 
                 row.style.display = (matchesSearch && matchesRole && matchesStatus) ? '' : 'none';
             });
+
+            updateResetButton();
+        }
+
+        function resetFilters() {
+            if (searchInput) searchInput.value = '';
+            if (roleFilter) roleFilter.value = '';
+            if (statusFilter) statusFilter.value = '';
+            filterTable();
         }
 
         // Attach event listeners
         searchInput?.addEventListener('input', filterTable);
         roleFilter?.addEventListener('change', filterTable);
         statusFilter?.addEventListener('change', filterTable);
+
+        updateResetButton();
     </script>
 </body>
 </html>

@@ -48,9 +48,11 @@
                         <option value="meeting" {{ request('department') === 'meeting' ? 'selected' : '' }}>Meeting</option>
                     </select>
 
-                    <button type="submit" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium text-sm transition">
-                        Filteren
-                    </button>
+                    @if(request('search') || request('status') || request('priority') || request('department'))
+                        <a href="{{ route('planner.tickets.index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-300">
+                            Reset
+                        </a>
+                    @endif
                 </form>
 
                 <!-- Tickets Table -->

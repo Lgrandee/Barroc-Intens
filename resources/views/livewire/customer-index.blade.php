@@ -28,6 +28,12 @@
             <option value="unknown">Onbekend</option>
         </select>
 
+        @if($search || $bkrStatus !== '')
+            <button wire:click="resetFilters" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-300">
+                Reset
+            </button>
+        @endif
+
         <a href="{{ route('customers.create') }}" class="ml-auto px-4 py-2 bg-yellow-300 text-black rounded-md text-sm font-semibold hover:bg-yellow-400 flex items-center gap-2">
             <span class="inline-block h-2 w-2 rounded-full bg-black"></span> Nieuwe Klant
         </a>
