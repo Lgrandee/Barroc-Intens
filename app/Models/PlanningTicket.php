@@ -16,6 +16,7 @@ class PlanningTicket extends Model
         'feedback_id',
         'location',
         'scheduled_time',
+        'appointment_date',
         'user_id',
         'status',
         'priority',
