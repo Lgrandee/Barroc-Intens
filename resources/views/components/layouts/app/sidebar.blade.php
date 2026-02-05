@@ -4,7 +4,7 @@
         @include('partials.head')
         <style>
             /* Sleek Sidebar Navigation Styles - Override Flux UI */
-            
+
             /* Target all possible nav item selectors */
             [data-flux-navlist-item],
             [data-flux-navlist] a,
@@ -17,7 +17,7 @@
                 transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
                 margin: 2px 0 !important;
             }
-            
+
             /* Hover effect - Neutral interaction */
             [data-flux-navlist-item]:hover,
             [data-flux-navlist] a:hover,
@@ -32,7 +32,7 @@
                 background: rgba(255, 255, 255, 0.05) !important;
                 color: #f3f4f6 !important;
             }
-            
+
             /* Active/clicked state - pressed */
             [data-flux-navlist-item]:active,
             [data-flux-navlist] a:active,
@@ -56,7 +56,7 @@
                 border-left: 4px solid #f59e0b !important;
                 transform: translateX(0) !important;
             }
-            
+
             .dark [data-flux-navlist-item][aria-current="page"],
             .dark [data-flux-navlist] a[aria-current="page"],
             .dark [data-flux-navlist-item][data-current],
@@ -71,14 +71,14 @@
                 background: linear-gradient(to right, rgba(251, 191, 36, 0.15), rgba(251, 191, 36, 0.1)) !important;
                 transform: translateX(0) !important;
             }
-            
+
             /* Icon styling for current page */
             [data-flux-navlist-item][aria-current="page"] svg,
             [data-flux-navlist] a[aria-current="page"] svg,
             [data-flux-sidebar] a[aria-current="page"] svg {
                 color: #1f2937 !important;
             }
-            
+
             /* Group headings styling */
             [data-flux-navlist-group] > button,
             [data-flux-navlist-group] > [data-flux-heading],
@@ -89,7 +89,7 @@
                 opacity: 0.7 !important;
                 font-weight: 600 !important;
             }
-            
+
             /* Subtle left border indicator for items */
             [data-flux-navlist-item]::before,
             [data-flux-navlist] a::before {
@@ -104,92 +104,92 @@
                 border-radius: 0 2px 2px 0;
                 transition: height 0.2s ease;
             }
-            
+
             [data-flux-navlist-item]:hover::before,
             [data-flux-navlist] a:hover::before {
                 height: 60%;
             }
-            
+
             [data-flux-navlist-item][aria-current="page"]::before,
             [data-flux-navlist] a[aria-current="page"]::before {
                 height: 80%;
                 width: 4px;
             }
-            
+
             /* Smooth icon transitions */
             [data-flux-navlist-item] svg,
             [data-flux-navlist] a svg,
             [data-flux-sidebar] a svg {
                 transition: transform 0.2s ease, color 0.2s ease !important;
             }
-            
+
             [data-flux-navlist-item]:hover svg,
             [data-flux-navlist] a:hover svg,
             [data-flux-sidebar] a:hover svg {
                 transform: scale(1.1) !important;
                 color: #FBBF24 !important;
             }
-            
+
             /* Focus states for accessibility */
             [data-flux-navlist-item]:focus-visible,
             [data-flux-navlist] a:focus-visible {
                 outline: 2px solid #FBBF24 !important;
                 outline-offset: 2px !important;
             }
-            
+
             /* Sleek Custom Scrollbar */
             ::-webkit-scrollbar {
                 width: 6px;
                 height: 6px;
             }
-            
+
             ::-webkit-scrollbar-track {
                 background: transparent;
                 border-radius: 3px;
             }
-            
+
             ::-webkit-scrollbar-thumb {
                 background: linear-gradient(180deg, #D4D4D8 0%, #A1A1AA 100%);
                 border-radius: 3px;
                 transition: background 0.2s ease;
             }
-            
+
             ::-webkit-scrollbar-thumb:hover {
                 background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%);
             }
-            
+
             .dark ::-webkit-scrollbar-thumb {
                 background: linear-gradient(180deg, #52525B 0%, #3F3F46 100%);
             }
-            
+
             .dark ::-webkit-scrollbar-thumb:hover {
                 background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%);
             }
-            
+
             /* Firefox scrollbar */
             * {
                 scrollbar-width: thin;
                 scrollbar-color: #A1A1AA transparent;
             }
-            
+
             .dark * {
                 scrollbar-color: #52525B transparent;
             }
-            
+
             /* Sidebar specific scrollbar */
             [data-flux-sidebar] {
                 scrollbar-width: thin;
             }
-            
+
             [data-flux-sidebar]::-webkit-scrollbar {
                 width: 4px;
             }
-            
+
             [data-flux-sidebar]::-webkit-scrollbar-thumb {
                 background: rgba(161, 161, 170, 0.5);
                 border-radius: 2px;
             }
-            
+
             [data-flux-sidebar]::-webkit-scrollbar-thumb:hover {
                 background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%);
             }
@@ -201,46 +201,46 @@
         <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
-            <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
+            <a href="{{ route('dashboard') }}" class="flex items-center justify-center w-full px-5" wire:navigate>
                 <x-app-logo />
             </a>
 
             <flux:navlist variant="outline">
                 @if(auth()->user()->department === 'Management')
                 <flux:navlist.group :heading="__('Platform')" expandable>
-                    <flux:navlist.item icon="pencil" :href="route('management')" :current="request()->routeIs('management')" wire:navigate>{{ __('Admin dashboard') }}</flux:navlist.item>
-                    <flux:navlist.item icon="user-group" :href="route('management.roles.index')" :current="request()->routeIs('management.roles.*')" wire:navigate>{{ __('Roles') }}</flux:navlist.item>
-                    <flux:navlist.item icon="users" :href="route('management.users.index')" :current="request()->routeIs('management.users.*')" wire:navigate>{{ __('Users') }}</flux:navlist.item>
+                    <flux:navlist.item icon="pencil" :href="route('management')" :current="request()->routeIs('management')" wire:navigate>{{ __('Admin Dashboard') }}</flux:navlist.item>
+                    <flux:navlist.item icon="user-group" :href="route('management.roles.index')" :current="request()->routeIs('management.roles.*')" wire:navigate>{{ __('Rollen') }}</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('management.users.index')" :current="request()->routeIs('management.users.*')" wire:navigate>{{ __('Gebruikers') }}</flux:navlist.item>
                 </flux:navlist.group>
                 @endif
 
                 @if(auth()->user()->department === 'Sales' || auth()->user()->department === 'Management')
-                <flux:navlist.group :heading="__('Sales')" expandable>
+                <flux:navlist.group :heading="__('Verkoop')" expandable>
                     <flux:navlist.item icon="banknotes" :href="route('sales.dashboard')" :current="request()->routeIs('sales.dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                     <flux:navlist.item icon="document-text" :href="route('offertes.index')" :current="request()->routeIs('offertes.*')" wire:navigate>{{ __('Offertes') }}</flux:navlist.item>
-                    <flux:navlist.item icon="users" :href="route('customers.index')" :current="request()->routeIs('customers.*')" wire:navigate>{{ __('Customers') }}</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('customers.index')" :current="request()->routeIs('customers.*')" wire:navigate>{{ __('Klanten') }}</flux:navlist.item>
                 </flux:navlist.group>
                 @endif
 
                 @if(auth()->user()->department === 'Purchasing' || auth()->user()->department === 'Management')
-                <flux:navlist.group :heading="__('Purchasing')" expandable>
+                <flux:navlist.group :heading="__('Inkoop')" expandable>
                     <flux:navlist.item icon="plus" :href="route('purchasing.dashboard')" :current="request()->routeIs('purchasing.dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                    <flux:navlist.item icon="cube" :href="route('product.stock')" :current="request()->routeIs('product.stock')" wire:navigate>{{ __('Stock') }}</flux:navlist.item>
-                    <flux:navlist.item icon="shopping-cart" :href="route('products.order')" :current="request()->routeIs('products.order') || request()->routeIs('products.store')" wire:navigate>{{ __('Order') }}</flux:navlist.item>
+                    <flux:navlist.item icon="cube" :href="route('product.stock')" :current="request()->routeIs('product.stock')" wire:navigate>{{ __('Voorraad') }}</flux:navlist.item>
+                    <flux:navlist.item icon="shopping-cart" :href="route('products.order')" :current="request()->routeIs('products.order') || request()->routeIs('products.store')" wire:navigate>{{ __('Bestellingen') }}</flux:navlist.item>
                     <flux:navlist.item icon="truck" :href="route('orders.logistics')" :current="request()->routeIs('orders.logistics')" wire:navigate>{{ __('Logistics') }}</flux:navlist.item>
                 </flux:navlist.group>
                 @endif
 
                 @if(auth()->user()->department === 'Finance' || auth()->user()->department === 'Management')
-                <flux:navlist.group :heading="__('Finance')" expandable>
+                <flux:navlist.group :heading="__('Financiën')" expandable>
                     <flux:navlist.item icon="wallet" :href="route('finance.dashboard')" :current="request()->routeIs('finance.dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                    <flux:navlist.item icon="document-text" :href="route('contracts.index')" :current="request()->routeIs('contracts.*')" wire:navigate>{{ __('Contracts') }}</flux:navlist.item>
-                    <flux:navlist.item icon="receipt-percent" :href="route('facturen.index')" :current="request()->routeIs('facturen.*')" wire:navigate>{{ __('Invoices') }}</flux:navlist.item>
+                    <flux:navlist.item icon="document-text" :href="route('contracts.index')" :current="request()->routeIs('contracts.*')" wire:navigate>{{ __('Contracten') }}</flux:navlist.item>
+                    <flux:navlist.item icon="receipt-percent" :href="route('facturen.index')" :current="request()->routeIs('facturen.*')" wire:navigate>{{ __('Facturen') }}</flux:navlist.item>
                 </flux:navlist.group>
                 @endif
 
                 @if(auth()->user()->department === 'Technician' || auth()->user()->department === 'Management')
-                <flux:navlist.group :heading="__('Technician')" expandable>
+                <flux:navlist.group :heading="__('Techniek')" expandable>
                     <flux:navlist.item icon="wrench" :href="route('technician.dashboard')" :current="request()->routeIs('technician.dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                     <flux:navlist.item icon="calendar-days" :href="route('technician.planning')" :current="request()->routeIs('technician.planning') || request()->routeIs('technician.onderhoud.*')" wire:navigate>{{ __('Planning') }}</flux:navlist.item>
                 </flux:navlist.group>

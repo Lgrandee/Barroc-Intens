@@ -21,7 +21,7 @@
 
 		<div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
 			<div class="p-6">
-				<form method="POST" action="{{ route('planner.tickets.update', $ticket->id) }}" class="space-y-6">
+				<form method="POST" action="{{ route('planner.tickets.update', $ticket->id) }}">
 					@csrf
 					@method('PUT')
 					<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -30,6 +30,9 @@
 							<div class="bg-white rounded-lg border border-gray-200 p-6">
 								<h3 class="text-lg font-semibold text-black mb-4">Ticket informatie</h3>
 								<div class="mb-4">
+									<label for="appointment_date" class="block text-sm font-medium text-gray-700 mb-1">Afspraakdatum</label>
+									<input type="date" name="appointment_date" id="appointment_date" value="{{ old('appointment_date', $ticket->appointment_date ? \Carbon\Carbon::parse($ticket->appointment_date)->format('Y-m-d') : '') }}" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+								</div>
 									<label class="block text-sm font-medium text-gray-700 mb-1">Klant</label>
 									<select name="customer_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
 										@foreach($customers as $customer)
@@ -56,13 +59,13 @@
 								<div class="mb-4">
 									<label class="block text-sm font-medium text-gray-700 mb-1">Prioriteit</label>
 									<select name="priority" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-										<option value="low" @if($ticket->priority == 'low') selected @endif>Laag</option>
+										<option value="laag" @if($ticket->priority == 'laag') selected @endif>Laag</option>
 										<option value="medium" @if($ticket->priority == 'medium') selected @endif>Middel</option>
-										<option value="high" @if($ticket->priority == 'high') selected @endif>Hoog</option>
+										<option value="hoog" @if($ticket->priority == 'hoog') selected @endif>Hoog</option>
 									</select>
 								</div>
 								<div class="mb-4">
-									<label class="block text-sm font-medium text-gray-700 mb-1">Technieker</label>
+										<label class="block text-sm font-medium text-gray-700 mb-1">Technicus</label>
 									<select name="technician_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
 										<option value="">-- Geen --</option>
 										@foreach($technicians as $technician)
@@ -86,20 +89,32 @@
 										<dd class="mt-1 text-sm text-gray-900">{{ \Carbon\Carbon::parse($ticket->updated_at)->format('d M Y') }}</dd>
 									</div>
 								</dl>
-								<div class="mt-6 pt-4 border-t border-gray-200 flex gap-2">
-									<a href="{{ route('planner.tickets.show', $ticket->id) }}" class="flex-1 text-gray-400 text-sm text-center py-2">Annuleren</a>
-									<button type="submit" class="flex-1 px-4 py-2 rounded-md bg-yellow-400 text-sm font-semibold text-black shadow hover:bg-yellow-300 transition-colors">Opslaan</button>
+								<div class="mt-6 pt-4 border-t border-gray-200 space-y-3">
+									<!-- Opslaan en Annuleren knoppen -->
+									<div class="flex gap-2">
+										<a href="{{ route('planner.tickets.show', $ticket->id) }}" class="flex-1 text-center px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-50 transition-colors">
+											Annuleren
+										</a>
+										<button type="submit" class="flex-1 px-4 py-2 rounded-md bg-yellow-400 text-sm font-semibold text-black shadow hover:bg-yellow-300 transition-colors">
+											Opslaan
+										</button>
+									</div>
+									<!-- Verwijder knop -->
+									<div class="pt-2 border-t border-gray-100">
+										<button type="button" onclick="if(confirm('Weet je zeker dat je dit ticket wilt verwijderen?')) { document.getElementById('delete-form').submit(); }" class="w-full text-gray-400 text-sm py-2 hover:text-gray-600 transition-colors" title="Verwijder ticket">
+											Ticket verwijderen
+										</button>
+									</div>
 								</div>
-								<form method="POST" action="{{ route('planner.tickets.destroy', $ticket->id) }}" onsubmit="return confirm('Weet je zeker dat je dit ticket wilt verwijderen?');" class="mt-2">
-									@csrf
-									@method('DELETE')
-									<button type="submit" class="w-full flex items-center justify-center gap-1 text-gray-400 text-sm py-2 hover:text-red-500 transition" title="Verwijder ticket">
-										🗑️ <span>Verwijderen</span>
-									</button>
-								</form>
 							</div>
 						</div>
 					</div>
+				</form>
+
+				<!-- Verborgen verwijder-formulier -->
+				<form id="delete-form" method="POST" action="{{ route('planner.tickets.destroy', $ticket->id) }}" style="display: none;">
+					@csrf
+					@method('DELETE')
 				</form>
 			</div>
 		</div>

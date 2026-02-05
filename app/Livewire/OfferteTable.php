@@ -12,7 +12,7 @@ class OfferteTable extends Component
 
     public $search = '';
     public $status = 'all';
-    public $period = 'last_7_days';
+    public $period = 'all';
 
     public function updatingSearch()
     {
@@ -33,7 +33,7 @@ class OfferteTable extends Component
     {
         $this->search = '';
         $this->status = 'all';
-        $this->period = 'last_7_days';
+        $this->period = 'all';
         $this->resetPage();
     }
 
@@ -49,7 +49,9 @@ class OfferteTable extends Component
 
     public function render()
     {
-        $query = Offerte::with(['customer', 'products']);
+        $query = Offerte::with(['customer', 'products' => function($q) {
+            $q->withPivot('quantity');
+        }]);
 
         // Zoekfunctie
         if ($this->search) {

@@ -153,6 +153,12 @@ class Roles extends Component
         $this->loadRoles();
     }
 
+    public function resetFilters()
+    {
+        $this->search = '';
+        $this->loadRoles();
+    }
+
     public function resetForm()
     {
         $this->roleId = null;

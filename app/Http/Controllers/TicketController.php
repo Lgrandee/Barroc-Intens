@@ -33,8 +33,9 @@ class TicketController extends Controller
             'subject' => 'required|string|max:255',
             'description' => 'required|string',
             'category' => 'required|in:meeting,installation,service',
-            'priority' => 'nullable|in:low,medium,high',
+            'priority' => 'nullable|in:laag,medium,hoog',
             'technician_id' => 'nullable|exists:users,id',
+            'appointment_date' => 'nullable|date',
         ]);
 
         // Update feedback
@@ -47,10 +48,12 @@ class TicketController extends Controller
         // Update ticket
         $ticket->update([
             'catagory' => $request->category,
+            'priority' => $request->priority,
             'user_id' => $request->technician_id ?? $ticket->user_id,
+            'appointment_date' => $request->appointment_date,
         ]);
 
-        return redirect()->route('planner.tickets.show', $ticket->id)
+        return redirect()->route('planner.tickets.index')
             ->with('success', 'Ticket succesvol bijgewerkt!');
     }
     /**
@@ -113,8 +116,9 @@ class TicketController extends Controller
             'subject' => 'required|string|max:255',
             'description' => 'required|string',
             'category' => 'required|in:meeting,installation,service',
-            'priority' => 'nullable|in:low,medium,high',
+            'priority' => 'nullable|in:laag,medium,hoog',
             'technician_id' => 'nullable|exists:users,id',
+            'appointment_date' => 'required|date',
         ]);
 
         // Create feedback entry
@@ -131,6 +135,7 @@ class TicketController extends Controller
             'feedback_id' => $feedback->id,
             'location' => $request->location ?? Customer::find($request->customer_id)->address,
             'scheduled_time' => $request->scheduled_time ?? now()->addDays(2),
+            'appointment_date' => $request->appointment_date,
             'user_id' => $request->technician_id ?? User::where('department', 'Technician')->first()->id,
         ]);
 

@@ -48,9 +48,11 @@
                         <option value="meeting" {{ request('department') === 'meeting' ? 'selected' : '' }}>Meeting</option>
                     </select>
 
-                    <button type="submit" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium text-sm transition">
-                        Filteren
-                    </button>
+                    @if(request('search') || request('status') || request('priority') || request('department'))
+                        <a href="{{ route('planner.tickets.index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-300">
+                            Reset
+                        </a>
+                    @endif
                 </form>
 
                 <!-- Tickets Table -->
@@ -60,6 +62,7 @@
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Onderwerp</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Klant</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Afspraakdatum</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prioriteit</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Laatste update</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
@@ -75,6 +78,9 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-black">{{ $ticket->feedback?->customer?->name_company ?? 'Onbekend' }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-black">{{ $ticket->appointment_date ? \Carbon\Carbon::parse($ticket->appointment_date)->format('d M Y') : '-' }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @php
@@ -120,14 +126,54 @@
                     </table>
                 </div>
 
+
                 <!-- Pagination -->
                 @if($tickets->hasPages())
-                <div class="mt-6 flex justify-between items-center">
+                <div class="flex flex-col items-center gap-3 px-4 py-3 border-t border-gray-200 bg-gray-50 mt-6">
                     <div class="text-sm text-gray-700">
-                        Tonen {{ $tickets->firstItem() ?? 0 }}–{{ $tickets->lastItem() ?? 0 }} van {{ $tickets->total() }}
+                        Showing {{ $tickets->firstItem() ?? 0 }}–{{ $tickets->lastItem() ?? 0 }} of {{ $tickets->total() }}
                     </div>
-                    <div class="flex gap-1">
-                        {{ $tickets->appends(request()->query())->links() }}
+                    <div class="flex gap-1 items-center">
+                        @if($tickets->onFirstPage())
+                            <span class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-400 cursor-not-allowed">‹</span>
+                        @else
+                            <a href="{{ $tickets->previousPageUrl() }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">‹</a>
+                        @endif
+
+                        @php
+                            $currentPage = $tickets->currentPage();
+                            $lastPage = $tickets->lastPage();
+                            $start = max(1, $currentPage - 2);
+                            $end = min($lastPage, $currentPage + 2);
+                        @endphp
+
+                        @if ($start > 1)
+                            <a href="{{ $tickets->url(1) }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">1</a>
+                            @if ($start > 2)
+                                <span class="px-2 text-gray-500">...</span>
+                            @endif
+                        @endif
+
+                        @for ($page = $start; $page <= $end; $page++)
+                            @if ($page == $currentPage)
+                                <span class="px-3 py-1 border border-yellow-400 bg-yellow-400 text-black rounded text-sm font-medium">{{ $page }}</span>
+                            @else
+                                <a href="{{ $tickets->url($page) }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">{{ $page }}</a>
+                            @endif
+                        @endfor
+
+                        @if ($end < $lastPage)
+                            @if ($end < $lastPage - 1)
+                                <span class="px-2 text-gray-500">...</span>
+                            @endif
+                            <a href="{{ $tickets->url($lastPage) }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">{{ $lastPage }}</a>
+                        @endif
+
+                        @if($tickets->hasMorePages())
+                            <a href="{{ $tickets->nextPageUrl() }}" class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-100">›</a>
+                        @else
+                            <span class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-400 cursor-not-allowed">›</span>
+                        @endif
                     </div>
                 </div>
                 @endif

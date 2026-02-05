@@ -23,6 +23,12 @@ class CustomerIndex extends Component
         $this->resetPage();
     }
 
+    public function resetFilters()
+    {
+        $this->reset(['search', 'bkrStatus']);
+        $this->resetPage();
+    }
+
     public function render()
     {
         $customers = Customer::when($this->search, function ($query) {

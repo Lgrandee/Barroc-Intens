@@ -47,7 +47,7 @@
     </header>
 
     <!-- Offerte info header -->
-    <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden mb-6">
+    <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-md overflow-hidden mb-6">
       <div class="p-5 border-b border-gray-100 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900">
         <h2 class="text-lg font-semibold text-black dark:text-white">Offertegegevens</h2>
       </div>
@@ -78,7 +78,7 @@
     </div>
 
     <!-- Producten Table -->
-    <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden mb-6">
+    <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-md overflow-hidden mb-6">
       <div class="p-5 border-b border-gray-100 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900">
         <h2 class="text-lg font-semibold text-black dark:text-white">Producten</h2>
       </div>
@@ -181,7 +181,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <!-- Left: Controle Checklist -->
-      <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden">
+      <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-md overflow-hidden">
         <div class="p-5 border-b border-gray-100 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900">
           <h2 class="text-lg font-semibold text-black dark:text-white flex items-center gap-2">
             <svg class="h-5 w-5 text-green-600" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
@@ -221,7 +221,7 @@
       </div>
 
       <!-- Right: E-mail Preview -->
-      <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden">
+      <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-md overflow-hidden">
         <div class="p-5 border-b border-gray-100 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900">
           <h2 class="text-lg font-semibold text-black dark:text-white flex items-center gap-2">
             <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
