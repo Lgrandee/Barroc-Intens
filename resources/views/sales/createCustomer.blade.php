@@ -48,7 +48,9 @@
 
                             <div>
                                 <label for="phone_number" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Telefoonnummer <span class="text-red-500">*</span></label>
-                                <input type="text" id="phone_number" name="phone_number" placeholder="Telefoonnummer..." class="w-full px-4 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent" required>
+                                <input type="tel" id="phone_number" name="phone_number" placeholder="0612345678" 
+                                       class="w-full px-4 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent" 
+                                       required pattern="[0-9]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                 @error('phone_number')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                             </div>
                         </div>

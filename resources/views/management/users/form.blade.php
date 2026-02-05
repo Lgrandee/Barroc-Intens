@@ -90,7 +90,7 @@
                                 </label>
                                 <input type="tel" name="phone_num" value="{{ old('phone_num', $user->phone_num ?? '') }}"
                                     class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                                    placeholder="+31 6 12345678">
+                                    placeholder="0612345678" pattern="[0-9]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                 @error('phone_num')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
