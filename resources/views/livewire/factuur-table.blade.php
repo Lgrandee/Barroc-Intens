@@ -62,7 +62,7 @@
         @forelse($facturen as $factuur)
           <tr class="hover:bg-gray-50">
             <td class="px-4 py-4">
-              <div class="font-medium text-yellow-400">F{{ date('Y', strtotime($factuur->invoice_date)) }}-{{ str_pad($factuur->id, 3, '0', STR_PAD_LEFT) }}</div>
+              <div class="font-bold text-black">F{{ date('Y', strtotime($factuur->invoice_date)) }}-{{ str_pad($factuur->id, 3, '0', STR_PAD_LEFT) }}</div>
               @if($factuur->offerte_id)
                 <div class="text-xs text-gray-500 flex items-center gap-1 mt-1">
                   🔗 <a href="{{ route('offertes.show', $factuur->offerte_id) }}" class="text-indigo-600 hover:text-indigo-800">Offerte</a>

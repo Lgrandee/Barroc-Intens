@@ -115,7 +115,7 @@ Barroc Intens B.V.</textarea>
 
             @if($factuur->status === 'verzonden' || $factuur->status === 'verlopen')
               <div class="space-y-2 mt-4 pt-4 border-t border-yellow-300">
-                <button type="button" onclick="alert('Herinnering versturen functionaliteit komt binnenkort')" class="w-full px-4 py-2 text-sm border border-yellow-500 rounded text-yellow-700 hover:bg-yellow-100">
+                <button type="button" onclick="window.location.href='mailto:{{ $factuur->customer->email ?? '' }}'" class="w-full px-4 py-2 text-sm border border-yellow-500 rounded text-yellow-700 hover:bg-yellow-100">
                   📩 Verstuur betalingsherinnering
                 </button>
                 @if($factuur->status === 'verlopen')

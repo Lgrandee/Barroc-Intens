@@ -223,6 +223,7 @@ new class extends Component {
                         icon="shield-check"
                         icon:variant="outline"
                         wire:click="enable"
+                        class="bg-yellow-300 text-black hover:bg-yellow-400 border-yellow-300"
                     >
                         {{ __('Enable 2FA') }}
                     </flux:button>

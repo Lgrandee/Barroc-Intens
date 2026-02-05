@@ -10,14 +10,14 @@
       />
 
       <select wire:model.live="status" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-900">
-        <option value="all">All statuses</option>
-        <option value="active">active</option>
-        <option value="inactive">inactive</option>
-        <option value="pending">pending</option>
+        <option value="all">Alle statussen</option>
+        <option value="active">actief</option>
+        <option value="inactive">inactief</option>
+        <option value="pending">in afwachting</option>
       </select>
 
       <select class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-900">
-        <option>All types</option>
+        <option>Alle types</option>
       </select>
 
       @if($search || $status !== 'all')
@@ -34,9 +34,9 @@
       <thead class="bg-gray-50 border-b border-gray-200">
         <tr>
           <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contract</th>
-          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Klant</th>
           <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start</th>
-          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Eind</th>
           <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
           <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acties</th>
         </tr>
@@ -45,7 +45,7 @@
         @forelse($contracts as $contract)
           <tr class="hover:bg-gray-50">
             <td class="px-4 py-4">
-              <div class="font-medium text-gray-900">CON-{{ date('Y', strtotime($contract->start_date)) }}-{{ str_pad($contract->id, 3, '0', STR_PAD_LEFT) }}</div>
+              <div class="font-bold text-gray-900">CON-{{ date('Y', strtotime($contract->start_date)) }}-{{ str_pad($contract->id, 3, '0', STR_PAD_LEFT) }}</div>
               <div class="text-sm text-gray-500">{{ $contract->products->pluck('product_name')->join(', ') ?: ($contract->product->product_name ?? 'N/A') }} — Location: {{ $contract->customer->city ?? 'Unknown' }}</div>
             </td>
             <td class="px-4 py-4 text-sm text-gray-900">
@@ -90,7 +90,7 @@
         @empty
           <tr>
             <td colspan="6" class="px-4 py-8 text-center text-gray-500 text-sm">
-              No contracts found
+              Geen contracten gevonden
             </td>
           </tr>
         @endforelse
@@ -101,7 +101,7 @@
   <!-- Footer with pagination -->
   <div class="flex flex-col items-center gap-3 px-4 py-3 border-t border-gray-200 bg-gray-50">
     <div class="text-sm text-gray-700">
-      Showing {{ $contracts->firstItem() ?? 0 }}–{{ $contracts->lastItem() ?? 0 }} of {{ $contracts->total() }}
+      Tonen {{ $contracts->firstItem() ?? 0 }}–{{ $contracts->lastItem() ?? 0 }} van {{ $contracts->total() }}
     </div>
     <div class="flex gap-1 items-center">
       @if ($contracts->onFirstPage())

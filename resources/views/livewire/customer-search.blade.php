@@ -20,12 +20,12 @@
       <input
         type="text"
         wire:model.live.debounce.100ms="search"
-        placeholder="Search by company name, contact person or city"
+        placeholder="Zoek op bedrijfsnaam, contactpersoon of plaats"
         class="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-gray-900"
       />
 
       @if($search && $results->isEmpty() && $showDropdown)
-        <div class="mt-1 text-xs text-gray-500">No customers found</div>
+        <div class="mt-1 text-xs text-gray-500">Geen klanten gevonden</div>
       @endif
 
       @if($showDropdown && $results->isNotEmpty())

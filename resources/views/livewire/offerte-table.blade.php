@@ -49,7 +49,7 @@
         @forelse($offertes as $offerte)
           <tr class="hover:bg-gray-50">
             <td class="px-4 py-4">
-              <div class="font-medium text-indigo-600">OFF-{{ date('Y', strtotime($offerte->created_at)) }}-{{ str_pad($offerte->id, 3, '0', STR_PAD_LEFT) }}</div>
+              <div class="font-bold text-black">OFF-{{ date('Y', strtotime($offerte->created_at)) }}-{{ str_pad($offerte->id, 3, '0', STR_PAD_LEFT) }}</div>
               @if($offerte->status === 'accepted' && $offerte->factuur)
                 <div class="text-xs text-green-600 flex items-center gap-1 mt-1">
                   ✓ <a href="{{ route('facturen.edit', $offerte->factuur->id) }}" class="hover:text-green-800">Factuur aangemaakt</a>

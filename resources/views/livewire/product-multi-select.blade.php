@@ -7,12 +7,12 @@
       <input
         type="text"
         wire:model.live.debounce.100ms="search"
-        placeholder="Search by product name"
+        placeholder="Zoek op productnaam"
         class="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-gray-900"
       />
 
       @if($search && $results->isEmpty() && $showDropdown)
-        <div class="mt-1 text-xs text-gray-500">No products found</div>
+        <div class="mt-1 text-xs text-gray-500">Geen producten gevonden</div>
       @endif
 
       @if($showDropdown && $results->isNotEmpty())
@@ -26,14 +26,14 @@
               <div class="flex-1">
                 <div class="font-medium text-sm text-gray-900">{{ $res->product_name }}</div>
                 <div class="flex gap-3 mt-1">
-                  <span class="text-xs text-gray-600">€{{ number_format($res->price, 2, ',', '.') }} / year</span>
+                  <span class="text-xs text-gray-600">€{{ number_format($res->price, 2, ',', '.') }} / jaar</span>
                   <span class="text-xs {{ $res->stock > 0 ? 'text-green-600' : 'text-red-600' }}">
-                    Stock: {{ $res->stock }}
+                    Voorraad: {{ $res->stock }}
                   </span>
                 </div>
               </div>
               <div class="ml-4 px-3 py-1 bg-green-600 text-white rounded-md text-xs font-semibold">
-                + ADD
+                + TOEVOEGEN
               </div>
             </button>
           @endforeach
@@ -46,7 +46,7 @@
       <div class="border border-gray-300 rounded-md overflow-hidden mt-4">
         <div class="bg-gray-100 px-4 py-2 border-b border-gray-300">
           <div class="flex justify-between items-center">
-            <span class="text-sm font-medium text-gray-800">Selected products</span>
+            <span class="text-sm font-medium text-gray-800">Geselecteerde producten</span>
             <span class="text-xs text-gray-600">{{ count($selected) }} item(s)</span>
           </div>
         </div>
@@ -60,9 +60,9 @@
                 <div class="flex-1">
                   <div class="font-medium text-sm">{{ $product->product_name }}</div>
                   <div class="flex gap-3 mt-0.5">
-                    <span class="text-xs text-gray-500">€{{ number_format($product->price, 2, ',', '.') }} / year</span>
+                    <span class="text-xs text-gray-500">€{{ number_format($product->price, 2, ',', '.') }} / jaar</span>
                     <span class="text-xs {{ $product->stock > 0 ? 'text-green-600' : 'text-red-600' }} font-medium">
-                      Stock: {{ $product->stock }}
+                      Voorraad: {{ $product->stock }}
                     </span>
                   </div>
                 </div>
@@ -73,9 +73,9 @@
                   <button
                     type="button"
                     wire:click="remove({{ $product->id }})"
-                    wire:confirm="Are you sure you want to remove this product?"
+                    wire:confirm="Weet je zeker dat je dit product wilt verwijderen?"
                     class="ml-2 text-red-600 hover:text-red-800 text-sm font-medium"
-                  >Remove</button>
+                  >Verwijderen</button>
                 </div>
               </div>
               <input type="hidden" name="product_ids[]" value="{{ $product->id }}" />
@@ -93,7 +93,7 @@
             $total = $subtotal + $vat;
           @endphp
           <div class="flex justify-between items-center text-sm">
-            <span class="text-gray-600">Subtotal (per year)</span>
+            <span class="text-gray-600">Subtotaal (per jaar)</span>
             <span class="text-gray-900">€{{ number_format($subtotal, 2, ',', '.') }}</span>
           </div>
           <div class="flex justify-between items-center text-sm">
@@ -101,7 +101,7 @@
             <span class="text-gray-900">€{{ number_format($vat, 2, ',', '.') }}</span>
           </div>
           <div class="flex justify-between items-center pt-2 border-t border-gray-400">
-            <span class="text-sm font-semibold text-gray-900">Total incl. BTW (per year)</span>
+            <span class="text-sm font-semibold text-gray-900">Totaal incl. BTW (per jaar)</span>
             <span class="text-sm font-semibold text-gray-900">€{{ number_format($total, 2, ',', '.') }}</span>
           </div>
         </div>
