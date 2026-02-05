@@ -30,13 +30,13 @@ class DashboardController extends Controller
         if ($activeUsers == 0) $activeUsers = User::count();
 
         $openTicketsCount = PlanningTicket::where('status', 'open')->count();
-        
+
         $lateInvoicesCount = Factuur::where('due_date', '<', now())
             ->whereNotIn('status', ['betaald', 'paid'])
             ->count();
 
         $openInvoicesCount = Factuur::whereNotIn('status', ['betaald', 'paid'])->count();
-        
+
         $recentInvoices = Factuur::with('customer')->latest()->take(5)->get();
 
         // Payment reminders: invoices due within 7 days that aren't paid
@@ -50,8 +50,8 @@ class DashboardController extends Controller
 
         return view('admin.dashboard', compact(
             'monthlyRevenue',
-            'activeUsers', 
-            'lateInvoicesCount', 
+            'activeUsers',
+            'lateInvoicesCount',
             'recentInvoices',
             'openInvoicesCount',
             'openTicketsCount',
@@ -63,7 +63,7 @@ class DashboardController extends Controller
     {
         $totalOffertes = Offerte::count();
         $newLeads = Customer::where('created_at', '>=', now()->subMonth())->count();
-        
+
         // Conversion Ratio: Accepted offertes / Total offertes
         $acceptedOffertes = Offerte::where('status', 'accepted')->count();
         $conversionRatio = $totalOffertes > 0 ? round(($acceptedOffertes / $totalOffertes) * 100) : 0;
@@ -92,9 +92,9 @@ class DashboardController extends Controller
         $openTasksCount = PlanningTicket::where('status', 'open')->count();
 
         return view('sales.dashboard', compact(
-            'totalOffertes', 
-            'newLeads', 
-            'conversionRatio', 
+            'totalOffertes',
+            'newLeads',
+            'conversionRatio',
             'avgDealValue',
             'recentDeals',
             'recentTasks',
@@ -106,22 +106,22 @@ class DashboardController extends Controller
     {
         // Total stock value - calculated in PHP for SQLite compatibility
         $totalStockValue = Product::all()->sum(function($p) { return $p->stock * $p->price; });
-        
+
         // Product counts
         $productCount = Product::sum('stock');
-        
+
         // Low stock products (threshold: 15 units)
         $lowStockThreshold = 15;
-        $lowStockProducts = Product::where('stock', '<', $lowStockThreshold)
+        $lowStockProducts = Product::with('orderLogistics')->where('stock', '<', $lowStockThreshold)
             ->where('stock', '>', 0)
             ->orderBy('stock')
             ->take(5)
             ->get();
         $lowStockCount = Product::where('stock', '<', $lowStockThreshold)->count();
-        
+
         // Open orders (orders created in last month)
         $openOrdersCount = OrderLogistic::where('created_at', '>=', now()->subMonth())->count();
-        
+
         // Recent orders
         $recentOrders = OrderLogistic::with('product')
             ->latest()
@@ -129,7 +129,7 @@ class DashboardController extends Controller
             ->get();
 
         // All products for stock overview
-        $allProducts = Product::orderBy('stock')->take(10)->get();
+        $allProducts = Product::with('orderLogistics')->orderBy('stock')->take(10)->get();
 
         return view('purchasing.dashboard', compact(
             'totalStockValue',
@@ -189,7 +189,7 @@ class DashboardController extends Controller
     {
         // Open tickets
         $openTicketsCount = PlanningTicket::where('status', 'open')->count();
-        
+
         // Scheduled services this week
         $scheduledServicesCount = PlanningTicket::where('catagory', 'service')
             ->whereBetween('scheduled_time', [now()->startOfWeek(), now()->endOfWeek()])
@@ -197,13 +197,13 @@ class DashboardController extends Controller
 
         // Average response time - calculated in PHP for SQLite compatibility
         $openTickets = PlanningTicket::where('status', 'open')->get();
-        $avgResponseTime = $openTickets->count() > 0 
-            ? $openTickets->avg(function($t) { return now()->diffInDays($t->created_at); }) 
+        $avgResponseTime = $openTickets->count() > 0
+            ? $openTickets->avg(function($t) { return now()->diffInDays($t->created_at); })
             : 0;
 
         // Low stock alerts (for technician supplies)
         $lowStockThreshold = 10;
-        $stockAlerts = Product::where('stock', '<', $lowStockThreshold)
+        $stockAlerts = Product::with('orderLogistics')->where('stock', '<', $lowStockThreshold)
             ->orderBy('stock')
             ->take(5)
             ->get();
@@ -277,7 +277,7 @@ class DashboardController extends Controller
 
         // Team schedule
         $teamSchedule = User::with(['planningTickets' => function($q) {
-            $q->whereDate('scheduled_time', today())->orderBy('scheduled_time');
+            $q->with('feedback')->whereDate('scheduled_time', today())->orderBy('scheduled_time');
         }])->take(5)->get();
 
         // Urgent changes (recent tickets or high priority)

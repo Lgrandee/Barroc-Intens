@@ -31,7 +31,8 @@ class CustomerIndex extends Component
 
     public function render()
     {
-        $customers = Customer::when($this->search, function ($query) {
+        $customers = Customer::with(['offertes', 'facturen', 'contracts'])
+        ->when($this->search, function ($query) {
             return $query->where(function ($q) {
                 $q->where('name_company', 'like', '%' . $this->search . '%')
                   ->orWhere('contact_person', 'like', '%' . $this->search . '%')

@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     public function showStock()
     {
-        $products = Product::paginate(15);
+        $products = Product::with('orderLogistics')->paginate(15);
         return view('purchasing.productStock')->with('products', $products);
     }
 
@@ -40,7 +40,7 @@ class ProductController extends Controller
     // Show order form where user can enter quantities to order
     public function orderForm()
     {
-        $products = Product::paginate(15);
+        $products = Product::with('orderLogistics')->paginate(15);
         return view('purchasing.orderProduct', compact('products'));
     }
 

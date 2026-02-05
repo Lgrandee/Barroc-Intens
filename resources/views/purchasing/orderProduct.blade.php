@@ -147,19 +147,30 @@
             @endif
 
             <div class="p-4 border-t border-gray-200 bg-gray-50" id="selected-summary">
-                <h3 class="text-sm font-semibold text-gray-800 mb-3">Geselecteerde producten</h3>
-                <div id="selected-empty" class="text-sm text-gray-500">Nog geen producten geselecteerd.</div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-sm font-semibold text-gray-800 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                        Geselecteerde producten
+                    </h3>
+                    <button type="button" id="clear-all-btn" class="hidden text-xs text-red-600 hover:text-red-800 hover:underline">
+                        Alles wissen
+                    </button>
+                </div>
+                <div id="selected-empty" class="text-sm text-gray-500 py-4 text-center">Nog geen producten geselecteerd.</div>
                 <div id="selected-list" class="hidden">
-                    <div class="grid grid-cols-4 text-xs font-semibold text-gray-500 border-b border-gray-200 pb-2">
+                    <div class="grid grid-cols-5 text-xs font-semibold text-gray-500 border-b border-gray-200 pb-2 mb-2">
                         <div>Product</div>
                         <div class="text-right">Prijs</div>
-                        <div class="text-right">Aantal</div>
+                        <div class="text-center">Aantal</div>
                         <div class="text-right">Totaal</div>
+                        <div class="text-right">Actie</div>
                     </div>
                     <div id="selected-items" class="divide-y divide-gray-100"></div>
-                    <div class="flex justify-end mt-3">
-                        <div class="text-sm text-gray-700">Subtotaal:</div>
-                        <div id="selected-total" class="ml-3 text-sm font-semibold text-gray-900">€ 0,00</div>
+                    <div class="flex justify-end mt-3 pt-3 border-t-2 border-gray-300">
+                        <div class="text-sm font-semibold text-gray-700">Subtotaal:</div>
+                        <div id="selected-total" class="ml-3 text-base font-bold text-gray-900">€ 0,00</div>
                     </div>
                 </div>
             </div>
@@ -228,22 +239,108 @@
                 total += lineTotal;
 
                 const item = document.createElement('div');
-                item.className = 'grid grid-cols-4 py-2 text-sm text-gray-700';
+                item.className = 'grid grid-cols-5 py-3 text-sm text-gray-700 items-center hover:bg-gray-100 transition rounded';
                 item.innerHTML = `
-                    <div>${itemData.name}</div>
+                    <div class="font-medium">${itemData.name}</div>
                     <div class="text-right">${formatPrice(itemData.price)}</div>
-                    <div class="text-right">${itemData.qty}</div>
+                    <div class="flex justify-center">
+                        <div class="inline-flex items-center border rounded-md overflow-hidden bg-white shadow-sm">
+                            <button type="button" class="px-2 py-1 text-gray-700 hover:bg-gray-100 selected-qty-btn" data-id="${itemData.id}" data-delta="-1">−</button>
+                            <span class="px-3 py-1 text-center border-l border-r border-gray-200 min-w-[40px] font-medium">${itemData.qty}</span>
+                            <button type="button" class="px-2 py-1 text-gray-700 hover:bg-gray-100 selected-qty-btn" data-id="${itemData.id}" data-delta="1">＋</button>
+                        </div>
+                    </div>
                     <div class="text-right font-semibold text-gray-900">${formatPrice(lineTotal)}</div>
+                    <div class="text-right">
+                        <button type="button" class="text-red-500 hover:text-red-700 selected-remove-btn" data-id="${itemData.id}" title="Verwijder">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                        </button>
+                    </div>
                 `;
                 selectedItems.appendChild(item);
+            });
+
+            // Voeg event listeners toe aan de nieuwe knoppen
+            document.querySelectorAll('.selected-qty-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.dataset.id;
+                    const delta = parseInt(this.dataset.delta, 10);
+                    updateQuantityFromSummary(id, delta);
+                });
+            });
+
+            document.querySelectorAll('.selected-remove-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.dataset.id;
+                    removeProductFromSummary(id);
+                });
             });
 
             selectedTotal.textContent = formatPrice(total);
             selectedEmpty.classList.toggle('hidden', hasItems);
             selectedList.classList.toggle('hidden', !hasItems);
+
+            // Toggle "Alles wissen" knop
+            const clearAllBtn = document.getElementById('clear-all-btn');
+            if (clearAllBtn) {
+                clearAllBtn.classList.toggle('hidden', !hasItems);
+            }
+
             updateHiddenInputs();
         }
 
+        function updateQuantityFromSummary(productId, delta) {
+            if (!selections[productId]) return;
+
+            const newQty = Math.max(0, selections[productId].qty + delta);
+
+            if (newQty === 0) {
+                delete selections[productId];
+            } else {
+                selections[productId].qty = newQty;
+            }
+
+            // Sync met de hoofdinput
+            const mainInput = document.getElementById('qty-' + productId);
+            if (mainInput) {
+                mainInput.value = newQty;
+            }
+
+            saveSelections();
+            updateSelectedSummary();
+        }
+
+        function removeProductFromSummary(productId) {
+            delete selections[productId];
+
+            // Reset de hoofdinput
+            const mainInput = document.getElementById('qty-' + productId);
+            if (mainInput) {
+                mainInput.value = 0;
+            }
+
+            saveSelections();
+            updateSelectedSummary();
+        }
+        function clearAllSelections() {
+            if (!confirm('Weet je zeker dat je alle geselecteerde producten wilt verwijderen?')) {
+                return;
+            }
+
+            // Reset alle inputs
+            Object.keys(selections).forEach(productId => {
+                const mainInput = document.getElementById('qty-' + productId);
+                if (mainInput) {
+                    mainInput.value = 0;
+                }
+            });
+
+            selections = {};
+            saveSelections();
+            updateSelectedSummary();
+        }
         function syncSelectionsFromInputs() {
             document.querySelectorAll('.product-row').forEach(row => {
                 const input = row.querySelector('input[type="number"]');
@@ -363,6 +460,12 @@
                 if (typeFilter) typeFilter.value = 'all';
                 applyFilters();
             });
+        }
+
+        // "Alles wissen" knop in geselecteerde producten
+        const clearAllBtn = document.getElementById('clear-all-btn');
+        if (clearAllBtn) {
+            clearAllBtn.addEventListener('click', clearAllSelections);
         }
 
         loadSelections();

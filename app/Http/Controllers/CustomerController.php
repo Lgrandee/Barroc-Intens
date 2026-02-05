@@ -9,7 +9,7 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::all();
+        $customers = Customer::with(['offertes', 'facturen', 'contracts'])->get();
         return view('sales.customerIndex')->with('customers',$customers);
     }
 

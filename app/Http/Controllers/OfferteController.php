@@ -160,7 +160,7 @@ class OfferteController extends Controller
             'status' => ['required', 'in:accepted,rejected,pending,draft'],
         ]);
 
-        $offerte = Offerte::findOrFail($id);
+        $offerte = Offerte::with(['customer', 'products'])->findOrFail($id);
         $oldStatus = $offerte->status;
 
         // Store primary product in product_id for backward compatibility
