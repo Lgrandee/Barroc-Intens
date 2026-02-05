@@ -161,7 +161,7 @@
                                     <input type="password" name="password" id="password" required
                                         class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent pr-10"
                                         placeholder="••••••••" oninput="checkPasswordStrength()">
-                                    <button type="button" onclick="togglePassword('password', this)" tabindex="-1" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-yellow-500 dark:hover:text-yellow-400">
+                                    <button type="button" onclick="togglePassword('password', this)" tabindex="-1" class="absolute inset-y-0 right-0 px-3 flex items-center justify-center text-gray-400 dark:text-gray-500 hover:text-yellow-500 dark:hover:text-yellow-400">
                                         <svg id="icon-password" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -192,7 +192,7 @@
                                     <input type="password" name="password_confirmation" id="password_confirmation" required
                                         class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent pr-10"
                                         placeholder="••••••••" onblur="checkPasswordMatch()">
-                                    <button type="button" onclick="togglePassword('password_confirmation', this)" tabindex="-1" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-yellow-500 dark:hover:text-yellow-400">
+                                    <button type="button" onclick="togglePassword('password_confirmation', this)" tabindex="-1" class="absolute inset-y-0 right-0 px-3 flex items-center justify-center text-gray-400 dark:text-gray-500 hover:text-yellow-500 dark:hover:text-yellow-400">
                                         <svg id="icon-password_confirmation" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -218,7 +218,7 @@
                                     <input type="password" name="password" id="edit_password"
                                         class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent pr-10"
                                         placeholder="••••••••" oninput="checkEditPasswordStrength()">
-                                    <button type="button" onclick="togglePassword('edit_password', this)" tabindex="-1" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-yellow-500 dark:hover:text-yellow-400">
+                                    <button type="button" onclick="togglePassword('edit_password', this)" tabindex="-1" class="absolute inset-y-0 right-0 px-3 flex items-center justify-center text-gray-400 dark:text-gray-500 hover:text-yellow-500 dark:hover:text-yellow-400">
                                         <svg id="icon-edit_password" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -249,7 +249,7 @@
                                     <input type="password" name="password_confirmation" id="edit_password_confirmation"
                                         class="w-full px-3 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 focus:border-transparent pr-10"
                                         placeholder="••••••••" onblur="checkPasswordMatch()">
-                                    <button type="button" onclick="togglePassword('edit_password_confirmation', this)" tabindex="-1" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-yellow-500 dark:hover:text-yellow-400">
+                                    <button type="button" onclick="togglePassword('edit_password_confirmation', this)" tabindex="-1" class="absolute inset-y-0 right-0 px-3 flex items-center justify-center text-gray-400 dark:text-gray-500 hover:text-yellow-500 dark:hover:text-yellow-400">
                                         <svg id="icon-edit_password_confirmation" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
