@@ -61,7 +61,7 @@ class OfferteController extends Controller
             'valid_until' => ['nullable', 'date', 'after:today'],
             'delivery_time_weeks' => ['nullable', 'integer', 'min:1'],
             'payment_terms_days' => ['nullable', 'integer', 'min:1'],
-            'custom_terms' => ['nullable', 'string', 'max:5000'],
+            'custom_terms' => ['nullable', 'string', 'max:5000', 'regex:/^[^<>]*$/'],
             'status' => ['required', 'in:pending,draft'],
         ]);
 

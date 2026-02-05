@@ -40,6 +40,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Zet email altijd om naar lowercase voor case-insensitive opslag
+     */
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
+
+    /**
      * Get the user's initials
      */
     public function initials(): string

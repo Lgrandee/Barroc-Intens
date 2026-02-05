@@ -20,14 +20,21 @@ class ProductController extends Controller
 
    public function store(Request $request)
     {
+        $validated = $request->validate([
+            'product_name' => 'required|string|max:255|unique:products,product_name',
+            'stock' => 'required|integer|min:0|max:999999',
+            'price' => 'required|numeric|min:0|max:999999.99',
+            'type' => 'required|in:beans,parts,machines',
+        ]);
+
         $newProduct = new Product();
-        $newProduct->product_name = $request->product_name;
-        $newProduct->stock = $request->stock;
-        $newProduct->price = $request->price;
-        $newProduct->type = $request->type;
+        $newProduct->product_name = $validated['product_name'];
+        $newProduct->stock = $validated['stock'];
+        $newProduct->price = $validated['price'];
+        $newProduct->type = $validated['type'];
         $newProduct->save();
 
-        return redirect()->route('product.stock');
+        return redirect()->route('product.stock')->with('success', 'Product aangemaakt.');
     }
 
     // Show order form where user can enter quantities to order
@@ -42,7 +49,7 @@ class ProductController extends Controller
     {
         $data = $request->validate([
             'quantities' => 'array',
-            'quantities.*' => 'nullable|integer|min:0',
+            'quantities.*' => 'nullable|integer|min:1',
         ]);
 
         $quantities = $data['quantities'] ?? [];
@@ -89,6 +96,7 @@ class ProductController extends Controller
         $logs = OrderLogistic::with('product')->orderBy('created_at', 'desc')->paginate(15);
         return view('purchasing.orderLogistics', compact('logs'));
     }
+
     // Show the edit form for a product
     public function edit($id)
     {
@@ -100,10 +108,18 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-        $product->product_name = $request->product_name;
-        $product->stock = $request->stock;
-        $product->price = $request->price;
-        $product->type = $request->type;
+
+        $validated = $request->validate([
+            'product_name' => 'required|string|max:255|unique:products,product_name,' . $product->id,
+            'stock' => 'required|integer|min:0|max:999999',
+            'price' => 'required|numeric|min:0|max:999999.99',
+            'type' => 'required|in:beans,parts,machines',
+        ]);
+
+        $product->product_name = $validated['product_name'];
+        $product->stock = $validated['stock'];
+        $product->price = $validated['price'];
+        $product->type = $validated['type'];
         $product->save();
 
         return redirect()->route('product.stock')->with('success', 'Product bijgewerkt.');
