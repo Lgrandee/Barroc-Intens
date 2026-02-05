@@ -21,6 +21,14 @@ class Customer extends Model
         'bkr_status',
     ];
 
+    /**
+     * Zet email altijd om naar lowercase voor case-insensitive opslag
+     */
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
+
     public function offertes()
     {
         return $this->hasMany(Offerte::class, 'name_company_id');

@@ -19,15 +19,27 @@ class CustomerController extends Controller
 
    public function store(Request $request)
     {
+        $validated = $request->validate([
+            'name_company' => 'required|string|max:255',
+            'contact_person' => 'required|string|max:255',
+            'email' => 'required|email|unique:customers,email',
+            'phone_number' => 'required|regex:/^[0-9\s\-\+()]{7,20}$/',
+            'bkr_number' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:100',
+            'zipcode' => 'required|regex:/^[0-9]{4}\s?[A-Z]{2}$/i|max:10',
+            'notes' => 'nullable|string|max:1000',
+        ]);
+
         $newCustomer = new Customer();
-        $newCustomer->name_company = $request->name_company;
-        $newCustomer->contact_person = $request->contact_person;
-        $newCustomer->email = $request->email;
-        $newCustomer->phone_number = $request->phone_number;
-        $newCustomer->bkr_number = $request->bkr_number;
-        $newCustomer->address = $request->address;
-        $newCustomer->city = $request->city;
-        $newCustomer->zipcode = $request->zipcode;
+        $newCustomer->name_company = $validated['name_company'];
+        $newCustomer->contact_person = $validated['contact_person'];
+        $newCustomer->email = $validated['email'];
+        $newCustomer->phone_number = $validated['phone_number'];
+        $newCustomer->bkr_number = $validated['bkr_number'];
+        $newCustomer->address = $validated['address'];
+        $newCustomer->city = $validated['city'];
+        $newCustomer->zipcode = $validated['zipcode'];
         $newCustomer->bkr_status = 'pending';
         $newCustomer->save();
 
@@ -54,15 +66,27 @@ class CustomerController extends Controller
 
     public function edit(Customer $customer, Request $request)
     {
-        $customer->name_company = $request->name_company;
-        $customer->contact_person = $request->contact_person;
-        $customer->email = $request->email;
-        $customer->phone_number = $request->phone_number;
-        $customer->bkr_number = $request->bkr_number;
-        $customer->address = $request->address;
-        $customer->city = $request->city;
-        $customer->zipcode = $request->zipcode;
-        $customer->notes = $request->notes;
+        $validated = $request->validate([
+            'name_company' => 'required|string|max:255',
+            'contact_person' => 'required|string|max:255',
+            'email' => 'required|email|unique:customers,email,' . $customer->id,
+            'phone_number' => 'required|regex:/^[0-9\s\-\+()]{7,20}$/',
+            'bkr_number' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:100',
+            'zipcode' => 'required|regex:/^[0-9]{4}\s?[A-Z]{2}$/i|max:10',
+            'notes' => 'nullable|string|max:1000',
+        ]);
+
+        $customer->name_company = $validated['name_company'];
+        $customer->contact_person = $validated['contact_person'];
+        $customer->email = $validated['email'];
+        $customer->phone_number = $validated['phone_number'];
+        $customer->bkr_number = $validated['bkr_number'];
+        $customer->address = $validated['address'];
+        $customer->city = $validated['city'];
+        $customer->zipcode = $validated['zipcode'];
+        $customer->notes = $validated['notes'];
         $customer->save();
 
         return redirect()->route('customers.show', $customer->id);

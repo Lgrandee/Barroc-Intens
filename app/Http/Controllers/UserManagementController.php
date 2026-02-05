@@ -162,7 +162,7 @@ class UserManagementController extends Controller
         $filename = "werknemers_export_" . date('Y-m-d') . ".csv";
 
         $handle = fopen('php://output', 'w');
-        
+
         // Add BOM for Excel compatibility
         fputs($handle, "\xEF\xBB\xBF");
 
@@ -176,10 +176,10 @@ class UserManagementController extends Controller
         foreach ($users as $u) {
             fputcsv($handle, [
                 $u->id,
-                $u->name,
-                $u->email,
+                $this->escapeCsvValue($u->name),
+                $this->escapeCsvValue($u->email),
                 $u->phone_num,
-                $u->department, // or function to get Dutch name
+                $u->department,
                 $u->status,
                 $u->created_at->format('Y-m-d H:i')
             ], ';');
@@ -187,6 +187,15 @@ class UserManagementController extends Controller
 
         fclose($handle);
         exit();
+    }
+
+    private function escapeCsvValue($value)
+    {
+        if (empty($value)) return $value;
+        if (preg_match('/^[=@+\-]/', $value)) {
+            return "'" . $value; // Prepend single quote to prevent formula injection
+        }
+        return $value;
     }
 
     public function import(Request $request)
@@ -197,36 +206,50 @@ class UserManagementController extends Controller
         }
 
         $request->validate([
-            'file' => 'required|file|mimes:csv,txt',
+            'file' => 'required|file|mimes:csv,txt|max:1024', // 1MB max
         ]);
 
         $file = $request->file('file');
-        
+
         if (($handle = fopen($file->getRealPath(), 'r')) !== false) {
             // Read header row
             $header = fgetcsv($handle, 1000, ';'); // Assuming semicolon separator
-            
-            // Basic validation of header structure could go here
-            // Expected: ID, Naam, Email, Telefoon, Afdeling, Status, ...
+
+            // Basic validation of header structure
+            $expectedHeaders = ['ID', 'Naam', 'Email', 'Telefoon', 'Afdeling', 'Status'];
+            if ($header !== $expectedHeaders) {
+                fclose($handle);
+                return redirect()->route('management.users.index')->with('error', 'CSV header format klopt niet. Verwacht: ID;Naam;Email;Telefoon;Afdeling;Status');
+            }
 
             $count = 0;
+            $errors = [];
+
             while (($data = fgetcsv($handle, 1000, ';')) !== false) {
                 // Skip empty rows
-                if (count($data) < 3) continue;
+                if (count($data) < 3 || empty($data[2])) continue;
 
                 // $data indices map to the export column order
                 // 0: ID, 1: Name, 2: Email, 3: Phone, 4: Department, 5: Status
-                
-                $email = $data[2];
-                $name = $data[1];
-                
-                if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) continue;
+
+                $email = trim($data[2]);
+                $name = trim($data[1]);
+
+                if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $errors[] = "Rij {$count}: Ongeldig email format";
+                    continue;
+                }
+
+                if (empty($name)) {
+                    $errors[] = "Rij {$count}: Naam mag niet leeg zijn";
+                    continue;
+                }
 
                 User::updateOrCreate(
                     ['email' => $email],
                     [
                         'name' => $name,
-                        'phone_num' => $data[3] ?? null,
+                        'phone_num' => isset($data[3]) ? trim($data[3]) : null,
                         'department' => $this->validateDepartment($data[4] ?? 'Sales'),
                         'status' => $this->validateStatus($data[5] ?? 'active'),
                         'password' => Hash::make('Welkom01!'), // Default password for new imports
@@ -236,7 +259,12 @@ class UserManagementController extends Controller
             }
             fclose($handle);
 
-            return redirect()->route('management.users.index')->with('success', "$count gebruikers geïmporteerd/bijgewerkt.");
+            $message = "$count gebruikers geïmporteerd/bijgewerkt.";
+            if (!empty($errors)) {
+                $message .= " " . count($errors) . " rijen geslaan.";
+            }
+
+            return redirect()->route('management.users.index')->with('success', $message);
         }
 
         return redirect()->route('management.users.index')->with('error', 'Kon bestand niet lezen.');
