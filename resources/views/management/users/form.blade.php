@@ -30,6 +30,7 @@
 
             <div class="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden">
                 <div class="p-6">
+                <form action="{{ isset($user) ? route('management.users.update', $user->id) : route('management.users.store') }}" method="POST">
                     @csrf
                     @if(isset($user))
                         @method('PUT')
