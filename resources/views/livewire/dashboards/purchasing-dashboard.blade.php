@@ -96,7 +96,7 @@
                                 <div class="font-medium">{{ $product->product_name }}</div>
                                 <div class="text-sm text-gray-500">Voorraad: {{ $product->stock }} stuks</div>
                             </div>
-                            <div class="text-sm text-red-600">Bestel nodig</div>
+                            <a href="{{ route('products.order', ['preselect' => $product->id]) }}" class="text-sm text-red-600 hover:text-red-700 hover:underline">Bestel nodig</a>
                         </div>
                         @empty
                         <div class="p-4 text-gray-500 text-center">Geen producten met lage voorraad.</div>

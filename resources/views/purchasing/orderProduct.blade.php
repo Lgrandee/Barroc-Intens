@@ -44,6 +44,15 @@
                 <option value="machines">Machine</option>
             </select>
 
+            <select
+                id="product-stock-filter"
+                class="px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-600 focus:ring-yellow-500 focus:border-yellow-500"
+            >
+                <option value="all">Alle voorraad</option>
+                <option value="low">Lage voorraad</option>
+                <option value="critical">Kritiek laag</option>
+            </select>
+
             <button
                 type="button"
                 id="product-reset"
@@ -63,14 +72,26 @@
             </div>
 
             @foreach ($products as $product)
+                @php
+                    $stockLevel = $product->stock < 5 ? 'critical' : ($product->stock < 15 ? 'low' : 'normal');
+                @endphp
               <div class="grid grid-cols-5 items-center p-4 border-b border-gray-200 text-sm gap-2 hover:bg-gray-50 transition product-row"
                   data-name="{{ strtolower($product->product_name) }}"
                   data-type="{{ strtolower($product->type) }}"
                   data-product-id="{{ $product->id }}"
                   data-product-name="{{ $product->product_name }}"
-                  data-price="{{ $product->price ?? 0 }}">
+                  data-price="{{ $product->price ?? 0 }}"
+                  data-stock-level="{{ $stockLevel }}">
                 <div class="text-black font-medium product-name">{{ $product->product_name }}</div>
-                <div class="text-black">{{ $product->stock }}</div>
+                <div>
+                    @if($product->stock < 5)
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">{{ $product->stock }} (Kritiek)</span>
+                    @elseif($product->stock < 15)
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">{{ $product->stock }} (Laag)</span>
+                    @else
+                        <span class="text-gray-700">{{ $product->stock }}</span>
+                    @endif
+                </div>
                 <div class="text-black">€ {{ number_format($product->price ?? 0, 2, ',', '.') }}</div>
                 <div class="text-black capitalize product-type">{{ $product->type }}</div>
 
@@ -207,6 +228,28 @@
             } catch (e) {
                 selections = {};
             }
+        }
+
+        function applyPreselectFromQuery() {
+            const params = new URLSearchParams(window.location.search);
+            const preselectId = params.get('preselect');
+            if (!preselectId) return;
+
+            const row = document.querySelector(`.product-row[data-product-id="${preselectId}"]`);
+            if (!row) return;
+
+            const name = row.dataset.productName || row.querySelector('.product-name')?.textContent?.trim() || '';
+            const price = parseFloat(row.dataset.price || '0');
+            const existingQty = selections[preselectId]?.qty || 0;
+            const qty = Math.max(existingQty, 1);
+
+            selections[preselectId] = { id: preselectId, name, price, qty };
+            const input = document.getElementById('qty-' + preselectId);
+            if (input) {
+                input.value = qty;
+            }
+
+            saveSelections();
         }
 
         function saveSelections() {
@@ -410,29 +453,36 @@
         // Zoek & filter functionaliteit
         const searchInput = document.getElementById('product-search');
         const typeFilter = document.getElementById('product-type-filter');
+        const stockFilter = document.getElementById('product-stock-filter');
         const rows = Array.from(document.querySelectorAll('.product-row'));
         const noResults = document.getElementById('no-results');
 
         function toggleResetButton() {
             const hasSearch = (searchInput.value || '').trim().length > 0;
             const hasFilter = typeFilter.value !== 'all';
+            const hasStockFilter = stockFilter && stockFilter.value !== 'all';
             if (resetButton) {
-                resetButton.classList.toggle('hidden', !(hasSearch || hasFilter));
+                resetButton.classList.toggle('hidden', !(hasSearch || hasFilter || hasStockFilter));
             }
         }
 
         function applyFilters() {
             const query = (searchInput.value || '').toLowerCase().trim();
             const type = typeFilter.value;
+            const stock = stockFilter ? stockFilter.value : 'all';
             let visibleCount = 0;
 
             rows.forEach(row => {
                 const name = row.dataset.name || '';
                 const rowType = row.dataset.type || '';
+                const stockLevel = row.dataset.stockLevel || 'normal';
                 const matchesQuery = !query || name.includes(query) || rowType.includes(query);
                 const matchesType = type === 'all' || rowType === type;
+                const matchesStock = stock === 'all'
+                    || (stock === 'low' && (stockLevel === 'low' || stockLevel === 'critical'))
+                    || (stock === 'critical' && stockLevel === 'critical');
 
-                if (matchesQuery && matchesType) {
+                if (matchesQuery && matchesType && matchesStock) {
                     row.classList.remove('hidden');
                     visibleCount += 1;
                 } else {
@@ -454,10 +504,15 @@
             typeFilter.addEventListener('change', applyFilters);
         }
 
+        if (stockFilter) {
+            stockFilter.addEventListener('change', applyFilters);
+        }
+
         if (resetButton) {
             resetButton.addEventListener('click', () => {
                 if (searchInput) searchInput.value = '';
                 if (typeFilter) typeFilter.value = 'all';
+                if (stockFilter) stockFilter.value = 'all';
                 applyFilters();
             });
         }
@@ -469,6 +524,7 @@
         }
 
         loadSelections();
+        applyPreselectFromQuery();
         syncInputsFromSelections();
         syncSelectionsFromInputs();
         applyFilters();

@@ -92,13 +92,13 @@
 	</div>
 	<div class="divide-y divide-gray-100">
 		@forelse($lowStockProducts as $product)
-		<div class="flex items-center justify-between p-4">
+			<a href="{{ route('products.order', ['preselect' => $product->id]) }}" class="flex items-center justify-between p-4 hover:bg-gray-50 cursor-pointer">
 			<div>
 				<div class="font-medium">{{ $product->product_name }}</div>
 				<div class="text-sm text-gray-500">Voorraad: {{ $product->stock }} stuks</div>
 			</div>
-			<div class="text-sm text-red-600">Bestel nodig</div>
-		</div>
+				<span class="text-sm text-red-600 hover:text-red-700 hover:underline">Bestel nodig</span>
+			</a>
 		@empty
 		<div class="p-4 text-gray-500 text-center">Geen producten met lage voorraad.</div>
 		@endforelse
