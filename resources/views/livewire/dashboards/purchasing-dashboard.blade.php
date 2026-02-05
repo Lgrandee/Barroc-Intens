@@ -51,11 +51,11 @@
                 <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
                     <div class="flex items-center justify-between p-4 border-b border-gray-100">
                         <h2 class="text-lg font-medium">Voorraad Overzicht</h2>
-                        <button class="text-sm text-indigo-600">+ Product</button>
+                        <a href="{{ route('products.create') }}" class="text-sm text-indigo-600 hover:text-indigo-800 transition-colors">+ Product</a>
                     </div>
                     <div class="flex gap-2 p-3 border-b border-gray-100 bg-gray-50">
-                        <button class="px-3 py-1 text-sm bg-indigo-100 text-indigo-700 rounded border border-indigo-200">Alle Producten</button>
-                        <button class="px-3 py-1 text-sm bg-white text-gray-600 rounded border border-gray-200">Lage Voorraad</button>
+                        <button wire:click="setFilter('all')" class="px-3 py-1 text-sm rounded border transition-colors {{ $stockFilter === 'all' ? 'bg-indigo-100 text-indigo-700 border-indigo-200' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' }}">Alle Producten</button>
+                        <button wire:click="setFilter('low')" class="px-3 py-1 text-sm rounded border transition-colors {{ $stockFilter === 'low' ? 'bg-indigo-100 text-indigo-700 border-indigo-200' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' }}">Lage Voorraad</button>
                     </div>
                     <div class="divide-y divide-gray-100">
                         @forelse($allProducts as $product)
@@ -87,7 +87,7 @@
                 <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
                     <div class="flex items-center justify-between p-4 border-b border-gray-100">
                         <h2 class="text-lg font-medium">Lage Voorraad Producten</h2>
-                        <button class="text-sm text-gray-600">Alle Producten</button>
+                        <a href="{{ route('product.stock') }}" class="text-sm text-gray-600 hover:text-gray-900">Alle Producten</a>
                     </div>
                     <div class="divide-y divide-gray-100">
                         @forelse($lowStockProducts as $product)
@@ -109,7 +109,7 @@
                 <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
                     <div class="flex items-center justify-between p-4 border-b border-gray-100">
                         <h2 class="text-lg font-medium">Recente Bestellingen</h2>
-                        <button class="text-sm text-gray-600">Alle Orders</button>
+                        <a href="{{ route('orders.logistics') }}" class="text-sm text-gray-600 hover:text-gray-900">Alle Orders</a>
                     </div>
                     <div class="divide-y divide-gray-100">
                         @forelse($recentOrders as $order)

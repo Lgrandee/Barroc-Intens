@@ -4,7 +4,7 @@
         <?php echo $__env->make('partials.head', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
         <style>
             /* Sleek Sidebar Navigation Styles - Override Flux UI */
-            
+
             /* Target all possible nav item selectors */
             [data-flux-navlist-item],
             [data-flux-navlist] a,
@@ -17,7 +17,7 @@
                 transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
                 margin: 2px 0 !important;
             }
-            
+
             /* Hover effect - Neutral interaction */
             [data-flux-navlist-item]:hover,
             [data-flux-navlist] a:hover,
@@ -32,7 +32,7 @@
                 background: rgba(255, 255, 255, 0.05) !important;
                 color: #f3f4f6 !important;
             }
-            
+
             /* Active/clicked state - pressed */
             [data-flux-navlist-item]:active,
             [data-flux-navlist] a:active,
@@ -56,7 +56,7 @@
                 border-left: 4px solid #f59e0b !important;
                 transform: translateX(0) !important;
             }
-            
+
             .dark [data-flux-navlist-item][aria-current="page"],
             .dark [data-flux-navlist] a[aria-current="page"],
             .dark [data-flux-navlist-item][data-current],
@@ -71,14 +71,14 @@
                 background: linear-gradient(to right, rgba(251, 191, 36, 0.15), rgba(251, 191, 36, 0.1)) !important;
                 transform: translateX(0) !important;
             }
-            
+
             /* Icon styling for current page */
             [data-flux-navlist-item][aria-current="page"] svg,
             [data-flux-navlist] a[aria-current="page"] svg,
             [data-flux-sidebar] a[aria-current="page"] svg {
                 color: #1f2937 !important;
             }
-            
+
             /* Group headings styling */
             [data-flux-navlist-group] > button,
             [data-flux-navlist-group] > [data-flux-heading],
@@ -89,7 +89,7 @@
                 opacity: 0.7 !important;
                 font-weight: 600 !important;
             }
-            
+
             /* Subtle left border indicator for items */
             [data-flux-navlist-item]::before,
             [data-flux-navlist] a::before {
@@ -104,92 +104,92 @@
                 border-radius: 0 2px 2px 0;
                 transition: height 0.2s ease;
             }
-            
+
             [data-flux-navlist-item]:hover::before,
             [data-flux-navlist] a:hover::before {
                 height: 60%;
             }
-            
+
             [data-flux-navlist-item][aria-current="page"]::before,
             [data-flux-navlist] a[aria-current="page"]::before {
                 height: 80%;
                 width: 4px;
             }
-            
+
             /* Smooth icon transitions */
             [data-flux-navlist-item] svg,
             [data-flux-navlist] a svg,
             [data-flux-sidebar] a svg {
                 transition: transform 0.2s ease, color 0.2s ease !important;
             }
-            
+
             [data-flux-navlist-item]:hover svg,
             [data-flux-navlist] a:hover svg,
             [data-flux-sidebar] a:hover svg {
                 transform: scale(1.1) !important;
                 color: #FBBF24 !important;
             }
-            
+
             /* Focus states for accessibility */
             [data-flux-navlist-item]:focus-visible,
             [data-flux-navlist] a:focus-visible {
                 outline: 2px solid #FBBF24 !important;
                 outline-offset: 2px !important;
             }
-            
+
             /* Sleek Custom Scrollbar */
             ::-webkit-scrollbar {
                 width: 6px;
                 height: 6px;
             }
-            
+
             ::-webkit-scrollbar-track {
                 background: transparent;
                 border-radius: 3px;
             }
-            
+
             ::-webkit-scrollbar-thumb {
                 background: linear-gradient(180deg, #D4D4D8 0%, #A1A1AA 100%);
                 border-radius: 3px;
                 transition: background 0.2s ease;
             }
-            
+
             ::-webkit-scrollbar-thumb:hover {
                 background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%);
             }
-            
+
             .dark ::-webkit-scrollbar-thumb {
                 background: linear-gradient(180deg, #52525B 0%, #3F3F46 100%);
             }
-            
+
             .dark ::-webkit-scrollbar-thumb:hover {
                 background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%);
             }
-            
+
             /* Firefox scrollbar */
             * {
                 scrollbar-width: thin;
                 scrollbar-color: #A1A1AA transparent;
             }
-            
+
             .dark * {
                 scrollbar-color: #52525B transparent;
             }
-            
+
             /* Sidebar specific scrollbar */
             [data-flux-sidebar] {
                 scrollbar-width: thin;
             }
-            
+
             [data-flux-sidebar]::-webkit-scrollbar {
                 width: 4px;
             }
-            
+
             [data-flux-sidebar]::-webkit-scrollbar-thumb {
                 background: rgba(161, 161, 170, 0.5);
                 border-radius: 2px;
             }
-            
+
             [data-flux-sidebar]::-webkit-scrollbar-thumb:hover {
                 background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%);
             }
@@ -229,7 +229,7 @@
 <?php unset($__componentOriginal1b6467b07b302021134396bbd98e74a9); ?>
 <?php endif; ?>
 
-            <a href="<?php echo e(route('dashboard')); ?>" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
+            <a href="<?php echo e(route('dashboard')); ?>" class="flex items-center justify-center w-full px-5" wire:navigate>
                 <?php if (isset($component)) { $__componentOriginal7b17d80ff7900603fe9e5f0b453cc7c3 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal7b17d80ff7900603fe9e5f0b453cc7c3 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.app-logo','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -282,7 +282,7 @@
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'pencil','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('management')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('management')),'wire:navigate' => true]); ?><?php echo e(__('Admin dashboard')); ?> <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['icon' => 'pencil','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('management')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('management')),'wire:navigate' => true]); ?><?php echo e(__('Admin Dashboard')); ?> <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalda376aa217444bbd92367ba1444eb3b8)): ?>
 <?php $attributes = $__attributesOriginalda376aa217444bbd92367ba1444eb3b8; ?>
@@ -301,7 +301,7 @@
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'user-group','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('management.roles.index')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('management.roles.*')),'wire:navigate' => true]); ?><?php echo e(__('Roles')); ?> <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['icon' => 'user-group','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('management.roles.index')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('management.roles.*')),'wire:navigate' => true]); ?><?php echo e(__('Rollen')); ?> <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalda376aa217444bbd92367ba1444eb3b8)): ?>
 <?php $attributes = $__attributesOriginalda376aa217444bbd92367ba1444eb3b8; ?>
@@ -320,7 +320,7 @@
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'users','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('management.users.index')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('management.users.*')),'wire:navigate' => true]); ?><?php echo e(__('Users')); ?> <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['icon' => 'users','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('management.users.index')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('management.users.*')),'wire:navigate' => true]); ?><?php echo e(__('Gebruikers')); ?> <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalda376aa217444bbd92367ba1444eb3b8)): ?>
 <?php $attributes = $__attributesOriginalda376aa217444bbd92367ba1444eb3b8; ?>
@@ -345,14 +345,14 @@
                 <?php if(auth()->user()->department === 'Sales' || auth()->user()->department === 'Management'): ?>
                 <?php if (isset($component)) { $__componentOriginal8b1fe5c87f0876e7c101dbc6fe82a9a4 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal8b1fe5c87f0876e7c101dbc6fe82a9a4 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.group','data' => ['heading' => __('Sales'),'expandable' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.group','data' => ['heading' => __('Verkoop'),'expandable' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('flux::navlist.group'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['heading' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(__('Sales')),'expandable' => true]); ?>
+<?php $component->withAttributes(['heading' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(__('Verkoop')),'expandable' => true]); ?>
                     <?php if (isset($component)) { $__componentOriginalda376aa217444bbd92367ba1444eb3b8 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalda376aa217444bbd92367ba1444eb3b8 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.item','data' => ['icon' => 'banknotes','href' => route('sales.dashboard'),'current' => request()->routeIs('sales.dashboard'),'wire:navigate' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -400,7 +400,7 @@
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'users','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('customers.index')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('customers.*')),'wire:navigate' => true]); ?><?php echo e(__('Customers')); ?> <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['icon' => 'users','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('customers.index')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('customers.*')),'wire:navigate' => true]); ?><?php echo e(__('Klanten')); ?> <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalda376aa217444bbd92367ba1444eb3b8)): ?>
 <?php $attributes = $__attributesOriginalda376aa217444bbd92367ba1444eb3b8; ?>
@@ -425,14 +425,14 @@
                 <?php if(auth()->user()->department === 'Purchasing' || auth()->user()->department === 'Management'): ?>
                 <?php if (isset($component)) { $__componentOriginal8b1fe5c87f0876e7c101dbc6fe82a9a4 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal8b1fe5c87f0876e7c101dbc6fe82a9a4 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.group','data' => ['heading' => __('Purchasing'),'expandable' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.group','data' => ['heading' => __('Inkoop'),'expandable' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('flux::navlist.group'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['heading' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(__('Purchasing')),'expandable' => true]); ?>
+<?php $component->withAttributes(['heading' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(__('Inkoop')),'expandable' => true]); ?>
                     <?php if (isset($component)) { $__componentOriginalda376aa217444bbd92367ba1444eb3b8 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalda376aa217444bbd92367ba1444eb3b8 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.item','data' => ['icon' => 'plus','href' => route('purchasing.dashboard'),'current' => request()->routeIs('purchasing.dashboard'),'wire:navigate' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -461,7 +461,7 @@
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'cube','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('product.stock')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('product.stock')),'wire:navigate' => true]); ?><?php echo e(__('Stock')); ?> <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['icon' => 'cube','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('product.stock')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('product.stock')),'wire:navigate' => true]); ?><?php echo e(__('Voorraad')); ?> <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalda376aa217444bbd92367ba1444eb3b8)): ?>
 <?php $attributes = $__attributesOriginalda376aa217444bbd92367ba1444eb3b8; ?>
@@ -480,7 +480,7 @@
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'shopping-cart','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('products.order')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('products.order') || request()->routeIs('products.store')),'wire:navigate' => true]); ?><?php echo e(__('Order')); ?> <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['icon' => 'shopping-cart','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('products.order')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('products.order') || request()->routeIs('products.store')),'wire:navigate' => true]); ?><?php echo e(__('Bestellingen')); ?> <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalda376aa217444bbd92367ba1444eb3b8)): ?>
 <?php $attributes = $__attributesOriginalda376aa217444bbd92367ba1444eb3b8; ?>
@@ -524,14 +524,14 @@
                 <?php if(auth()->user()->department === 'Finance' || auth()->user()->department === 'Management'): ?>
                 <?php if (isset($component)) { $__componentOriginal8b1fe5c87f0876e7c101dbc6fe82a9a4 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal8b1fe5c87f0876e7c101dbc6fe82a9a4 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.group','data' => ['heading' => __('Finance'),'expandable' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.group','data' => ['heading' => __('Financiën'),'expandable' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('flux::navlist.group'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['heading' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(__('Finance')),'expandable' => true]); ?>
+<?php $component->withAttributes(['heading' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(__('Financiën')),'expandable' => true]); ?>
                     <?php if (isset($component)) { $__componentOriginalda376aa217444bbd92367ba1444eb3b8 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalda376aa217444bbd92367ba1444eb3b8 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.item','data' => ['icon' => 'wallet','href' => route('finance.dashboard'),'current' => request()->routeIs('finance.dashboard'),'wire:navigate' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -560,7 +560,7 @@
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'document-text','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('contracts.index')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('contracts.*')),'wire:navigate' => true]); ?><?php echo e(__('Contracts')); ?> <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['icon' => 'document-text','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('contracts.index')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('contracts.*')),'wire:navigate' => true]); ?><?php echo e(__('Contracten')); ?> <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalda376aa217444bbd92367ba1444eb3b8)): ?>
 <?php $attributes = $__attributesOriginalda376aa217444bbd92367ba1444eb3b8; ?>
@@ -579,7 +579,7 @@
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'receipt-percent','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('facturen.index')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('facturen.*')),'wire:navigate' => true]); ?><?php echo e(__('Invoices')); ?> <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['icon' => 'receipt-percent','href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('facturen.index')),'current' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('facturen.*')),'wire:navigate' => true]); ?><?php echo e(__('Facturen')); ?> <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalda376aa217444bbd92367ba1444eb3b8)): ?>
 <?php $attributes = $__attributesOriginalda376aa217444bbd92367ba1444eb3b8; ?>
@@ -604,14 +604,14 @@
                 <?php if(auth()->user()->department === 'Technician' || auth()->user()->department === 'Management'): ?>
                 <?php if (isset($component)) { $__componentOriginal8b1fe5c87f0876e7c101dbc6fe82a9a4 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal8b1fe5c87f0876e7c101dbc6fe82a9a4 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.group','data' => ['heading' => __('Technician'),'expandable' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.group','data' => ['heading' => __('Techniek'),'expandable' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('flux::navlist.group'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['heading' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(__('Technician')),'expandable' => true]); ?>
+<?php $component->withAttributes(['heading' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(__('Techniek')),'expandable' => true]); ?>
                     <?php if (isset($component)) { $__componentOriginalda376aa217444bbd92367ba1444eb3b8 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalda376aa217444bbd92367ba1444eb3b8 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::navlist.item','data' => ['icon' => 'wrench','href' => route('technician.dashboard'),'current' => request()->routeIs('technician.dashboard'),'wire:navigate' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -1249,4 +1249,5 @@
 <?php echo app('flux')->scripts(); ?>
 
     </body>
-</html><?php /**PATH C:\Users\PowerHouse V2\Herd\Barocc-intens\resources\views/components/layouts/app/sidebar.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH C:\Users\PowerHouse V2\Herd\Barocc-intens\resources\views/components/layouts/app/sidebar.blade.php ENDPATH**/ ?>

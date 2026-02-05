@@ -17,6 +17,13 @@ class PurchasingDashboard extends Component
      * - Use Laravel Echo + Pusher for event-driven real-time updates instead of polling
      */
     
+    public $stockFilter = 'all';
+
+    public function setFilter($filter)
+    {
+        $this->stockFilter = $filter;
+    }
+
     public function render()
     {
         // Total stock value - calculated in PHP for SQLite compatibility
@@ -44,7 +51,13 @@ class PurchasingDashboard extends Component
             ->get();
 
         // All products for stock overview
-        $allProducts = Product::orderBy('stock')->take(10)->get();
+        $query = Product::query();
+        
+        if ($this->stockFilter === 'low') {
+            $query->where('stock', '<', $lowStockThreshold);
+        }
+        
+        $allProducts = $query->orderBy('stock')->take(10)->get();
 
         return view('livewire.dashboards.purchasing-dashboard', compact(
             'totalStockValue',
