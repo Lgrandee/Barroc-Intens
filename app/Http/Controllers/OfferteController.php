@@ -28,7 +28,9 @@ class OfferteController extends Controller
             abort(403, 'Toegang geweigerd. Alleen Sales en Management hebben toegang tot offertes.');
         }
 
-        $offerte = Offerte::with(['customer', 'products'])->findOrFail($id);
+        $offerte = Offerte::with(['customer', 'products' => function($q) {
+            $q->withPivot('quantity');
+        }])->findOrFail($id);
 
         return view('offerte.show', compact('offerte'));
     }

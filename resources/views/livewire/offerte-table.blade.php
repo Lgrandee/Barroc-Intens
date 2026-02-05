@@ -23,7 +23,7 @@
         <option value="all">Alle periodes</option>
       </select>
 
-      @if($search || $status !== 'all' || $period !== 'last_7_days')
+      @if($search || $status !== 'all' || $period !== 'all')
         <button wire:click="resetFilters" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-300">
           Reset
         </button>
