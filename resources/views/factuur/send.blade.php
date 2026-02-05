@@ -123,9 +123,9 @@ Barroc Intens B.V.</textarea>
                     ⚠️ Verstuur aanmaning
                   </button>
                 @endif
-                <button type="button" onclick="if(confirm('Markeer deze factuur als betaald?')) { alert('Betaald markeren functionaliteit komt binnenkort'); }" class="w-full px-4 py-2 text-sm border border-green-500 rounded text-green-700 hover:bg-green-100">
+                <a href="{{ route('facturen.markAsPaid', $factuur->id) }}" onclick="return confirm('Markeer deze factuur als betaald?')" class="inline-flex items-center justify-center gap-2 w-full px-4 py-2 text-sm border border-green-500 rounded text-green-700 hover:bg-green-100">
                   ✅ Markeer als betaald
-                </button>
+                </a>
               </div>
             @endif
           </div>

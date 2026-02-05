@@ -186,4 +186,11 @@ class FactuurController extends Controller
         $filename = 'FACT-' . date('Y', strtotime($factuur->invoice_date)) . '-' . str_pad($factuur->id, 3, '0', STR_PAD_LEFT) . '.pdf';
         return $pdf->download($filename);
     }
+
+    public function markAsPaid($id)
+    {
+        $factuur = Factuur::findOrFail($id);
+        $factuur->update(['status' => 'betaald']);
+        return redirect()->route('facturen.index')->with('success', 'Factuur is gemarkeerd als betaald.');
+    }
 }

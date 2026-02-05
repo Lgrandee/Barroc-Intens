@@ -96,6 +96,7 @@ Route::put('/facturen/{id}', [FactuurController::class, 'update'])->middleware('
 Route::get('/facturen/{id}/send', [FactuurController::class, 'send'])->middleware('auth')->name('facturen.send');
 Route::post('/facturen/{id}/send', [FactuurController::class, 'sendEmail'])->middleware('auth')->name('facturen.sendEmail');
 Route::get('/facturen/{id}/pdf', [FactuurController::class, 'downloadPdf'])->middleware('auth')->name('facturen.pdf');
+Route::get('/facturen/{id}/mark-as-paid', [FactuurController::class, 'markAsPaid'])->middleware('auth')->name('facturen.markAsPaid');
 // Management - Rollen beheer
 Route::middleware(['auth', 'departmentRole:Management'])->group(function () {
     Route::get('/management/roles', [RoleController::class, 'index'])->name('management.roles.index');
