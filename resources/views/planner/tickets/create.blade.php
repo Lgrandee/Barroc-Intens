@@ -20,6 +20,16 @@
                     <p class="text-sm text-gray-600 mb-6">Gebruik dit formulier om klantvragen snel te registreren</p>
                     <form method="POST" action="{{ route('planner.tickets.store') }}" enctype="multipart/form-data">
                         @csrf
+                        @if($errors->any())
+                            <div class="mb-4 rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+                                <div class="font-medium mb-2">Opslaan mislukt. Controleer de velden hieronder.</div>
+                                <ul class="list-disc pl-5">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <!-- Customer Selection -->
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Kies klant of zoek...</label>
@@ -106,7 +116,7 @@
                 <!-- SLA & Tips onderaan als grijze tekst -->
                 <div class="col-span-full mt-8">
                     <div class="text-xs text-gray-500 text-center">
-                        Standaard reactietijd: 48 uur (Service). 
+                        Standaard reactietijd: 48 uur (Service).
                     </div>
                                         <div class="text-xs text-gray-500 text-center">
                         Technische tickets worden binnen 2 werkdagen opgepakt.

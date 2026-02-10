@@ -61,38 +61,7 @@ class TicketController extends Controller
      */
     public function index(Request $request)
     {
-        $query = PlanningTicket::with(['user', 'feedback.customer']);
-
-        // Search filter
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->whereHas('feedback.customer', function($customerQuery) use ($search) {
-                    $customerQuery->where('name_company', 'like', "%{$search}%");
-                })
-                ->orWhere('id', 'like', "%{$search}%")
-                ->orWhere('location', 'like', "%{$search}%");
-            });
-        }
-
-        // Status filter
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
-        // Priority filter
-        if ($request->filled('priority')) {
-            $query->where('priority', $request->priority);
-        }
-
-        // Department/Category filter
-        if ($request->filled('department')) {
-            $query->where('catagory', $request->department);
-        }
-
-        $tickets = $query->orderBy('scheduled_time', 'desc')->paginate(20);
-
-        return view('planner.tickets.index', compact('tickets'));
+        return view('planner.tickets.index');
     }
 
     /**
