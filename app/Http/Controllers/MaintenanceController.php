@@ -13,17 +13,24 @@ class MaintenanceController extends Controller
      */
     public function planning(Request $request)
     {
-        // Technician can only see their own planning
-        $userId = Auth::id();
+        $user = Auth::user();
+        $isManagement = $user && $user->department === 'Management';
+        $userId = $user?->id;
 
         // Update overdue tasks to 'te_laat' status
-        PlanningTicket::where('user_id', $userId)
+        $overdueQuery = PlanningTicket::query();
+        if (!$isManagement) {
+            $overdueQuery->where('user_id', $userId);
+        }
+        $overdueQuery
             ->where('status', 'open')
             ->where('scheduled_time', '<', now())
             ->update(['status' => 'te_laat']);
 
-        $query = PlanningTicket::with(['user', 'feedback.customer', 'feedback.products'])
-            ->where('user_id', $userId);
+        $query = PlanningTicket::with(['user', 'feedback.customer', 'feedback.products']);
+        if (!$isManagement) {
+            $query->where('user_id', $userId);
+        }
 
         // Search filter
         if ($request->filled('search')) {
@@ -100,12 +107,15 @@ class MaintenanceController extends Controller
      */
     public function show($id)
     {
-        // Technician can only see their own tasks
-        $userId = Auth::id();
+        $user = Auth::user();
+        $isManagement = $user && $user->department === 'Management';
 
-        $task = PlanningTicket::with(['user', 'feedback.customer', 'feedback.products'])
-            ->where('user_id', $userId)
-            ->findOrFail($id);
+        $query = PlanningTicket::with(['user', 'feedback.customer', 'feedback.products']);
+        if (!$isManagement) {
+            $query->where('user_id', $user?->id);
+        }
+
+        $task = $query->findOrFail($id);
 
         return view('technician.detail', compact('task'));
     }
@@ -115,11 +125,15 @@ class MaintenanceController extends Controller
      */
     public function rapport($id)
     {
-        $userId = Auth::id();
+        $user = Auth::user();
+        $isManagement = $user && $user->department === 'Management';
 
-        $task = PlanningTicket::with(['user', 'feedback.customer', 'feedback.products'])
-            ->where('user_id', $userId)
-            ->findOrFail($id);
+        $query = PlanningTicket::with(['user', 'feedback.customer', 'feedback.products']);
+        if (!$isManagement) {
+            $query->where('user_id', $user?->id);
+        }
+
+        $task = $query->findOrFail($id);
 
         return view('technician.rapport', compact('task'));
     }
@@ -129,11 +143,15 @@ class MaintenanceController extends Controller
      */
     public function updateRapport(Request $request, $id)
     {
-        $userId = Auth::id();
+        $user = Auth::user();
+        $isManagement = $user && $user->department === 'Management';
 
-        $task = PlanningTicket::with('feedback')
-            ->where('user_id', $userId)
-            ->findOrFail($id);
+        $query = PlanningTicket::with('feedback');
+        if (!$isManagement) {
+            $query->where('user_id', $user?->id);
+        }
+
+        $task = $query->findOrFail($id);
 
         $request->validate([
             'feedback' => 'required|string|max:5000',

@@ -17,21 +17,34 @@ class TechnicianDashboard extends Component
      * - Use wire:poll.keep-alive to only poll when tab is visible
      * - Use Laravel Echo + Pusher for event-driven real-time updates instead of polling
      */
-    
+
     public function render()
     {
+        $user = auth()->user();
+        $isManagement = $user && $user->department === 'Management';
+
+        $baseTicketQuery = PlanningTicket::query();
+        if (!$isManagement) {
+            $baseTicketQuery->where('user_id', $user?->id);
+        }
+
         // Open tickets
-        $openTicketsCount = PlanningTicket::where('status', 'open')->count();
-        
+        $openTicketsCount = (clone $baseTicketQuery)
+            ->where('status', 'open')
+            ->count();
+
         // Scheduled services this week
-        $scheduledServicesCount = PlanningTicket::where('catagory', 'service')
+        $scheduledServicesCount = (clone $baseTicketQuery)
+            ->where('catagory', 'service')
             ->whereBetween('scheduled_time', [now()->startOfWeek(), now()->endOfWeek()])
             ->count();
 
         // Average response time - calculated in PHP for SQLite compatibility
-        $openTickets = PlanningTicket::where('status', 'open')->get();
-        $avgResponseTime = $openTickets->count() > 0 
-            ? $openTickets->avg(function($t) { return now()->diffInDays($t->created_at); }) 
+        $openTickets = (clone $baseTicketQuery)
+            ->where('status', 'open')
+            ->get();
+        $avgResponseTime = $openTickets->count() > 0
+            ? $openTickets->avg(function($t) { return now()->diffInDays($t->created_at); })
             : 0;
 
         // Low stock alerts (for technician supplies)
@@ -43,15 +56,19 @@ class TechnicianDashboard extends Component
         $stockAlertsCount = $stockAlerts->count();
 
         // Urgent tickets - simplified ordering for SQLite
-        $urgentTickets = PlanningTicket::with('user', 'feedback')
-            ->where('priority', 'hoog')
-            ->orWhere('status', 'open')
+        $urgentTickets = (clone $baseTicketQuery)
+            ->with('user', 'feedback')
+            ->where(function($query) {
+                $query->where('priority', 'hoog')
+                    ->orWhere('status', 'open');
+            })
             ->orderBy('priority')
             ->take(5)
             ->get();
 
         // Weekly planning
-        $weeklyPlanning = PlanningTicket::with('user', 'feedback')
+        $weeklyPlanning = (clone $baseTicketQuery)
+            ->with('user', 'feedback')
             ->whereBetween('scheduled_time', [now()->startOfWeek(), now()->endOfWeek()])
             ->orderBy('scheduled_time')
             ->get()
