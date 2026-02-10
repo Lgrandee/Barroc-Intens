@@ -86,6 +86,10 @@
                     </div>
                 </div>
 
+                <div class="mb-8">
+                    <livewire:customer-bkr-check :customer="$customer" />
+                </div>
+
                 <!-- Notes (readonly textarea) -->
                 <div class="border-t border-gray-100 dark:border-zinc-700 pt-6">
                     <label for="notes" class="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
