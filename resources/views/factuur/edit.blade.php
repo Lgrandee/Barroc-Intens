@@ -116,11 +116,11 @@
             <div class="space-y-3">
               <div class="flex justify-between text-sm">
                 <span class="text-yellow-800">Subtotaal</span>
-                <span class="font-medium text-black" id="subtotal">€{{ number_format($factuur->products->sum(function($p) { return $p->price * $p->pivot->quantity; }), 2, ',', '.') }}</span>
+                <span class="font-medium text-black" id="subtotal">€{{ number_format($factuur->total_amount, 2, ',', '.') }}</span>
               </div>
               <div class="flex justify-between text-sm">
                 <span class="text-yellow-800">BTW (21%)</span>
-                <span class="font-medium text-black" id="btw">€{{ number_format($factuur->products->sum(function($p) { return $p->price * $p->pivot->quantity; }) * 0.21, 2, ',', '.') }}</span>
+                <span class="font-medium text-black" id="btw">€{{ number_format($factuur->total_amount * 0.21, 2, ',', '.') }}</span>
               </div>
               <div class="border-t border-yellow-300 pt-3 flex justify-between">
                 <span class="font-semibold text-black">Totaal</span>

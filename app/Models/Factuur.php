@@ -40,6 +40,7 @@ class Factuur extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class, 'factuur_products')
+                    ->withPivot('quantity')
                     ->withTimestamps();
     }
 
