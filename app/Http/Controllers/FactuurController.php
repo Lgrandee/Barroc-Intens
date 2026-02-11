@@ -168,9 +168,6 @@ class FactuurController extends Controller
             'sent_at' => now(),
         ]);
 
-        // TODO: Send actual email here with Mail facade
-        // Mail::to($validated['email'])->send(new FactuurMail($factuur));
-
         return redirect()->route('facturen.index')->with('success', 'Factuur verstuurd naar ' . $validated['email'] . ' op ' . now()->format('d-m-Y H:i'));
     }
 
