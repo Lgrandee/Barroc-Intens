@@ -11,12 +11,6 @@ class RoleSeeder extends Seeder
     {
         $roles = [
             [
-                'name' => 'Admin',
-                'label' => 'Admin',
-                'description' => 'Volledige systeem toegang met alle permissies',
-                'permissions' => ['view_users', 'create_users', 'edit_users', 'delete_users', 'view_roles', 'manage_roles']
-            ],
-            [
                 'name' => 'Sales',
                 'label' => 'Sales',
                 'description' => 'Verkoop en klantrelatie management',
@@ -47,6 +41,33 @@ class RoleSeeder extends Seeder
                 'permissions' => ['view_tickets', 'view_planning']
             ],
         ];
+
+        $allPermissions = collect($roles)
+            ->pluck('permissions')
+            ->flatten()
+            ->unique()
+            ->values()
+            ->all();
+
+        $adminExtraPermissions = [
+            'view_users',
+            'create_users',
+            'edit_users',
+            'delete_users',
+            'view_roles',
+            'manage_roles',
+        ];
+
+        array_unshift($roles, [
+            'name' => 'Admin',
+            'label' => 'Admin',
+            'description' => 'Volledige systeem toegang met alle permissies',
+            'permissions' => collect($allPermissions)
+                ->merge($adminExtraPermissions)
+                ->unique()
+                ->values()
+                ->all(),
+        ]);
 
         foreach ($roles as $role) {
             Role::firstOrCreate(['name' => $role['name']], $role);
