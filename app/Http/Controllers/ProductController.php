@@ -49,7 +49,7 @@ class ProductController extends Controller
     {
         $data = $request->validate([
             'quantities' => 'array',
-            'quantities.*' => 'nullable|integer|min:1',
+            'quantities.*' => 'nullable|integer|min:0',
         ]);
 
         $quantities = $data['quantities'] ?? [];
