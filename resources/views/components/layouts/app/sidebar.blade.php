@@ -226,7 +226,7 @@
                 <flux:navlist.group :heading="__('Inkoop')" expandable>
                     <flux:navlist.item icon="plus" :href="route('purchasing.dashboard')" :current="request()->routeIs('purchasing.dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                     <flux:navlist.item icon="cube" :href="route('product.stock')" :current="request()->routeIs('product.stock')" wire:navigate>{{ __('Voorraad') }}</flux:navlist.item>
-                    <flux:navlist.item icon="shopping-cart" :href="route('products.order')" :current="request()->routeIs('products.order') || request()->routeIs('products.store')" wire:navigate>{{ __('Bestellingen') }}</flux:navlist.item>
+                    <flux:navlist.item icon="shopping-cart" :href="route('products.order')" :current="request()->routeIs('products.order') || request()->routeIs('products.store')">{{ __('Bestellingen') }}</flux:navlist.item>
                     <flux:navlist.item icon="truck" :href="route('orders.logistics')" :current="request()->routeIs('orders.logistics')" wire:navigate>{{ __('Backlog') }}</flux:navlist.item>
                 </flux:navlist.group>
                 @endif
